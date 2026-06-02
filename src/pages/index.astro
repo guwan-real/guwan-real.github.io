@@ -1,0 +1,242 @@
+---
+import heroWorkbench from "../assets/hero-workbench.png";
+import "../styles/global.css";
+
+const profile = {
+  initials: "GR",
+  name: "Your Name",
+  role: "Developer / Researcher / Builder",
+  location: "City, Country",
+  headline: "I build careful software, write down what I learn, and turn messy ideas into durable systems.",
+  current: "Currently shaping a personal operating system for learning, projects, and writing.",
+};
+
+const signals = [
+  ["Focus", "AI systems, full-stack products, learning tools"],
+  ["Mode", "Research notes, prototypes, shipped artifacts"],
+  ["Stack", "TypeScript, Python, Hugo, Astro"],
+  ["Open", "Collaborations, writing, experiments"],
+];
+
+const projects = [
+  {
+    type: "Featured",
+    title: "Learning Diary",
+    description: "A Hugo-powered archive for notes, interview prep, and technical thinking.",
+    href: "/learning-diary/",
+  },
+  {
+    type: "Project",
+    title: "Project Name",
+    description: "Short description for a product, research prototype, or open-source repository.",
+    href: "#contact",
+  },
+  {
+    type: "Lab",
+    title: "Experiment Name",
+    description: "A compact place to describe a live demo, dataset, model, tool, or study.",
+    href: "#contact",
+  },
+];
+
+const writings = [
+  {
+    title: "Learning Diary",
+    description: "Daily notes, long-form technical整理, and interview review.",
+    href: "/learning-diary/",
+    featured: true,
+  },
+  {
+    title: "Essay Title",
+    description: "A future essay about systems, craft, or a hard-won lesson.",
+    href: "#",
+  },
+  {
+    title: "Field Note",
+    description: "A short observation from building and studying.",
+    href: "#",
+  },
+];
+
+const timeline = [
+  ["Now", "Building the homepage", "A clean public surface for projects, notes, and contact."],
+  ["Next", "Fill in real profile data", "Replace placeholders with biography, links, and selected work."],
+  ["Later", "Add richer case studies", "Turn project cards into detailed pages when the material is ready."],
+];
+
+const contact = [
+  ["GitHub", "guwan-real", "https://github.com/guwan-real"],
+  ["Email", "name@example.com", "mailto:name@example.com"],
+  ["Writing", "Learning Diary", "/learning-diary/"],
+  ["Elsewhere", "@handle", "#"],
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={profile.headline} />
+    <meta name="generator" content={Astro.generator} />
+    <meta property="og:title" content={`${profile.name} - Personal Homepage`} />
+    <meta property="og:description" content={profile.headline} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://guwan-real.github.io/" />
+    <title>{profile.name} - Personal Homepage</title>
+  </head>
+  <body>
+    <header class="site-header shell">
+      <a class="brand" href="/" aria-label="Home">
+        <span class="brand-mark">{profile.initials}</span>
+        <span>{profile.name}</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#writing">Writing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">{profile.role} / {profile.location}</p>
+          <h1 id="hero-title">{profile.name}</h1>
+          <p>{profile.headline}</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#work">View Work</a>
+            <a class="button" href="/learning-diary/">Learning Diary</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="image-frame">
+            <img src={heroWorkbench.src} width={heroWorkbench.width} height={heroWorkbench.height} alt="A quiet workbench with notes, screens, and an abstract knowledge map" />
+          </div>
+          <div class="status-card" aria-label="Current focus">
+            <span>Current</span>
+            <strong>{profile.current}</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about" aria-labelledby="about-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">About</p>
+            <h2 id="about-title">A public desk for the work in progress.</h2>
+          </div>
+          <p>Use this section as a compact biography: what you care about, what you are learning, and what kind of work you want people to associate with you.</p>
+        </div>
+        <div class="about-grid">
+          <div class="panel">
+            <p>
+              This homepage is intentionally calm and editable. It can hold a concise profile, selected projects,
+              writing links, and a few current signals without turning into a heavy portfolio system.
+            </p>
+          </div>
+          <div class="panel">
+            <ul class="signal-list">
+              {signals.map(([label, value]) => (
+                <li><b>{label}</b><span>{value}</span></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="work" aria-labelledby="work-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Selected Work</p>
+            <h2 id="work-title">Things worth pointing at.</h2>
+          </div>
+          <p>Keep this list short. Three strong entries usually feel more intentional than a long shelf of everything.</p>
+        </div>
+        <div class="project-grid">
+          {projects.map((project) => (
+            <article class="project-card">
+              <span class="card-kicker">{project.type}</span>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <a class="card-link" href={project.href}>Open →</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section" id="writing" aria-labelledby="writing-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Writing</p>
+            <h2 id="writing-title">Notes that keep their shape.</h2>
+          </div>
+          <p>Writing can be essays, logs, technical notes, or public study material. Start with links, then grow into pages later.</p>
+        </div>
+        <div class="writing-grid">
+          <article class="writing-card featured">
+            <span class="card-kicker">Archive</span>
+            <h3>{writings[0].title}</h3>
+            <p>{writings[0].description}</p>
+            <a class="card-link" href={writings[0].href}>Read →</a>
+          </article>
+          <div class="writing-stack">
+            {writings.slice(1).map((item) => (
+              <article class="writing-card">
+                <span class="card-kicker">Draft</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <a class="card-link" href={item.href}>Open →</a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="timeline-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Timeline</p>
+            <h2 id="timeline-title">A small map of what changes next.</h2>
+          </div>
+          <p>These entries can become recent milestones, current goals, or a lightweight now page.</p>
+        </div>
+        <ol class="timeline">
+          {timeline.map(([when, title, description]) => (
+            <li>
+              <time>{when}</time>
+              <div>
+                <strong>{title}</strong>
+                <span>{description}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="section" id="contact" aria-labelledby="contact-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2 id="contact-title">A few doors left open.</h2>
+          </div>
+          <p>Swap these links for your real GitHub, email, blog, resume, or social profiles whenever you are ready.</p>
+        </div>
+        <div class="contact-grid">
+          {contact.map(([label, value, href]) => (
+            <a class="contact-card" href={href}>
+              <span class="card-kicker">{label}</span>
+              <h3>{value}</h3>
+            </a>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer shell">
+      <span>© {new Date().getFullYear()} {profile.name}</span>
+      <span>Built with Astro</span>
+    </footer>
+  </body>
+</html>

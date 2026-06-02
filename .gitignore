@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.codex-screenshots/
+
+.DS_Store
+Thumbs.db
