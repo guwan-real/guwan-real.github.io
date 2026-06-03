@@ -3,26 +3,41 @@ import heroWorkbench from "../assets/hero-workbench.png";
 import "../styles/global.css";
 
 const profile = {
-  initials: "GR",
-  name: "Your Name",
-  role: "Developer / Researcher / Builder",
-  location: "City, Country",
-  headline: "I build careful software, write down what I learn, and turn messy ideas into durable systems.",
-  current: "Currently shaping a personal operating system for learning, projects, and writing.",
+  initials: "FT",
+  name: "付涛",
+  role: "Agent Infra / Development / Learning",
+  location: "合肥, 中国",
+  headline: "我关注 Agent Infra 和开发，把学习、实验和工程实践整理成可以持续复用的系统。",
+  current: "目前围绕 Agent Infra、开发实践和个人学习体系做持续积累。",
 };
 
 const signals = [
-  ["Focus", "AI systems, full-stack products, learning tools"],
-  ["Mode", "Research notes, prototypes, shipped artifacts"],
+  ["Focus", "Agent Infra, developer tools, applied engineering"],
+  ["Mode", "Learning notes, prototypes, engineering practice"],
   ["Stack", "TypeScript, Python, Hugo, Astro"],
-  ["Open", "Collaborations, writing, experiments"],
+  ["Base", "Hefei, China"],
+];
+
+const education = [
+  {
+    period: "2018.09 - 2022.06",
+    school: "武汉大学",
+    institute: "计算机学院",
+    note: "本科阶段",
+  },
+  {
+    period: "2024.09 - 2027.06",
+    school: "中国科学技术大学",
+    institute: "先进技术研究院",
+    note: "研究生阶段",
+  },
 ];
 
 const projects = [
   {
     type: "Featured",
     title: "Learning Diary",
-    description: "A Hugo-powered archive for notes, interview prep, and technical thinking.",
+    description: "一个 Hugo 驱动的学习日记，用来沉淀笔记、面试整理和技术思考。",
     href: "/learning-diary/",
   },
   {
@@ -42,7 +57,7 @@ const projects = [
 const writings = [
   {
     title: "Learning Diary",
-    description: "Daily notes, long-form technical整理, and interview review.",
+    description: "学习笔记、长文技术整理和面试复盘。",
     href: "/learning-diary/",
     featured: true,
   },
@@ -59,9 +74,9 @@ const writings = [
 ];
 
 const timeline = [
-  ["Now", "Building the homepage", "A clean public surface for projects, notes, and contact."],
-  ["Next", "Fill in real profile data", "Replace placeholders with biography, links, and selected work."],
-  ["Later", "Add richer case studies", "Turn project cards into detailed pages when the material is ready."],
+  ["Now", "Agent Infra and development", "持续学习 agent 基础设施、开发工具与工程实践。"],
+  ["Next", "Fill selected projects", "把项目卡片替换成真实仓库、实验或作品。"],
+  ["Later", "Add richer case studies", "将重要项目扩展成更完整的 case study 页面。"],
 ];
 
 const contact = [
@@ -93,6 +108,7 @@ const contact = [
       </a>
       <nav class="nav" aria-label="Primary navigation">
         <a href="#about">About</a>
+        <a href="#education">Education</a>
         <a href="#work">Work</a>
         <a href="#writing">Writing</a>
         <a href="#contact">Contact</a>
@@ -125,15 +141,14 @@ const contact = [
         <div class="section-head">
           <div>
             <p class="eyebrow">About</p>
-            <h2 id="about-title">A public desk for the work in progress.</h2>
+            <h2 id="about-title">Agent Infra, development, and durable learning.</h2>
           </div>
-          <p>Use this section as a compact biography: what you care about, what you are learning, and what kind of work you want people to associate with you.</p>
+          <p>这里先保留为一个简洁的个人主页入口，后续可以继续补充更具体的研究兴趣、项目经历、论文或实习信息。</p>
         </div>
         <div class="about-grid">
           <div class="panel">
             <p>
-              This homepage is intentionally calm and editable. It can hold a concise profile, selected projects,
-              writing links, and a few current signals without turning into a heavy portfolio system.
+              我目前主要关注 Agent Infra 和开发方向，希望把学习过程、工程实践和阶段性项目都整理成可追踪、可复盘、可继续迭代的材料。
             </p>
           </div>
           <div class="panel">
@@ -143,6 +158,26 @@ const contact = [
               ))}
             </ul>
           </div>
+        </div>
+      </section>
+
+      <section class="section" id="education" aria-labelledby="education-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Education</p>
+            <h2 id="education-title">Academic path.</h2>
+          </div>
+          <p>教育经历先按时间线保留为简洁版本，后续可以继续补充课程、研究方向、导师、论文或项目。</p>
+        </div>
+        <div class="education-grid">
+          {education.map((item) => (
+            <article class="education-card">
+              <span class="card-kicker">{item.period}</span>
+              <h3>{item.school}</h3>
+              <p>{item.institute}</p>
+              <strong>{item.note}</strong>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -160,7 +195,7 @@ const contact = [
               <span class="card-kicker">{project.type}</span>
               <h3>{project.title}</h3>
               <p>{project.description}</p>
-              <a class="card-link" href={project.href}>Open →</a>
+              <a class="card-link" href={project.href}>Open -&gt;</a>
             </article>
           ))}
         </div>
@@ -179,7 +214,7 @@ const contact = [
             <span class="card-kicker">Archive</span>
             <h3>{writings[0].title}</h3>
             <p>{writings[0].description}</p>
-            <a class="card-link" href={writings[0].href}>Read →</a>
+            <a class="card-link" href={writings[0].href}>Read -&gt;</a>
           </article>
           <div class="writing-stack">
             {writings.slice(1).map((item) => (
@@ -187,7 +222,7 @@ const contact = [
                 <span class="card-kicker">Draft</span>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
-                <a class="card-link" href={item.href}>Open →</a>
+                <a class="card-link" href={item.href}>Open -&gt;</a>
               </article>
             ))}
           </div>
@@ -235,7 +270,7 @@ const contact = [
     </main>
 
     <footer class="site-footer shell">
-      <span>© {new Date().getFullYear()} {profile.name}</span>
+      <span>&copy; {new Date().getFullYear()} {profile.name}</span>
       <span>Built with Astro</span>
     </footer>
   </body>
