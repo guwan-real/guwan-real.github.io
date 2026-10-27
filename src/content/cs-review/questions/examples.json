@@ -1,0 +1,491 @@
+[
+  {
+    "id": "example-insertion-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "insertion-sort"
+    ],
+    "type": "single",
+    "stem": "对序列 `5, 2, 4, 6, 1, 3` 进行直接插入排序。约定第一趟将第二个元素插入前方有序区。第二趟结束后的完整序列是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "`2, 5, 4, 6, 1, 3`"
+      },
+      {
+        "id": "B",
+        "text": "`2, 4, 5, 6, 1, 3`"
+      },
+      {
+        "id": "C",
+        "text": "`1, 2, 4, 5, 6, 3`"
+      },
+      {
+        "id": "D",
+        "text": "`1, 2, 3, 4, 5, 6`"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "第二趟插入的是原序列中的 4。它插在 2 与 5 之间，未处理后缀保持不变。",
+      "steps": [
+        "初始有序区为 `[5]`。",
+        "第一趟插入 2：`[2, 5] | 4, 6, 1, 3`。",
+        "第二趟保存 4，将 5 右移，再将 4 放入空位：`[2, 4, 5] | 6, 1, 3`。"
+      ],
+      "keyPoint": "每趟扩展有序区一个元素，后缀不会被整体排序。",
+      "pitfall": "A 只完成第一趟；D 是排序终态。不要将“趟”理解为单次交换。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "insertion-sort"
+    ]
+  },
+  {
+    "id": "example-complement-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "以 **8 位有符号补码**计算 `01111111 + 00000001`，截断到 8 位后，结果的真值和溢出情况为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "128，未溢出"
+      },
+      {
+        "id": "B",
+        "text": "−128，发生溢出"
+      },
+      {
+        "id": "C",
+        "text": "0，发生溢出"
+      },
+      {
+        "id": "D",
+        "text": "−127，未溢出"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "位运算结果为 `10000000`，按 8 位补码解释为 −128。数学结果 128 超出了表示范围，发生有符号溢出。",
+      "steps": [
+        "`01111111` 的真值是 127，`00000001` 的真值是 1。",
+        "8 位补码范围为 $[-128,127]$，而 $127+1=128$。",
+        "截断后的位模式 `10000000` 的最高位权值是 $-2^7$，其余位均为 0，因此真值为 −128。",
+        "两个正数相加却得到负号，符合“同号相加结果异号”的溢出判据。"
+      ],
+      "keyPoint": "位模式、按补码解释的真值和数学结果是三个不同概念。",
+      "pitfall": "没有向第 9 位进位，也可能发生有符号溢出。不要将无符号进位与补码溢出混同。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "twos-complement"
+    ]
+  },
+  {
+    "id": "example-cache-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "按字节编址的系统使用直接映射 Cache。Cache **数据区**为 1 KiB，块大小为 16 B，行号从 0 开始。主存块号为 69 的块映射到哪一行？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "5"
+      },
+      {
+        "id": "C",
+        "text": "16"
+      },
+      {
+        "id": "D",
+        "text": "69"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "Cache 有 $1024/16=64$ 行。直接映射行号为主存块号对行数取余，即 $69\\bmod64=5$。",
+      "steps": [
+        "统一单位：1 KiB = 1024 B。",
+        "计算行数 $N=1024/16=64$。",
+        "题目已经给出主存块号，不需要再除以块大小。",
+        "计算 $69=1\\times64+5$，对应行号为 5、标记为 1。"
+      ],
+      "keyPoint": "直接映射按主存块号取余，先分清字节地址和块号。",
+      "pitfall": "如果把块号再次除以 16，会错误地重复进行字节地址到块号的转换。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "cache-mapping"
+    ]
+  },
+  {
+    "id": "example-fifo-01",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "fifo-pages"
+    ],
+    "type": "single",
+    "stem": "采用 FIFO 页面置换，初始 3 个页框均为空。访问序列为 `7, 0, 1, 2, 0, 3`，首次装入也计缺页。总缺页次数为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "5"
+      },
+      {
+        "id": "C",
+        "text": "6"
+      },
+      {
+        "id": "D",
+        "text": "3"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "仅第五次访问 0 命中，其余五次均缺页。FIFO 在命中时不调整装入先后次序。",
+      "steps": [
+        "访问 7、0、1：连续三次缺页，队列为 `[7, 0, 1]`（左侧最早）。",
+        "访问 2：淘汰 7，第四次缺页，队列为 `[0, 1, 2]`。",
+        "访问 0：命中，队列仍为 `[0, 1, 2]`。",
+        "访问 3：淘汰 0，第五次缺页，队列为 `[1, 2, 3]`。"
+      ],
+      "keyPoint": "FIFO 追踪装入时间，LRU 追踪最近访问时间。",
+      "pitfall": "命中 0 后将它移到队尾，会把 FIFO 的行为误算成 LRU。首次装入也需要计入缺页。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "fifo-pages"
+    ]
+  },
+  {
+    "id": "example-sjf-01",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "single",
+    "stem": "三个进程 A、B、C 的（到达时间，CPU 服务时间）依次为（0，5）、（1，2）、（2，1）。无阻塞，忽略切换开销，使用**非抢占式 SJF**。平均等待时间是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1"
+      },
+      {
+        "id": "B",
+        "text": "2"
+      },
+      {
+        "id": "C",
+        "text": "$\\frac{8}{3}$"
+      },
+      {
+        "id": "D",
+        "text": "4"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "执行顺序为 A、C、B。等待时间分别是 0、3、5，平均为 $8/3$。",
+      "steps": [
+        "时刻 0 只有 A 已到达，因此 A 从 0 执行到 5。",
+        "时刻 5，B 与 C 都在就绪队列中，C 更短，从 5 执行到 6。",
+        "B 从 6 执行到 8。",
+        "A 等待 $0-0=0$；B 等待 $6-1=5$；C 等待 $5-2=3$，平均 $(0+5+3)/3=8/3$。"
+      ],
+      "keyPoint": "非抢占 SJF 只在 CPU 可调度时，从已到达的进程中选择。",
+      "pitfall": "不能让时刻 2 到达的 C 中断正在执行的 A。不要把完成时间减到达时间当成等待时间。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "sjf-scheduling"
+    ]
+  },
+  {
+    "id": "example-tcp-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "tcp-stream"
+    ],
+    "type": "boolean",
+    "stem": "TCP 保证发送端每调用一次发送操作，接收端就恰好通过一次读取操作收到这条完整消息。",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "F"
+    ],
+    "explanation": {
+      "analysis": "TCP 提供字节流，不保留应用发送操作的消息边界。接收端可能分多次读到一个消息，也可能一次读到多个消息的数据。",
+      "steps": [
+        "区分传输层的可靠有序字节流与应用层的消息。",
+        "由应用协议通过长度字段、固定长度或分隔符定义边界。"
+      ],
+      "keyPoint": "可靠交付与消息定界是不同层面的职责。",
+      "pitfall": "不能从“TCP 可靠”推导出“每次发送对应一次完整接收”。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "tcp-stream"
+    ]
+  },
+  {
+    "id": "example-acid-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "acid-transactions"
+    ],
+    "type": "multiple",
+    "stem": "关于数据库事务，下列说法正确的有（多选，全选对才得分）：",
+    "options": [
+      {
+        "id": "A",
+        "text": "原子性要求事务中的操作全部完成或全部不生效。"
+      },
+      {
+        "id": "B",
+        "text": "一致性要求事务前后满足规定的完整性约束。"
+      },
+      {
+        "id": "C",
+        "text": "所有标准隔离级别都禁止读到其他事务尚未提交的数据。"
+      },
+      {
+        "id": "D",
+        "text": "持久性要求已提交事务的结果得到持久保存。"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "A、B、D 分别描述原子性、一致性与持久性。C 错在“所有”：标准意义上的读未提交允许脏读。",
+      "steps": [
+        "逐项对应 ACID 各属性，避免互换含义。",
+        "检查 C 的限定词：读到未提交数据称为脏读。",
+        "隔离级别有强弱区别，读未提交不禁止脏读，因此 C 不成立。"
+      ],
+      "keyPoint": "事务属性与隔离级别的具体保证应分开理解。",
+      "pitfall": "不要把最强隔离保证套用到所有隔离级别，也不要漏选 D。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "acid-transactions"
+    ]
+  },
+  {
+    "id": "example-boundary-01",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "boundary-testing"
+    ],
+    "type": "single",
+    "stem": "某输入为整数，合法区间为 $0\\le x\\le100$。采用健壮边界值分析，下列哪组最直接覆盖两个边界及各自紧邻的内外侧？",
+    "options": [
+      {
+        "id": "A",
+        "text": "−1、0、1、99、100、101"
+      },
+      {
+        "id": "B",
+        "text": "0、20、40、60、80、100"
+      },
+      {
+        "id": "C",
+        "text": "1、2、3、98、99、100"
+      },
+      {
+        "id": "D",
+        "text": "−100、−50、0、50、100、150"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "上下界分别是 0 和 100。整数边界的紧邻值为 −1、1 和 99、101，因此 A 覆盖最直接。",
+      "steps": [
+        "确认区间为闭区间且输入类型是整数。",
+        "下界附近取 −1、0、1。",
+        "上界附近取 99、100、101。"
+      ],
+      "keyPoint": "边界值分析重点关注条件判断容易出错的临界位置。",
+      "pitfall": "只在合法范围内均匀选点不能检验越界处理。边界值测试也不等于完整测试。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "boundary-testing"
+    ]
+  },
+  {
+    "id": "example-supervised-01",
+    "revision": 1,
+    "moduleId": "ai",
+    "knowledgeIds": [
+      "supervised-learning"
+    ],
+    "type": "single",
+    "stem": "使用已标注“正常 / 故障”的设备运行样本训练模型，预测新设备数据的状态。该任务最直接属于？",
+    "options": [
+      {
+        "id": "A",
+        "text": "无监督聚类"
+      },
+      {
+        "id": "B",
+        "text": "监督分类"
+      },
+      {
+        "id": "C",
+        "text": "监督回归"
+      },
+      {
+        "id": "D",
+        "text": "强化学习"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "训练样本带有目标标签，且目标是离散的两个类别，因此属于监督分类。",
+      "steps": [
+        "检查是否存在目标标签：有“正常 / 故障”。",
+        "检查输出类型：离散类别。",
+        "据此判断为监督学习中的分类任务。"
+      ],
+      "keyPoint": "学习范式看训练信号，分类与回归看预测目标的类型。",
+      "pitfall": "输入中有温度、电流等连续数字，不代表输出任务是回归。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "supervised-learning"
+    ]
+  },
+  {
+    "id": "example-cloud-01",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "cloud-service-models"
+    ],
+    "type": "multiple",
+    "stem": "下列关于云服务与容器的说法正确的有（多选，全选对才得分）：",
+    "options": [
+      {
+        "id": "A",
+        "text": "租用虚拟机及基础网络资源，通常属于 IaaS。"
+      },
+      {
+        "id": "B",
+        "text": "向托管应用运行平台部署代码，通常属于 PaaS。"
+      },
+      {
+        "id": "C",
+        "text": "直接使用在线办公应用，通常属于 SaaS。"
+      },
+      {
+        "id": "D",
+        "text": "常见 Linux 容器中的每个容器都拥有独立于宿主的操作系统内核。"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "A、B、C 按服务提供的能力和用户的管理责任分类。D 错误：常见 Linux 容器共享宿主内核。",
+      "steps": [
+        "IaaS 面向基础设施，用户通常管理操作系统与上层软件。",
+        "PaaS 提供托管运行平台，SaaS 提供可直接使用的应用。",
+        "区分进程隔离的容器和拥有客体操作系统的虚拟机。"
+      ],
+      "keyPoint": "按责任边界识别服务层次；按隔离实现区分容器与虚拟机。",
+      "pitfall": "不要将“有独立文件系统视图”理解为“有独立内核”。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "项目自编示例 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "cloud-service-models"
+    ]
+  }
+]

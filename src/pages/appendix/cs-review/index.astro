@@ -1,0 +1,27 @@
+---
+import CSReviewLayout from '../../../layouts/CSReviewLayout.astro';
+import ContentNotice from '../../../components/cs-review/ContentNotice.astro';
+import ModuleList from '../../../components/cs-review/ModuleList.astro';
+import { reviewUrl } from '../../../lib/cs-review/catalogue';
+---
+<CSReviewLayout title="学习起点" active="home">
+  <section class="review-intro">
+    <p class="review-eyebrow">COMPUTER SCIENCE / 学习起点</p>
+    <h1>计算机复习，<br />从一道题开始<span class="review-accent">。</span></h1>
+    <p class="review-lead">梳理原理，拆解过程。<br class="review-mobile-break" />把需要回看的地方，留给下一次进步。</p>
+    <div class="review-actions">
+      <a class="review-button is-primary" href={reviewUrl('practice/?mode=random&start=1')}>开始随机练习 <span aria-hidden="true">→</span></a>
+      <a class="review-button is-quiet" href={reviewUrl('knowledge/')}>先复习知识点</a>
+    </div>
+  </section>
+  <section class="review-resume" data-home-session hidden aria-labelledby="resume-title"></section>
+  <ContentNotice />
+  <section class="review-section">
+    <div class="review-section-heading"><div><p class="review-eyebrow">THE INDEX</p><h2>沿着章节，逐一理解。</h2></div><span class="review-muted">8 个复习模块 · 完整手册待接入</span></div>
+    <ModuleList />
+  </section>
+  <section class="review-bottom-links" aria-label="学习工具">
+    <a href={reviewUrl('mistakes/')}><span class="review-label">回到难点</span><h3>错题与收藏 <span aria-hidden="true">↗</span></h3><p>保留错误轨迹，主动确认掌握。</p></a>
+    <a href={reviewUrl('progress/')}><span class="review-label">看看近况</span><h3>学习状态 <span aria-hidden="true">↗</span></h3><p>从提交记录里，找到下一步。</p></a>
+  </section>
+</CSReviewLayout>

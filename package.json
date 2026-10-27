@@ -5,12 +5,27 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
-    "build": "astro check && astro build",
-    "preview": "astro preview --host 127.0.0.1"
+    "build": "npm run check:content && astro check && astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "check:content": "tsx scripts/check-cs-review.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "test:static": "tsx --test tests/static/*.test.ts"
   },
   "devDependencies": {
     "@astrojs/check": "latest",
+    "@types/katex": "^0.16.8",
+    "@types/node": "^24.19.2",
     "astro": "latest",
+    "tsx": "^4.23.15",
     "typescript": "latest"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.4",
+    "gray-matter": "^4.0.3",
+    "katex": "^0.19.1",
+    "rehype-katex": "^7.0.1",
+    "rehype-sanitize": "^6.0.0",
+    "remark-math": "^6.0.0",
+    "zod": "^4.6.7"
   }
 }

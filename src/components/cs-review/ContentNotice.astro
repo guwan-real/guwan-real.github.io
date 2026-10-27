@@ -1,0 +1,8 @@
+---
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+<aside class:list={['review-notice', { 'is-compact': compact }]}>
+  <span class="review-status-dot" aria-hidden="true"></span>
+  <p><strong>手册待接入</strong>{compact ? ' · 当前内容为自编示例，非官方真题。' : ' · 当前内容与题目均为自编示例，用于走通学习流程，非官方真题。完整复习范围将在接入手册、核对国网 2027 与南网 2026 大纲后确定。'}</p>
+</aside>

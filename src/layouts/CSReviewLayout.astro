@@ -1,0 +1,56 @@
+---
+import '../styles/cs-review.css';
+import 'katex/dist/katex.min.css';
+import { MODULES, reviewUrl } from '../lib/cs-review/catalogue';
+interface Props { title: string; active: 'home' | 'knowledge' | 'practice' | 'mistakes' | 'progress'; description?: string }
+const { title, active, description = '计算机知识复习、在线练习与错题回顾。个人学习附录，学习记录保存在当前浏览器。' } = Astro.props;
+const navigation = [
+  ['home', '', '学习起点'], ['knowledge', 'knowledge/', '知识目录'], ['practice', 'practice/', '开始练习'],
+  ['mistakes', 'mistakes/', '错题与收藏'], ['progress', 'progress/', '学习状态'],
+] as const;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} · CS Review · 付涛</title>
+  </head>
+  <body class="cs-review" data-review-page={active} data-review-base={reviewUrl()}>
+    <a class="review-skip" href="#review-main">跳到正文</a>
+    <header class="review-topbar">
+      <a class="review-brand" href={import.meta.env.BASE_URL} aria-label="返回付涛的个人主页"><span class="review-brand-mark">FT</span><span>付涛<span class="review-brand-slash"> / </span><span class="review-brand-note">学习附录</span></span></a>
+      <a class="review-home-link" href={import.meta.env.BASE_URL}>返回主页 <span aria-hidden="true">↗</span></a>
+    </header>
+    <div class="review-workspace">
+      <aside class="review-sidebar">
+        <a class="review-wordmark" href={reviewUrl()}><span class="review-eyebrow">APPENDIX / 01</span><strong>CS Review<span>.</span></strong><small>理解原理，也练习方法。</small></a>
+        <nav class="review-navigation" aria-label="复习附录导航">
+          {navigation.map(([key, path, label], index) => <a href={reviewUrl(path)} aria-current={active === key ? 'page' : undefined}><span aria-hidden="true">0{index + 1}</span>{label}</a>)}
+        </nav>
+        <div class="review-sidebar-chapters">
+          <p class="review-label">复习范围</p>
+          <nav aria-label="章节导航">{MODULES.map((m) => <a href={`${reviewUrl('knowledge/')}#${m.id}`}><span>{m.number}</span>{m.short}</a>)}</nav>
+        </div>
+        <p class="review-sidebar-note">一点一点，建立自己的知识索引。<br />记录留在当前浏览器。</p>
+      </aside>
+      <main class="review-main" id="review-main" tabindex="-1">
+        <div class="review-storage-warning" data-storage-warning role="status" hidden></div>
+        <div class="review-feedback" id="cs-feedback" role="alert" hidden></div>
+        <slot />
+        <noscript><p class="review-notice">知识正文可以直接阅读。刷题、搜索与本地学习记录需要启用 JavaScript。</p></noscript>
+        <footer class="review-footer"><span>个人计算机复习附录</span><a href={reviewUrl('progress/#data')}>本地数据与备份</a></footer>
+      </main>
+    </div>
+    <dialog class="review-dialog" id="review-confirm" aria-labelledby="review-confirm-title">
+      <form method="dialog">
+        <h2 id="review-confirm-title">确认操作</h2>
+        <p data-dialog-message></p>
+        <div class="review-actions"><button class="review-button" value="cancel" autofocus>取消</button><button class="review-button is-primary" data-dialog-confirm value="confirm">确认</button></div>
+      </form>
+    </dialog>
+    <script>import '../lib/cs-review/client';</script>
+  </body>
+</html>

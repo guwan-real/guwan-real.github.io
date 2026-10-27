@@ -1,0 +1,30 @@
+---
+import { render } from 'astro:content';
+import CSReviewLayout from '../../../../layouts/CSReviewLayout.astro';
+import ContentNotice from '../../../../components/cs-review/ContentNotice.astro';
+import { moduleTitle, reviewUrl, TYPE_LABELS } from '../../../../lib/cs-review/catalogue';
+import { getReviewContent } from '../../../../lib/cs-review/content';
+export async function getStaticPaths() {
+  const { entries } = await getReviewContent();
+  return entries.map((entry) => ({ params: { id: entry.data.knowledgeId }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const { questions } = await getReviewContent();
+const related = questions.filter((q) => q.knowledgeIds.includes(entry.data.knowledgeId));
+---
+<CSReviewLayout title={entry.data.title} active="knowledge" description={entry.data.description}>
+  <a class="review-back-link" href={`${reviewUrl('knowledge/')}#${entry.data.moduleId}`}>← {moduleTitle(entry.data.moduleId)}</a>
+  <header class="review-page-heading is-article"><p class="review-eyebrow">KNOWLEDGE / {entry.data.status === 'example' ? '示例知识点' : '复习手册'}</p><h1>{entry.data.title}</h1><p class="review-lead">{entry.data.description}</p></header>
+  {entry.data.status === 'example' && <ContentNotice compact />}
+  <div class="review-article-layout">
+    <article class="review-prose" data-knowledge-id={entry.data.knowledgeId}><Content /></article>
+    <aside class="review-toc"><p class="review-label">本页内容</p><nav aria-label="本页章节">{headings.filter((h) => h.depth === 2).map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}<a href="#related-practice">关联练习</a></nav></aside>
+  </div>
+  <section class="review-related" id="related-practice">
+    <div class="review-section-heading"><h2>用一道题，检验理解。</h2><button class="review-button is-small" data-mark-reviewed={entry.data.knowledgeId} aria-pressed="false">标记已复习</button></div>
+    <p class="review-caption">“已复习”表示你主动记录阅读状态，不代表已掌握。</p>
+    {related.length ? <><p>{related.length} 道关联题 · {related.every((q) => q.source.isExample) ? '均为自编示例' : '来源见题目'}</p><div class="review-actions"><a class="review-button is-primary" href={reviewUrl(`practice/?knowledge=${entry.data.knowledgeId}&mode=knowledge&start=1`)}>练习这个知识点 →</a><span class="review-muted">{related.map((q) => TYPE_LABELS[q.type]).filter((v, i, a) => a.indexOf(v) === i).join(' / ')}</span></div></> : <p class="review-muted">本知识点暂未录入练习题。</p>}
+    <p class="review-source">内容来源：{entry.data.source}</p>
+  </section>
+</CSReviewLayout>

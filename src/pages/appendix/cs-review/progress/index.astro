@@ -1,0 +1,9 @@
+---
+import CSReviewLayout from '../../../../layouts/CSReviewLayout.astro';
+import DataManagement from '../../../../components/cs-review/DataManagement.astro';
+---
+<CSReviewLayout title="学习状态" active="progress">
+  <header class="review-page-heading"><p class="review-eyebrow">REFLECTION / 学习状态</p><h1>让下一步，更有方向。</h1><p class="review-lead">这里记录练习发生了什么。正确率与阅读标记，都不直接等于掌握程度。</p></header>
+  <div id="progress-app" aria-busy="true"><p role="status">正在整理本地记录…</p></div>
+  <DataManagement />
+</CSReviewLayout>
