@@ -64,3 +64,11 @@ test('homepage retains its own stylesheet and review styles are isolated', async
   assert.match(home, /Appendix \/ CS Review/); assert.match(home, /hero-workbench/);
   assert.match(review, /class="cs-review"/);
 });
+test('full handbook, original Markdown download and PDF are published', async () => {
+  const page = await readFile(new URL('handbook/index.html', root), 'utf8');
+  assert.match(page, /高频题型决策表/); assert.match(page, /48 项逐项复习勾选表/); assert.match(page, /文档与大纲关系/);
+  const source = await readFile(new URL('../../src/content/cs-review/handbook.md', import.meta.url), 'utf8');
+  assert.equal(await readFile(new URL('resources/handbook.md', root), 'utf8'), source);
+  const pdf = await readFile(new URL('resources/sgcc-2027-computer-syllabus.pdf', root));
+  assert.ok(pdf.subarray(0, 4).toString() === '%PDF');
+});

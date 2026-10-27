@@ -31,7 +31,7 @@ export function initSearch(url: (path: string) => string, notify: (message: stri
         const at = Math.max(0, tokens.map((token) => normalize(entry.text).indexOf(token)).find((position) => position >= 0) ?? 0);
         const snippet = entry.text.slice(Math.max(0, at - 35), at + 130).replace(/\s+/g, ' ');
         return `<a class="review-search-result" href="${url(`knowledge/${entry.id}/`)}"><span class="review-label">${e(moduleTitle(entry.moduleId))}</span><h3>${highlight(entry.title, tokens)}</h3><p>${highlight(snippet, tokens)}…</p></a>`;
-      }).join('') + (matches.length ? '' : '<p class="review-muted">试试更短的关键词，或返回目录。完整手册尚待接入。</p>');
+      }).join('') + (matches.length ? '' : '<p class="review-muted">试试更短的关键词，或返回目录。可尝试章节名、题型或公式中的关键词。</p>');
     } catch (error) { results.innerHTML = '<p class="review-muted">搜索暂不可用，仍可从章节目录阅读。</p>'; notify(error instanceof Error ? error.message : '搜索失败。'); }
   }
   input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(() => void search(), 120); });

@@ -1,14 +1,19 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { test } from 'node:test';
+import { createHash } from 'node:crypto';
 import matter from 'gray-matter';
 import { questionSchema, validateCatalogue } from '../src/lib/cs-review/content-schema';
 import { renderMarkdown } from '../src/lib/cs-review/markdown';
+import { parseHandbook, chapterBody } from '../src/lib/cs-review/handbook-source';
+import syllabus from '../src/content/cs-review/syllabus.json';
+import sourceManifest from '../src/content/cs-review/source-manifest.json';
 import { appendAttempt, createBackup, createSession, emptyStudyData, FutureVersionError, mergeStudyData, parseBackup, parseStudyData,
   questionStats, questionStatsIndex, recordExam, recordPracticeAnswer, sameOptions, setQuestionFlag, STORAGE_KEY, StudyStore } from '../src/lib/cs-review/study';
 import type { Answer, Attempt, PublicQuestion, Question } from '../src/lib/cs-review/types';
 
 const questionData: Question[] = JSON.parse(await readFile(new URL('../src/content/cs-review/questions/examples.json', import.meta.url), 'utf8'));
+const handbookQuestions: Question[] = JSON.parse(await readFile(new URL('../src/content/cs-review/questions/handbook-self-tests.json', import.meta.url), 'utf8'));
 const knowledgeDirectory = new URL('../src/content/cs-review/knowledge/', import.meta.url);
 const knowledgeData = await Promise.all((await readdir(knowledgeDirectory)).map(async (name) => matter(await readFile(new URL(name, knowledgeDirectory), 'utf8')).data));
 const publicQuestions: PublicQuestion[] = questionData.map((q) => ({ id: q.id, revision: q.revision, moduleId: q.moduleId, knowledgeIds: q.knowledgeIds,
@@ -33,10 +38,49 @@ class MemoryStorage {
 }
 
 test('the actual content catalogue is valid and example labels are explicit', () => {
-  const result = validateCatalogue(knowledgeData, questionData);
-  assert.equal(result.knowledge.length, 10); assert.equal(result.questions.length, 10);
+  const result = validateCatalogue(knowledgeData, [...questionData, ...handbookQuestions]);
+  assert.equal(result.knowledge.length, 48); assert.equal(result.questions.length, 58);
   assert.ok(result.questions.every((q) => q.source.isExample && q.source.label.includes('非官方真题')));
-  assert.ok(result.knowledge.every((k) => k.status === 'example'));
+  assert.ok(result.knowledge.every((k) => k.status === 'handbook'));
+});
+test('all 48 syllabus items have their own chapter and handbook self-test', () => {
+  assert.deepEqual(syllabus.map((item) => item.number), Array.from({ length: 48 }, (_, i) => i + 1));
+  for (const item of syllabus) {
+    const chapter = knowledgeData.find((k) => k.knowledgeId === item.knowledgeId)!;
+    assert.equal(chapter.moduleId, item.moduleId); assert.equal(chapter.syllabusNumber, item.number);
+    const question = handbookQuestions.find((q) => q.id === `handbook-${String(item.number).padStart(2, '0')}`)!;
+    assert.ok(question); assert.deepEqual(question.knowledgeIds, [item.knowledgeId]);
+    assert.ok(question.source.label.includes(`第 ${item.number} 节`) && question.source.isExample);
+  }
+});
+test('chapter imports retain every source section and all 24 specialist recipes', async () => {
+  const source = await readFile(new URL('../src/content/cs-review/handbook.md', import.meta.url), 'utf8');
+  const { sections, recipes } = parseHandbook(source);
+  assert.equal(sections.size, 48); assert.equal(recipes.size, 24);
+  assert.deepEqual([...new Set(syllabus.flatMap((item) => item.recipes))].sort(), [...recipes.keys()].sort());
+  for (const item of syllabus) {
+    const document = matter(await readFile(new URL(`${item.knowledgeId}.md`, knowledgeDirectory), 'utf8'));
+    assert.equal(document.content.trim(), chapterBody(sections.get(item.number)!, item.recipes.map((id) => recipes.get(id)!)).trim());
+  }
+});
+test('archived handbook and syllabus retain their original bytes', async () => {
+  const hash = (buffer: Buffer) => createHash('sha256').update(buffer).digest('hex');
+  assert.equal(hash(await readFile(new URL('../src/content/cs-review/handbook.md', import.meta.url))), sourceManifest.handbookSha256);
+  assert.equal(hash(await readFile(new URL('../public/appendix/cs-review/resources/sgcc-2027-computer-syllabus.pdf', import.meta.url))), sourceManifest.syllabusSha256);
+});
+test('numeric self-tests agree with independently recomputed results', () => {
+  const answerText = (number: number) => {
+    const q = handbookQuestions.find((q) => q.id === `handbook-${String(number).padStart(2, '0')}`)!;
+    return q.options.find((option) => option.id === q.correctOptionIds[0])!.text;
+  };
+  let remainder = parseInt('1101' + '000', 2);
+  const divisor = parseInt('1011', 2);
+  for (let bit = 6; bit >= 3; bit--) if (remainder & (1 << bit)) remainder ^= divisor << (bit - 3);
+  assert.equal(answerText(19), remainder.toString(2).padStart(3, '0'));
+  assert.equal(answerText(27).toLowerCase(), `0x${(9 * 1024 + (0x12a3 % 1024)).toString(16)}`);
+  assert.equal(answerText(32), String(0x90 - 256).replace('-', '−'));
+  assert.equal(answerText(35), `${(5 + 20 - 1)} ns`);
+  assert.equal(Number(answerText(37)), 1 / (0.2 + 0.8 / 4));
 });
 for (const [name, change] of [
   ['duplicate options', (q: Question) => { q.options[1].id = q.options[0].id; }],

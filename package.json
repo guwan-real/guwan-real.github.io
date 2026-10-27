@@ -9,7 +9,8 @@
     "preview": "astro preview --host 127.0.0.1",
     "check:content": "tsx scripts/check-cs-review.ts",
     "test": "tsx --test tests/*.test.ts",
-    "test:static": "tsx --test tests/static/*.test.ts"
+    "test:static": "tsx --test tests/static/*.test.ts",
+    "import:handbook": "tsx scripts/import-cs-handbook.ts"
   },
   "devDependencies": {
     "@astrojs/check": "latest",

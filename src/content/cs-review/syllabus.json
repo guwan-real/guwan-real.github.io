@@ -1,0 +1,440 @@
+[
+  {
+    "number": 1,
+    "title": "数据结构基本概念",
+    "knowledgeId": "ds-foundations",
+    "moduleId": "algorithms",
+    "recipes": [
+      "A1"
+    ],
+    "page": 2
+  },
+  {
+    "number": 2,
+    "title": "线性表",
+    "knowledgeId": "linear-lists",
+    "moduleId": "algorithms",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 3,
+    "title": "栈和队列",
+    "knowledgeId": "stacks-queues",
+    "moduleId": "algorithms",
+    "recipes": [
+      "A2"
+    ],
+    "page": 2
+  },
+  {
+    "number": 4,
+    "title": "数组、数组的压缩存储与字符串",
+    "knowledgeId": "arrays-strings",
+    "moduleId": "algorithms",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 5,
+    "title": "树和二叉树",
+    "knowledgeId": "trees",
+    "moduleId": "algorithms",
+    "recipes": [
+      "A3"
+    ],
+    "page": 2
+  },
+  {
+    "number": 6,
+    "title": "图",
+    "knowledgeId": "graphs",
+    "moduleId": "algorithms",
+    "recipes": [
+      "A4"
+    ],
+    "page": 2
+  },
+  {
+    "number": 7,
+    "title": "查找",
+    "knowledgeId": "searching",
+    "moduleId": "algorithms",
+    "recipes": [
+      "A5"
+    ],
+    "page": 2
+  },
+  {
+    "number": 8,
+    "title": "内部排序",
+    "knowledgeId": "insertion-sort",
+    "moduleId": "algorithms",
+    "recipes": [
+      "A6"
+    ],
+    "page": 2
+  },
+  {
+    "number": 9,
+    "title": "算法设计与分析基础",
+    "knowledgeId": "algorithm-design",
+    "moduleId": "algorithms",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 10,
+    "title": "数据库基本概念",
+    "knowledgeId": "db-foundations",
+    "moduleId": "databases",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 11,
+    "title": "关系数据库基本理论",
+    "knowledgeId": "relational-theory",
+    "moduleId": "databases",
+    "recipes": [
+      "E1"
+    ],
+    "page": 2
+  },
+  {
+    "number": 12,
+    "title": "关系数据库标准语言 SQL",
+    "knowledgeId": "sql",
+    "moduleId": "databases",
+    "recipes": [
+      "E2"
+    ],
+    "page": 2
+  },
+  {
+    "number": 13,
+    "title": "事务处理和并发控制",
+    "knowledgeId": "acid-transactions",
+    "moduleId": "databases",
+    "recipes": [
+      "E3"
+    ],
+    "page": 2
+  },
+  {
+    "number": 14,
+    "title": "备份和恢复",
+    "knowledgeId": "backup-recovery",
+    "moduleId": "databases",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 15,
+    "title": "数据库应用系统设计与开发",
+    "knowledgeId": "db-design",
+    "moduleId": "databases",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 16,
+    "title": "数据库安全",
+    "knowledgeId": "db-security",
+    "moduleId": "databases",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 17,
+    "title": "计算机网络体系结构",
+    "knowledgeId": "network-architecture",
+    "moduleId": "networks",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 18,
+    "title": "物理层",
+    "knowledgeId": "physical-layer",
+    "moduleId": "networks",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 19,
+    "title": "数据链路层",
+    "knowledgeId": "data-link",
+    "moduleId": "networks",
+    "recipes": [
+      "D3"
+    ],
+    "page": 2
+  },
+  {
+    "number": 20,
+    "title": "网络层",
+    "knowledgeId": "network-layer",
+    "moduleId": "networks",
+    "recipes": [
+      "D1"
+    ],
+    "page": 2
+  },
+  {
+    "number": 21,
+    "title": "传输层",
+    "knowledgeId": "tcp-stream",
+    "moduleId": "networks",
+    "recipes": [
+      "D2"
+    ],
+    "page": 2
+  },
+  {
+    "number": 22,
+    "title": "应用层",
+    "knowledgeId": "application-layer",
+    "moduleId": "networks",
+    "recipes": [
+      "D4"
+    ],
+    "page": 2
+  },
+  {
+    "number": 23,
+    "title": "网络管理与网络安全",
+    "knowledgeId": "network-security",
+    "moduleId": "networks",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 24,
+    "title": "无线网络与移动网络",
+    "knowledgeId": "wireless-mobile",
+    "moduleId": "networks",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 25,
+    "title": "操作系统概述",
+    "knowledgeId": "os-overview",
+    "moduleId": "os",
+    "recipes": [],
+    "page": 2
+  },
+  {
+    "number": 26,
+    "title": "进程与线程管理",
+    "knowledgeId": "sjf-scheduling",
+    "moduleId": "os",
+    "recipes": [
+      "C1",
+      "C2"
+    ],
+    "page": 2
+  },
+  {
+    "number": 27,
+    "title": "内存管理",
+    "knowledgeId": "fifo-pages",
+    "moduleId": "os",
+    "recipes": [
+      "C3"
+    ],
+    "page": 2
+  },
+  {
+    "number": 28,
+    "title": "文件管理",
+    "knowledgeId": "file-management",
+    "moduleId": "os",
+    "recipes": [
+      "C4"
+    ],
+    "page": 2
+  },
+  {
+    "number": 29,
+    "title": "输入输出管理",
+    "knowledgeId": "io-management",
+    "moduleId": "os",
+    "recipes": [
+      "C4"
+    ],
+    "page": 3
+  },
+  {
+    "number": 30,
+    "title": "操作系统安全与保护",
+    "knowledgeId": "os-security",
+    "moduleId": "os",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 31,
+    "title": "计算机系统概述",
+    "knowledgeId": "system-overview",
+    "moduleId": "architecture",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 32,
+    "title": "数据的机器级表示和运算",
+    "knowledgeId": "twos-complement",
+    "moduleId": "architecture",
+    "recipes": [
+      "B1",
+      "B2"
+    ],
+    "page": 3
+  },
+  {
+    "number": 33,
+    "title": "多级层次的存储系统",
+    "knowledgeId": "cache-mapping",
+    "moduleId": "architecture",
+    "recipes": [
+      "B3"
+    ],
+    "page": 3
+  },
+  {
+    "number": 34,
+    "title": "指令系统",
+    "knowledgeId": "instruction-set",
+    "moduleId": "architecture",
+    "recipes": [
+      "B4"
+    ],
+    "page": 3
+  },
+  {
+    "number": 35,
+    "title": "中央处理器",
+    "knowledgeId": "cpu",
+    "moduleId": "architecture",
+    "recipes": [
+      "B5"
+    ],
+    "page": 3
+  },
+  {
+    "number": 36,
+    "title": "总线与输入输出系统",
+    "knowledgeId": "system-buses",
+    "moduleId": "architecture",
+    "recipes": [
+      "B5"
+    ],
+    "page": 3
+  },
+  {
+    "number": 37,
+    "title": "并行计算与异构计算",
+    "knowledgeId": "parallel-computing",
+    "moduleId": "architecture",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 38,
+    "title": "软件工程基本概念",
+    "knowledgeId": "software-foundations",
+    "moduleId": "software",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 39,
+    "title": "软件开发方法和过程",
+    "knowledgeId": "software-process",
+    "moduleId": "software",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 40,
+    "title": "需求分析",
+    "knowledgeId": "requirements",
+    "moduleId": "software",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 41,
+    "title": "系统设计",
+    "knowledgeId": "system-design",
+    "moduleId": "software",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 42,
+    "title": "系统开发",
+    "knowledgeId": "implementation",
+    "moduleId": "software",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 43,
+    "title": "软件测试",
+    "knowledgeId": "boundary-testing",
+    "moduleId": "software",
+    "recipes": [
+      "F1"
+    ],
+    "page": 3
+  },
+  {
+    "number": 44,
+    "title": "软件交付与维护",
+    "knowledgeId": "software-delivery",
+    "moduleId": "software",
+    "recipes": [],
+    "page": 3
+  },
+  {
+    "number": 45,
+    "title": "人工智能基础",
+    "knowledgeId": "supervised-learning",
+    "moduleId": "ai",
+    "recipes": [
+      "F2"
+    ],
+    "page": 3,
+    "scope": "人工智能基本概念、机器学习、多模态识别、智能体、大语言模型、人工智能应用等"
+  },
+  {
+    "number": 46,
+    "title": "物联网基础",
+    "knowledgeId": "iot",
+    "moduleId": "technologies",
+    "recipes": [],
+    "page": 3,
+    "scope": "物联网基本概念、传感技术、传感网络、常见协议及标准、电力物联网应用等"
+  },
+  {
+    "number": 47,
+    "title": "云计算基础",
+    "knowledgeId": "cloud-service-models",
+    "moduleId": "technologies",
+    "recipes": [],
+    "page": 3,
+    "scope": "云计算基本概念、分布式计算、云边协同、算力部署应用等"
+  },
+  {
+    "number": 48,
+    "title": "大数据基础",
+    "knowledgeId": "big-data",
+    "moduleId": "technologies",
+    "recipes": [],
+    "page": 3,
+    "scope": "大数据基本概念、数据采集、数据预处理、数据分析、数据模型、数据挖掘、可视化、大数据安全防护等"
+  }
+]

@@ -18,7 +18,7 @@ npm run build
 ## CS Review Appendix
 
 Computer science revision and browser-local practice are available at `/appendix/cs-review/`.
-The first version contains explicitly labelled self-authored examples; the original review handbook and official syllabus mapping are pending.
+The user's complete handbook is organized into 48 syllabus-linked knowledge pages with 24 specialist explanations. It includes 58 clearly labelled self-authored practice questions, a full handbook reader, the original Markdown download, and the provided 2027 syllabus PDF.
 
 ```sh
 npm test

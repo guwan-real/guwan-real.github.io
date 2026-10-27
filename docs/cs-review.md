@@ -10,6 +10,7 @@
 
 - `/appendix/cs-review/`：练习入口、继续会话与八个章节。
 - `knowledge/` 与 `knowledge/<稳定ID>/`：全文搜索、Markdown、LaTeX、代码高亮、目录、已复习标记及关联练习。
+- `handbook/`：完整原稿阅读、题型决策表、原稿 Markdown 下载与大纲 PDF。
 - `practice/`：章节、知识点、随机、错题、收藏、模拟考试；原生 TypeScript 管理交互。
 - `mistakes/`：待复习、历史错题、收藏、不确定，支持章节筛选和分页。
 - `progress/`：明确口径的学习统计及备份恢复。
@@ -18,9 +19,13 @@
 
 ## 内容状态与接入手册
 
-当前只有 **10 个自编示例知识点、10 道自编示例题**，不是官方真题，也不代表完整大纲覆盖。八模块按项目需求设置。国网 2027 与南网 2026 大纲原文尚未完成核验；不宣称逐项对齐，也不加入独立通信专业内容。
+已接入用户提供的《电网招聘_计算机类_强化复习手册》完整原稿和《计算机类专业 2027 版》大纲 PDF。大纲第 2、3 页列出的 **48 项专业知识**逐项对应 48 个知识页；手册 **24 个专项**附在相关知识页后，整本原稿与两份附录也可直接阅读。公共与行业知识不属于本工具的复习主线。
 
-后续需要提供原始 Markdown 手册，以及希望采用的大纲原文 / PDF。接入时先保留原文和来源，建立章节到稳定 ID 的对应表；再按原有边界拆分，不擅自删减、改写或用示例替代手册。可将原手册另存为只读参考，但不要将包含个人敏感信息的文件提交到公开仓库。
+题库共 **58 道自编练习**：48 道按手册逐节编写的自测题，加上原来的 10 道示例。每题标注来源、解析和对应知识点，不冒充官方真题。48 项映射表示条目已接入，不代表穷尽考试内容、官方题目分布或用户已掌握。
+
+原稿位于 `src/content/cs-review/handbook.md`，PDF 位于 `public/appendix/cs-review/resources/sgcc-2027-computer-syllabus.pdf`，两者均按原始字节保存；`source-manifest.json` 记录来源文件名与 SHA-256。手册里的南网对照说明按原文保留，尚未单独核验南网原始 PDF，不以此宣称核对完成。
+
+`src/content/cs-review/syllabus.json` 管理大纲编号、官方条目名称、知识点 ID 和专项映射。`npm run import:handbook` 从原稿重新生成分节页面，只调整展示结构，不改写正文或专项内容。更换新版本手册时，应有意识地更新来源记录；测试会检查原稿哈希以及 48 节、24 个专项的完整保留。原有十个知识点 URL 沿用，因此旧书签与题目关联仍然有效。
 
 知识库在 `src/content/cs-review/knowledge/*.md`，使用 Astro Content Collections。每个文件名必须等于 frontmatter 的 `knowledgeId`：
 
@@ -32,6 +37,7 @@ title: 知识点标题
 description: 简介
 order: 1
 status: handbook # example 表示自编示例，handbook 表示已接入手册
+syllabusNumber: 1 # 对应提供的大纲中的专业知识序号
 source: 原始手册名称与章节
 tags: [排序, 复杂度]
 ---
@@ -77,6 +83,7 @@ ID 使用稳定的小写短横线格式，发布后不要复用旧 ID 给不同�
 npm ci
 npm test
 npm run build
+npm run test:static
 npm run preview
 ```
 

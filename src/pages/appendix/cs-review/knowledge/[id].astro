@@ -4,19 +4,27 @@ import CSReviewLayout from '../../../../layouts/CSReviewLayout.astro';
 import ContentNotice from '../../../../components/cs-review/ContentNotice.astro';
 import { moduleTitle, reviewUrl, TYPE_LABELS } from '../../../../lib/cs-review/catalogue';
 import { getReviewContent } from '../../../../lib/cs-review/content';
+import { getHandbook } from '../../../../lib/cs-review/handbook';
+import syllabus from '../../../../content/cs-review/syllabus.json';
 export async function getStaticPaths() {
   const { entries } = await getReviewContent();
   return entries.map((entry) => ({ params: { id: entry.data.knowledgeId }, props: { entry } }));
 }
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
-const { questions } = await getReviewContent();
+const { knowledge, questions } = await getReviewContent();
 const related = questions.filter((q) => q.knowledgeIds.includes(entry.data.knowledgeId));
+const item = syllabus.find((item) => item.number === entry.data.syllabusNumber);
+const original = (await getHandbook()).metadata.headings.find((heading) => heading.depth === 2 && heading.text.startsWith(`${entry.data.syllabusNumber}. `));
+const position = knowledge.findIndex((k) => k.knowledgeId === entry.data.knowledgeId);
+const previous = knowledge[position - 1];
+const next = knowledge[position + 1];
 ---
 <CSReviewLayout title={entry.data.title} active="knowledge" description={entry.data.description}>
   <a class="review-back-link" href={`${reviewUrl('knowledge/')}#${entry.data.moduleId}`}>← {moduleTitle(entry.data.moduleId)}</a>
   <header class="review-page-heading is-article"><p class="review-eyebrow">KNOWLEDGE / {entry.data.status === 'example' ? '示例知识点' : '复习手册'}</p><h1>{entry.data.title}</h1><p class="review-lead">{entry.data.description}</p></header>
   {entry.data.status === 'example' && <ContentNotice compact />}
+  {item && <div class="review-chapter-source"><p class="review-caption">对应国网 2027 专业知识第 {item.number} 项：{item.title}{item.scope ? `（${item.scope}）` : ''}</p><div class="review-actions"><a class="review-text-link" href={reviewUrl(`handbook/${original ? `#${original.slug}` : ''}`)}>查看原稿本节 ↗</a><a class="review-text-link" href={reviewUrl(`resources/sgcc-2027-computer-syllabus.pdf#page=${item.page}`)} target="_blank" rel="noopener noreferrer">对照大纲第 {item.page} 页 ↗</a></div></div>}
   <div class="review-article-layout">
     <article class="review-prose" data-knowledge-id={entry.data.knowledgeId}><Content /></article>
     <aside class="review-toc"><p class="review-label">本页内容</p><nav aria-label="本页章节">{headings.filter((h) => h.depth === 2).map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}<a href="#related-practice">关联练习</a></nav></aside>
@@ -24,7 +32,8 @@ const related = questions.filter((q) => q.knowledgeIds.includes(entry.data.knowl
   <section class="review-related" id="related-practice">
     <div class="review-section-heading"><h2>用一道题，检验理解。</h2><button class="review-button is-small" data-mark-reviewed={entry.data.knowledgeId} aria-pressed="false">标记已复习</button></div>
     <p class="review-caption">“已复习”表示你主动记录阅读状态，不代表已掌握。</p>
-    {related.length ? <><p>{related.length} 道关联题 · {related.every((q) => q.source.isExample) ? '均为自编示例' : '来源见题目'}</p><div class="review-actions"><a class="review-button is-primary" href={reviewUrl(`practice/?knowledge=${entry.data.knowledgeId}&mode=knowledge&start=1`)}>练习这个知识点 →</a><span class="review-muted">{related.map((q) => TYPE_LABELS[q.type]).filter((v, i, a) => a.indexOf(v) === i).join(' / ')}</span></div></> : <p class="review-muted">本知识点暂未录入练习题。</p>}
+    {related.length ? <><p>{related.length} 道关联题 · {related.every((q) => q.source.isExample) ? '均为自编自测，非官方真题' : '来源见题目'}</p><div class="review-actions"><a class="review-button is-primary" href={reviewUrl(`practice/?knowledge=${entry.data.knowledgeId}&mode=knowledge&start=1`)}>练习这个知识点 →</a><span class="review-muted">{related.map((q) => TYPE_LABELS[q.type]).filter((v, i, a) => a.indexOf(v) === i).join(' / ')}</span></div></> : <p class="review-muted">本知识点暂未录入练习题。</p>}
     <p class="review-source">内容来源：{entry.data.source}</p>
   </section>
+  <nav class="review-chapter-pager" aria-label="前后知识点">{previous ? <a href={reviewUrl(`knowledge/${previous.knowledgeId}/`)}>← {previous.title}</a> : <span />}{next && <a href={reviewUrl(`knowledge/${next.knowledgeId}/`)}>{next.title} →</a>}</nav>
 </CSReviewLayout>

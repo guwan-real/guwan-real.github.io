@@ -12,3 +12,6 @@ const processor = createMarkdownProcessor({
 export async function renderMarkdown(markdown: string) {
   return (await (await processor).render(markdown)).code;
 }
+export async function renderMarkdownDocument(markdown: string) {
+  return (await processor).render(markdown);
+}

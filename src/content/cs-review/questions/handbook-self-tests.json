@@ -1,0 +1,2422 @@
+[
+  {
+    "id": "handbook-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "ds-foundations"
+    ],
+    "type": "single",
+    "stem": "循环 `for (i = 1; i < 32; i *= 2)` 的循环体执行多少次？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4 次"
+      },
+      {
+        "id": "B",
+        "text": "5 次"
+      },
+      {
+        "id": "C",
+        "text": "6 次"
+      },
+      {
+        "id": "D",
+        "text": "32 次"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "循环体在 i 为 1、2、4、8、16 时执行，i 变为 32 后条件不成立。",
+      "steps": [
+        "从初值 1 开始，每次乘以 2。",
+        "依次列出满足 i < 32 的值：1、2、4、8、16。",
+        "共 5 次，随 n 增长的数量级为 O(log n)。"
+      ],
+      "keyPoint": "精确次数先列边界，复杂度再取数量级。",
+      "pitfall": "把条件误看成 i <= 32 会多算一次；代码行数不是执行次数。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 1 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据结构基本概念",
+      "手册自测",
+      "国网2027第1项"
+    ]
+  },
+  {
+    "id": "handbook-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "linear-lists"
+    ],
+    "type": "single",
+    "stem": "一个长度为 5 的顺序表，位置从 1 开始编号。要在原第 3 个元素之前插入新元素，需要向后移动几个原元素？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1 个"
+      },
+      {
+        "id": "B",
+        "text": "2 个"
+      },
+      {
+        "id": "C",
+        "text": "3 个"
+      },
+      {
+        "id": "D",
+        "text": "4 个"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "原位置 3、4、5 的元素都必须后移一位，因此移动 3 个。",
+      "steps": [
+        "明确插入点是原第 3 个元素之前。",
+        "从表尾开始依次移动原第 5、4、3 个元素。",
+        "空出第 3 个位置放新元素。"
+      ],
+      "keyPoint": "顺序表插入需要为插入点之后的原元素腾出连续空间。",
+      "pitfall": "不要把位置从 1 编号的题目直接代入 0 下标公式；新元素写入不算原元素移动。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 2 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "线性表",
+      "手册自测",
+      "国网2027第2项"
+    ]
+  },
+  {
+    "id": "handbook-03",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "stacks-queues"
+    ],
+    "type": "single",
+    "stem": "循环队列数组大小 N=8，采用牺牲一格方案，front 指向队首、rear 指向下一个空位。若 front=6、rear=2，当前长度和最大容量分别为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4，8"
+      },
+      {
+        "id": "B",
+        "text": "4，7"
+      },
+      {
+        "id": "C",
+        "text": "3，7"
+      },
+      {
+        "id": "D",
+        "text": "5，7"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "队列长度为 (2−6+8) mod 8 = 4；牺牲一格后最大容量为 7。",
+      "steps": [
+        "按定义使用长度公式 (rear−front+N)%N。",
+        "队列跨越数组末端，长度为 4。",
+        "牺牲一格用于区分空满，最多存 N−1=7 个元素。"
+      ],
+      "keyPoint": "循环队列公式依赖 front/rear 的指向约定。",
+      "pitfall": "不能直接算 rear−front，也不能把数组大小当作有效容量。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 3 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "栈和队列",
+      "手册自测",
+      "国网2027第3项"
+    ]
+  },
+  {
+    "id": "handbook-04",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "arrays-strings"
+    ],
+    "type": "single",
+    "stem": "5×5 对称矩阵只存下三角（含对角线），按行优先、0 下标存入一维数组。A[3][1] 对应的一维下标是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "6"
+      },
+      {
+        "id": "B",
+        "text": "7"
+      },
+      {
+        "id": "C",
+        "text": "8"
+      },
+      {
+        "id": "D",
+        "text": "11"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "前三行分别存 1、2、3 项，共 6 项；本行列下标为 1，所以 k=6+1=7。",
+      "steps": [
+        "确认 i=3、j=1，位于下三角。",
+        "计算前面各行的项数 1+2+3=6。",
+        "再加当前行内偏移 j=1，得到下标 7。"
+      ],
+      "keyPoint": "下三角行优先的 0 下标公式为 k=i(i+1)/2+j。",
+      "pitfall": "下标从 0 开始，不能额外加 1；矩阵总阶数并不直接参与这一局部下标计算。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 4 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数组、数组的压缩存储与字符串",
+      "手册自测",
+      "国网2027第4项"
+    ]
+  },
+  {
+    "id": "handbook-05",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "trees"
+    ],
+    "type": "single",
+    "stem": "一棵非空二叉树有 7 个度为 2 的节点和 3 个度为 1 的节点。叶子节点数是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "7"
+      },
+      {
+        "id": "B",
+        "text": "8"
+      },
+      {
+        "id": "C",
+        "text": "10"
+      },
+      {
+        "id": "D",
+        "text": "11"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "非空二叉树总满足 n₀=n₂+1，因此叶子数为 7+1=8。",
+      "steps": [
+        "设三种度的节点数为 n₀、n₁、n₂。",
+        "边数一方面为 n−1，另一方面为 n₁+2n₂。",
+        "两式消去 n 与 n₁，得到 n₀=n₂+1=8。"
+      ],
+      "keyPoint": "叶子数只比双分支节点数多 1，与单分支节点数无直接加法关系。",
+      "pitfall": "不要将度为 1 的 3 个节点也加进叶子数。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 5 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "树和二叉树",
+      "手册自测",
+      "国网2027第5项"
+    ]
+  },
+  {
+    "id": "handbook-06",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "graphs"
+    ],
+    "type": "multiple",
+    "stem": "关于图算法，下列说法正确的有（全选对才得分）：",
+    "options": [
+      {
+        "id": "A",
+        "text": "BFS 可求无权图中边数最少的路径。"
+      },
+      {
+        "id": "B",
+        "text": "标准 Dijkstra 算法可直接保证带负权边图的最短路正确。"
+      },
+      {
+        "id": "C",
+        "text": "Prim、Kruskal 的最小生成树问题针对无向连通带权图。"
+      },
+      {
+        "id": "D",
+        "text": "有向图能完成全部顶点的拓扑排序时，该图是 DAG。"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "A、C、D 正确。标准 Dijkstra 的正确性依赖非负边权，B 缺少这一条件。",
+      "steps": [
+        "按问题类型区分最短路径、最小生成树与依赖排序。",
+        "BFS 按层扩展，适用于无权的最少边路径。",
+        "Dijkstra 不应直接用于含负边的情形；负边需要选择适用算法。"
+      ],
+      "keyPoint": "算法选择首先检查图的有向性、权值条件与优化目标。",
+      "pitfall": "最短路径树与最小生成树不是同一个目标；含负权不能套用 Dijkstra。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 6 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "图",
+      "手册自测",
+      "国网2027第6项"
+    ]
+  },
+  {
+    "id": "handbook-07",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "searching"
+    ],
+    "type": "single",
+    "stem": "在有序数组 1…16 中用闭区间二分查找 17，初始 low=0、high=15，mid 向下取整。只计算与数组关键字的比较，需比较几次才能判定失败？",
+    "options": [
+      {
+        "id": "A",
+        "text": "3 次"
+      },
+      {
+        "id": "B",
+        "text": "4 次"
+      },
+      {
+        "id": "C",
+        "text": "5 次"
+      },
+      {
+        "id": "D",
+        "text": "16 次"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "依次比较 8、12、14、15、16，之后 low>high，比较 5 次失败。",
+      "steps": [
+        "第一次 mid=7，比较值 8，进入右半区。",
+        "接着比较 12、14、15、16。",
+        "最后边界越过，循环结束；边界条件判断不算关键字比较。"
+      ],
+      "keyPoint": "失败的最大比较次数与失败平均查找长度不同。",
+      "pitfall": "不要把 low>high 的条件判断再计作一次关键字比较。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 7 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "查找",
+      "手册自测",
+      "国网2027第7项"
+    ]
+  },
+  {
+    "id": "handbook-08",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "insertion-sort"
+    ],
+    "type": "multiple",
+    "stem": "采用常见实现，且相等关键字按稳定规则处理，下列排序中稳定的有：",
+    "options": [
+      {
+        "id": "A",
+        "text": "直接插入排序"
+      },
+      {
+        "id": "B",
+        "text": "归并排序"
+      },
+      {
+        "id": "C",
+        "text": "堆排序"
+      },
+      {
+        "id": "D",
+        "text": "简单选择排序"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B"
+    ],
+    "explanation": {
+      "analysis": "直接插入在严格大于时移动元素，归并在相等时先取左半段，都能保留相等元素的原顺序；常见堆排、简单选择排序不稳定。",
+      "steps": [
+        "稳定性关心的是相等关键字元素的原相对次序。",
+        "插入遇到相等元素不跨越它；归并相等时先取左边。",
+        "堆排和选择排序的远距离交换可能打乱相等元素顺序。"
+      ],
+      "keyPoint": "稳定性是相等关键字的次序属性，与是否 O(n log n) 无直接等价关系。",
+      "pitfall": "不要把时间复杂度较好的排序都当作稳定排序。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 8 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "内部排序",
+      "手册自测",
+      "国网2027第8项"
+    ]
+  },
+  {
+    "id": "handbook-09",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "algorithm-design"
+    ],
+    "type": "boolean",
+    "stem": "对于任意 0/1 背包问题，按单位重量价值从高到低贪心选择，总能得到最优解。",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "F"
+    ],
+    "explanation": {
+      "analysis": "0/1 背包的物品不能任意分割，局部价值密度最高的选择可能阻碍整体最优。",
+      "steps": [
+        "构造容量 50、物品 (重量,价值) 为 (10,60)、(20,100)、(30,120)。",
+        "按密度贪心先选前两个，价值 160，剩余容量不足再选。",
+        "选择后两个重量恰为 50，价值 220，更优。"
+      ],
+      "keyPoint": "0/1 背包一般不能按价值密度直接贪心；动态规划利用最优子结构与状态转移。",
+      "pitfall": "可分割背包与 0/1 背包的约束不同，不能混用结论。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 9 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "算法设计与分析基础",
+      "手册自测",
+      "国网2027第9项"
+    ]
+  },
+  {
+    "id": "handbook-10",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-foundations"
+    ],
+    "type": "single",
+    "stem": "数据库改变了底层文件组织与索引结构，但逻辑表结构和应用代码不必因此改变，主要体现什么性质？",
+    "options": [
+      {
+        "id": "A",
+        "text": "事务原子性"
+      },
+      {
+        "id": "B",
+        "text": "逻辑数据独立性"
+      },
+      {
+        "id": "C",
+        "text": "物理数据独立性"
+      },
+      {
+        "id": "D",
+        "text": "参照完整性"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "内模式等物理实现变化不要求模式及应用随之改变，体现物理数据独立性。",
+      "steps": [
+        "文件组织、存取路径和索引属于物理存储层面。",
+        "逻辑表结构与上层应用保持可用。",
+        "区分内模式变化与逻辑模式变化，选择物理数据独立性。"
+      ],
+      "keyPoint": "外模式—模式—内模式及映像用于隔离不同层次的变化。",
+      "pitfall": "逻辑独立性讨论逻辑模式变化对外模式和应用的影响，不是这里的底层存储变化。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 10 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据库基本概念",
+      "手册自测",
+      "国网2027第10项"
+    ]
+  },
+  {
+    "id": "handbook-11",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "relational-theory"
+    ],
+    "type": "single",
+    "stem": "关系 R(A,B,C) 各属性值原子化，函数依赖只有 A→B、B→C 及其逻辑推论。该关系满足的最高范式是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1NF"
+      },
+      {
+        "id": "B",
+        "text": "2NF"
+      },
+      {
+        "id": "C",
+        "text": "3NF"
+      },
+      {
+        "id": "D",
+        "text": "BCNF"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "唯一候选键为 A。单属性候选键不存在对其真子集的部分依赖，因此满足 2NF；B→C 的左部非超键，右部 C 为非主属性，违反 3NF。",
+      "steps": [
+        "计算 A⁺={A,B,C}，所以 A 是候选键。",
+        "B⁺={B,C}，B 不是超键，C 也不属于候选键。",
+        "B→C 导致非主属性的传递依赖，不能达到 3NF。"
+      ],
+      "keyPoint": "先求候选键与主属性，再按依赖判断范式。",
+      "pitfall": "不能只看到 A 能决定所有属性，就忽略 B→C 对 3NF 的限制。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 11 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "关系数据库基本理论",
+      "手册自测",
+      "国网2027第11项"
+    ]
+  },
+  {
+    "id": "handbook-12",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "single",
+    "stem": "某表有 4 行，score 列依次为 80、NULL、90、NULL。没有 WHERE 过滤时，`COUNT(*)` 与 `COUNT(score)` 的结果分别是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4，2"
+      },
+      {
+        "id": "B",
+        "text": "2，4"
+      },
+      {
+        "id": "C",
+        "text": "4，4"
+      },
+      {
+        "id": "D",
+        "text": "2，2"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "COUNT(*) 计算行数，COUNT(score) 只计算 score 非 NULL 的行数，因此分别为 4 和 2。",
+      "steps": [
+        "表中共有 4 行，COUNT(*)=4。",
+        "score 只有 80 和 90 两个非 NULL 值。",
+        "因此 COUNT(score)=2。"
+      ],
+      "keyPoint": "COUNT(*) 数行，COUNT(列) 排除该列的 NULL。",
+      "pitfall": "NULL 不是 0，也不能因为有 NULL 就忽略整行的 COUNT(*) 统计。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 12 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "关系数据库标准语言 SQL",
+      "手册自测",
+      "国网2027第12项"
+    ]
+  },
+  {
+    "id": "handbook-13",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "acid-transactions"
+    ],
+    "type": "single",
+    "stem": "两个事务对同一数据项 X 的操作顺序为 `r1(X), w2(X), w1(X)`。只分析冲突可串行化，结论为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "冲突可串行化，等价于 T1 在 T2 前"
+      },
+      {
+        "id": "B",
+        "text": "不满足冲突可串行化，因为优先图存在环"
+      },
+      {
+        "id": "C",
+        "text": "只有读读操作，不存在冲突"
+      },
+      {
+        "id": "D",
+        "text": "只需按提交先后顺序即可保证冲突可串行化"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "r1(X) 在 w2(X) 前形成 T1→T2；w2(X) 在 w1(X) 前形成 T2→T1，两条边构成有向环。",
+      "steps": [
+        "找不同事务对同一数据项、至少一个为写的操作对。",
+        "读写冲突给出 T1→T2，写写冲突给出 T2→T1。",
+        "优先图有环，因此不是冲突可串行化调度。"
+      ],
+      "keyPoint": "冲突可串行化看优先图是否有环。",
+      "pitfall": "提交顺序不能替代读写操作形成的冲突关系；读读才不构成冲突。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 13 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "事务处理和并发控制",
+      "手册自测",
+      "国网2027第13项"
+    ]
+  },
+  {
+    "id": "handbook-14",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "backup-recovery"
+    ],
+    "type": "single",
+    "stem": "某备份方案要求故障后允许损失的数据最多对应最近 10 分钟，而恢复服务耗时另有指标。这项“10 分钟”要求属于？",
+    "options": [
+      {
+        "id": "A",
+        "text": "RTO"
+      },
+      {
+        "id": "B",
+        "text": "事务隔离级别"
+      },
+      {
+        "id": "C",
+        "text": "RPO"
+      },
+      {
+        "id": "D",
+        "text": "Cache 缺失惩罚"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "RPO 描述允许的数据丢失时间窗口；RTO 描述允许的服务恢复时长。",
+      "steps": [
+        "题干关注的是可能丢失多新的数据。",
+        "这属于恢复点目标 RPO。",
+        "若题干问多久恢复服务，才是 RTO。"
+      ],
+      "keyPoint": "RPO 管数据损失窗口，RTO 管恢复服务时间。",
+      "pitfall": "备份频率与恢复耗时不是同一个指标，备份也不等于高可用。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 14 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "备份和恢复",
+      "手册自测",
+      "国网2027第14项"
+    ]
+  },
+  {
+    "id": "handbook-15",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-design"
+    ],
+    "type": "single",
+    "stem": "应用需要把用户输入的姓名作为数据库查询条件。下列做法最适合降低 SQL 注入风险的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "仅在浏览器中校验姓名长度"
+      },
+      {
+        "id": "B",
+        "text": "直接将输入拼接进 SQL 字符串"
+      },
+      {
+        "id": "C",
+        "text": "使用参数化查询并绑定参数"
+      },
+      {
+        "id": "D",
+        "text": "给应用数据库账号授予管理员权限"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "参数化查询把 SQL 结构与参数值分开，避免输入被当作查询语法的一部分。",
+      "steps": [
+        "识别风险来自将输入直接拼成 SQL 语句。",
+        "使用占位符和数据库驱动的参数绑定传入姓名。",
+        "同时按最小权限配置数据库账号。"
+      ],
+      "keyPoint": "应用设计应明确数据与查询结构的边界。",
+      "pitfall": "前端校验可以被绕过；扩大账号权限会增大损害范围。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 15 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据库应用系统设计与开发",
+      "手册自测",
+      "国网2027第15项"
+    ]
+  },
+  {
+    "id": "handbook-16",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-security"
+    ],
+    "type": "multiple",
+    "stem": "关于数据库安全，下列说法正确的有：",
+    "options": [
+      {
+        "id": "A",
+        "text": "身份认证主要回答“你是谁”。"
+      },
+      {
+        "id": "B",
+        "text": "基于角色的授权可以控制“你能做什么”。"
+      },
+      {
+        "id": "C",
+        "text": "数据库启用加密后，所有用户就自动获得合法访问权限。"
+      },
+      {
+        "id": "D",
+        "text": "备份文件同样需要访问控制，并按需要加密。"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "A、B、D 正确。加密是保护数据的一种手段，并不授予用户访问权限。",
+      "steps": [
+        "区分身份认证、权限授权与数据加密的职责。",
+        "备份包含数据库信息，也需要保护。",
+        "检查 C 把加密错误地当成了授权机制。"
+      ],
+      "keyPoint": "认证、授权、审计与加密共同保护数据，但作用不能互相替代。",
+      "pitfall": "不要只保护在线数据库而忽略备份副本。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 16 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据库安全",
+      "手册自测",
+      "国网2027第16项"
+    ]
+  },
+  {
+    "id": "handbook-17",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-architecture"
+    ],
+    "type": "single",
+    "stem": "发送 8 Mbit 数据，链路速率为 2 Mbit/s，传播距离 1000 km，传播速率 2×10⁸ m/s。M=10⁶，只计传输和传播时延，总时延是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.005 s"
+      },
+      {
+        "id": "B",
+        "text": "4 s"
+      },
+      {
+        "id": "C",
+        "text": "4.005 s"
+      },
+      {
+        "id": "D",
+        "text": "5 s"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "传输时延为 8/2=4 s，传播时延为 10⁶/(2×10⁸)=0.005 s，总计 4.005 s。",
+      "steps": [
+        "统一单位：1000 km=10⁶ m。",
+        "计算将全部比特送入链路的时间 L/R=4 s。",
+        "计算信号传播时间 d/v=0.005 s，再相加。"
+      ],
+      "keyPoint": "传输时延看数据长度与速率，传播时延看距离与传播速度。",
+      "pitfall": "题目给的是 Mbit，不能再误乘 8 当作字节；也不能只算其中一种时延。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 17 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "计算机网络体系结构",
+      "手册自测",
+      "国网2027第17项"
+    ]
+  },
+  {
+    "id": "handbook-18",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "physical-layer"
+    ],
+    "type": "single",
+    "stem": "信噪比给为 30 dB。代入香农公式 `C=B log₂(1+S/N)` 前，应使用的线性比值 S/N 为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "30"
+      },
+      {
+        "id": "B",
+        "text": "1000"
+      },
+      {
+        "id": "C",
+        "text": "3000"
+      },
+      {
+        "id": "D",
+        "text": "10³⁰"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "30=10 log₁₀(S/N)，所以 log₁₀(S/N)=3，S/N=1000。",
+      "steps": [
+        "先识别题目给的是对数单位 dB。",
+        "把 30 除以 10，得到 3。",
+        "还原线性值为 10³=1000，再代入香农公式。"
+      ],
+      "keyPoint": "dB 值必须先转换成无量纲的线性比值。",
+      "pitfall": "不能把 30 直接代入 1+S/N，也不要把功率比的系数 10 误用为 20。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 18 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "物理层",
+      "手册自测",
+      "国网2027第18项"
+    ]
+  },
+  {
+    "id": "handbook-19",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "single",
+    "stem": "CRC 原数据位串为 `1101`，生成多项式对应位串为 `1011`。在数据后补 3 个 0 做模二除法，得到的 3 位余数是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "001"
+      },
+      {
+        "id": "B",
+        "text": "010"
+      },
+      {
+        "id": "C",
+        "text": "101"
+      },
+      {
+        "id": "D",
+        "text": "111"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "1101000 对 1011 做按位异或除法，最终余数为 001。",
+      "steps": [
+        "生成多项式次数为 3，先写出 1101000。",
+        "对齐最高位依次异或：1101000→0110000→0011100。",
+        "继续异或得到 0001010→0000001，取低 3 位为 001。"
+      ],
+      "keyPoint": "CRC 的除法使用异或，不产生借位。",
+      "pitfall": "结果要保留 r=3 位，不能把余数 1 写成只有一位而遗漏前导 0。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 19 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据链路层",
+      "手册自测",
+      "国网2027第19项"
+    ]
+  },
+  {
+    "id": "handbook-20",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-layer"
+    ],
+    "type": "single",
+    "stem": "IPv4 地址 `192.168.10.130/26` 所在子网的网络地址和广播地址分别是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "192.168.10.0，192.168.10.63"
+      },
+      {
+        "id": "B",
+        "text": "192.168.10.64，192.168.10.127"
+      },
+      {
+        "id": "C",
+        "text": "192.168.10.128，192.168.10.191"
+      },
+      {
+        "id": "D",
+        "text": "192.168.10.128，192.168.10.255"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "/26 留下 6 个主机位，每段 64 个地址；130 位于 128…191 段。",
+      "steps": [
+        "掩码为 255.255.255.192，最后一字节步长为 64。",
+        "网段起点依次为 0、64、128、192。",
+        "130 落在 128 开始的网段，网络地址 .128，广播地址 .191。"
+      ],
+      "keyPoint": "CIDR 按前缀长度分网络与主机位。",
+      "pitfall": "不要把 .255 固定当作所有子网的广播地址。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 20 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "网络层",
+      "手册自测",
+      "国网2027第20项"
+    ]
+  },
+  {
+    "id": "handbook-21",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "tcp-stream"
+    ],
+    "type": "single",
+    "stem": "一个已建立的 TCP 连接发送数据段，seq=1000，载荷为 200 字节，不包含 SYN/FIN。接收端按序完整收到后，下一期望字节的确认号通常为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1199"
+      },
+      {
+        "id": "B",
+        "text": "1200"
+      },
+      {
+        "id": "C",
+        "text": "1201"
+      },
+      {
+        "id": "D",
+        "text": "200"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "数据占用序号 1000…1199，下一期望字节为 1200。",
+      "steps": [
+        "TCP 序号按字节计数。",
+        "本段 200 字节从 1000 开始，最后一字节为 1199。",
+        "ACK 表示下一期望字节，所以 ACK=1200。"
+      ],
+      "keyPoint": "确认号不是最后收到的字节序号，而是下一个期望的字节。",
+      "pitfall": "SYN/FIN 各占一个序号，但题目已明确不包含，不能多加 1。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 21 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "传输层",
+      "手册自测",
+      "国网2027第21项"
+    ]
+  },
+  {
+    "id": "handbook-22",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "application-layer"
+    ],
+    "type": "single",
+    "stem": "排查 HTTPS 访问失败时，已确认 DNS 解析正确、TCP 连接可建立，但浏览器提示证书域名不匹配。最直接应检查的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "网线的传播速度"
+      },
+      {
+        "id": "B",
+        "text": "本机 ARP 表是否能保存无限条目"
+      },
+      {
+        "id": "C",
+        "text": "TLS 证书域名与信任配置"
+      },
+      {
+        "id": "D",
+        "text": "数据库 SQL 的 GROUP BY 顺序"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "域名不匹配属于 TLS 身份认证环节的证书校验问题。",
+      "steps": [
+        "DNS 与 TCP 已经通过，不必把当前故障定位在这两个已验证环节。",
+        "检查访问的主机名与证书所涵盖的域名。",
+        "还应按故障信息核对证书有效期与信任链。"
+      ],
+      "keyPoint": "按 DNS→TCP→TLS→HTTP 分层定位故障。",
+      "pitfall": "TCP 能连通不表示 TLS 认证已经成功；不要通过忽略证书校验来“解决”问题。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 22 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "应用层",
+      "手册自测",
+      "国网2027第22项"
+    ]
+  },
+  {
+    "id": "handbook-23",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-security"
+    ],
+    "type": "multiple",
+    "stem": "关于网络安全，下列说法正确的有：",
+    "options": [
+      {
+        "id": "A",
+        "text": "DDoS 常直接影响可用性。"
+      },
+      {
+        "id": "B",
+        "text": "防重放需要关注消息的新鲜性。"
+      },
+      {
+        "id": "C",
+        "text": "哈希摘要是一种能用密钥解密还原原文的加密方式。"
+      },
+      {
+        "id": "D",
+        "text": "数字签名通常用签名者私钥生成、用其公钥验证。"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "A、B、D 正确；哈希摘要不是可逆加密，C 把两种机制混同。",
+      "steps": [
+        "先把攻击或机制与保护目标对应。",
+        "DDoS 压垮资源影响服务可用，重放攻击利用旧消息。",
+        "区分摘要、加密和签名，签名验证使用签名者的公钥。"
+      ],
+      "keyPoint": "安全目标与机制有不同职责，散列不等于加密。",
+      "pitfall": "不能用“加密”统称所有密码学机制；签名也不等于对数据保密。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 23 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "网络管理与网络安全",
+      "手册自测",
+      "国网2027第23项"
+    ]
+  },
+  {
+    "id": "handbook-24",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "wireless-mobile"
+    ],
+    "type": "boolean",
+    "stem": "在 Wi-Fi 中，RTS/CTS 可以缓解隐藏终端问题，但不能据此断言所有碰撞都被完全消除。",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "T"
+    ],
+    "explanation": {
+      "analysis": "RTS/CTS 有助于让部分不能直接侦听到彼此的节点协调接入，但无线环境和协议开销仍存在约束。",
+      "steps": [
+        "识别隐藏终端：发送节点之间可能互相听不到。",
+        "RTS/CTS 能通告占用信息，缓解这一类冲突。",
+        "“缓解”不等于在所有场景保证零碰撞。"
+      ],
+      "keyPoint": "无线网络采用碰撞避免机制，理解机制的适用边界。",
+      "pitfall": "不要把 CSMA/CA 的“避免”理解成绝对无碰撞，也不要与共享半双工以太网的 CSMA/CD 混用。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 24 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "无线网络与移动网络",
+      "手册自测",
+      "国网2027第24项"
+    ]
+  },
+  {
+    "id": "handbook-25",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "os-overview"
+    ],
+    "type": "boolean",
+    "stem": "用户进程执行系统调用进入内核态，就一定会切换为另一个进程运行。",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "F"
+    ],
+    "explanation": {
+      "analysis": "系统调用会受控地进入内核态，但处理系统调用的仍可能是当前进程。是否发生进程切换取决于阻塞、调度等条件。",
+      "steps": [
+        "先区分模式切换与进程切换。",
+        "进入内核态改变的是执行权限与运行环境。",
+        "如果不发生阻塞或重新调度，可以返回同一进程继续执行。"
+      ],
+      "keyPoint": "用户态/内核态切换不等于进程调度切换。",
+      "pitfall": "不要把所有中断、异常或系统调用都直接理解为更换进程。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 25 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "操作系统概述",
+      "手册自测",
+      "国网2027第25项"
+    ]
+  },
+  {
+    "id": "handbook-26",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "single",
+    "stem": "有界缓冲区初始 `empty=N, full=0, mutex=1`。生产者写入一个元素时，哪种顺序是常见的正确做法？",
+    "options": [
+      {
+        "id": "A",
+        "text": "P(empty) → P(mutex) → 写入 → V(mutex) → V(full)"
+      },
+      {
+        "id": "B",
+        "text": "P(mutex) → P(empty) → 写入 → V(full) → V(mutex)，且任何情况都不会死锁"
+      },
+      {
+        "id": "C",
+        "text": "P(full) → P(mutex) → 写入 → V(mutex) → V(empty)"
+      },
+      {
+        "id": "D",
+        "text": "直接写入后仅执行 V(mutex)"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "生产者先等待空槽，再进入互斥区；写入完成后释放互斥锁并通知有新数据。",
+      "steps": [
+        "empty 计数可用空槽，生产者需要先 P(empty)。",
+        "mutex 保护对缓冲区的互斥访问。",
+        "写入后释放 mutex，再 V(full) 通知消费者。"
+      ],
+      "keyPoint": "资源数量同步与临界区互斥是两个约束。",
+      "pitfall": "如果先持有 mutex 再因没有空槽而阻塞，可能阻碍消费者取出数据并造成死锁。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 26 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "进程与线程管理",
+      "手册自测",
+      "国网2027第26项"
+    ]
+  },
+  {
+    "id": "handbook-27",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "fifo-pages"
+    ],
+    "type": "single",
+    "stem": "虚拟地址为 16 位，页大小为 1 KiB。虚拟地址 `0x12A3` 所属页映射到物理页框 9，物理地址应为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "0x12A3"
+      },
+      {
+        "id": "B",
+        "text": "0x26A3"
+      },
+      {
+        "id": "C",
+        "text": "0x24A3"
+      },
+      {
+        "id": "D",
+        "text": "0x2AA3"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "页内偏移为 0x2A3=675，物理地址为 9×1024+675=9891=0x26A3。",
+      "steps": [
+        "页大小 1024=2¹⁰，所以低 10 位为页内偏移。",
+        "0x12A3=4771=4×1024+675，虚拟页号为 4。",
+        "用页框号 9 替换页号，保持偏移不变，得 0x26A3。"
+      ],
+      "keyPoint": "地址变换改变页号对应的页框，页内偏移保持不变。",
+      "pitfall": "不要把虚拟页号 4 直接当作物理页框，也不要把 1 KiB 当作 1000 字节。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 27 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "内存管理",
+      "手册自测",
+      "国网2027第27项"
+    ]
+  },
+  {
+    "id": "handbook-28",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "file-management"
+    ],
+    "type": "single",
+    "stem": "索引块大小为 4 KiB，指针为 4 B。inode 有 10 个直接指针、1 个一级间接和1 个二级间接指针。忽略其他限制，最多可索引的数据字节数为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "(10+1024)×4 KiB"
+      },
+      {
+        "id": "B",
+        "text": "(10+1024+1024²)×4 KiB"
+      },
+      {
+        "id": "C",
+        "text": "(10+4096+4096²)×4 KiB"
+      },
+      {
+        "id": "D",
+        "text": "1024² B"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "每个索引块可装 4096/4=1024 个指针。直接、一级间接、二级间接分别指向 10、1024、1024² 个数据块。",
+      "steps": [
+        "先算每个索引块的指针数 1024。",
+        "计算可寻址数据块数 10+1024+1024²。",
+        "每个数据块 4 KiB，因此再乘以 4 KiB。"
+      ],
+      "keyPoint": "间接索引的每一层都按指针扇出数计算。",
+      "pitfall": "索引块本身用于存指针，不能把 4096 字节直接当作 4096 个指针。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 28 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "文件管理",
+      "手册自测",
+      "国网2027第28项"
+    ]
+  },
+  {
+    "id": "handbook-29",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "io-management"
+    ],
+    "type": "single",
+    "stem": "磁头当前位于 50 号磁道，采用 LOOK，初始向磁道号增大的方向移动，请求为 10、40、70、90。处理完这些请求的总移动距离为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "100"
+      },
+      {
+        "id": "B",
+        "text": "120"
+      },
+      {
+        "id": "C",
+        "text": "140"
+      },
+      {
+        "id": "D",
+        "text": "160"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "LOOK 先处理 70、90，再折返处理 40、10，总距离 20+20+50+30=120。",
+      "steps": [
+        "按初始方向先走 50→70→90。",
+        "LOOK 到本方向最远请求后折返，不必到磁盘物理端点。",
+        "继续 90→40→10，累计移动 120 个磁道。"
+      ],
+      "keyPoint": "先确定调度算法、当前磁头位置与方向，再求相邻移动距离之和。",
+      "pitfall": "LOOK 与 SCAN 的端点规则不同；不能漏掉从初始磁道出发的距离。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 29 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "输入输出管理",
+      "手册自测",
+      "国网2027第29项"
+    ]
+  },
+  {
+    "id": "handbook-30",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "os-security"
+    ],
+    "type": "multiple",
+    "stem": "Unix 类系统中某目录的权限为 755。下列说法正确的有：",
+    "options": [
+      {
+        "id": "A",
+        "text": "所有者具有读、写、执行权限。"
+      },
+      {
+        "id": "B",
+        "text": "同组用户具有写权限。"
+      },
+      {
+        "id": "C",
+        "text": "其他用户具有读和执行权限。"
+      },
+      {
+        "id": "D",
+        "text": "目录的执行权限与穿越、检索路径有关。"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "755 分别对应 rwx、r-x、r-x；组用户和其他用户都没有写权限。",
+      "steps": [
+        "把三个八进制数字分别拆为读 4、写 2、执行 1。",
+        "7=4+2+1；5=4+1。",
+        "目录的 x 不是“运行这个目录”，而是与路径访问有关。"
+      ],
+      "keyPoint": "权限位解释需要同时看对象类型与用户类别。",
+      "pitfall": "文件可读、目录可列出、目录可穿越是不同条件，不能机械等同。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 30 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "操作系统安全与保护",
+      "手册自测",
+      "国网2027第30项"
+    ]
+  },
+  {
+    "id": "handbook-31",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-overview"
+    ],
+    "type": "single",
+    "stem": "某程序执行 10⁹ 条指令，平均 CPI=2，CPU 时钟频率为 2 GHz。忽略其他因素，CPU 执行时间为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1 s"
+      },
+      {
+        "id": "B",
+        "text": "2 s"
+      },
+      {
+        "id": "C",
+        "text": "0.5 s"
+      },
+      {
+        "id": "D",
+        "text": "4 s"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "执行时间=指令数×CPI/频率=10⁹×2/(2×10⁹)=1 秒。",
+      "steps": [
+        "指令执行需要的时钟周期数为 2×10⁹。",
+        "2 GHz 表示每秒 2×10⁹ 个时钟周期。",
+        "周期数除以每秒周期数，得到 1 秒。"
+      ],
+      "keyPoint": "CPU 时间同时取决于指令数、CPI 和时钟频率。",
+      "pitfall": "不能把 CPI 当作指令执行速率，也不能仅凭 GHz 判断程序运行时间。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 31 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "计算机系统概述",
+      "手册自测",
+      "国网2027第31项"
+    ]
+  },
+  {
+    "id": "handbook-32",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "将位模式 `0x90` 按 **8 位有符号补码**解释，其真值为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "144"
+      },
+      {
+        "id": "B",
+        "text": "−144"
+      },
+      {
+        "id": "C",
+        "text": "−112"
+      },
+      {
+        "id": "D",
+        "text": "112"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "0x90 的无符号值是 144，最高位为 1，按 8 位补码解释应减去 256，因此为 −112。",
+      "steps": [
+        "十六进制 0x90=9×16=144。",
+        "8 位补码负数可由无符号值减去 2⁸。",
+        "144−256=−112，位于 [-128,127] 内。"
+      ],
+      "keyPoint": "同一个位模式的真值取决于位宽与有符号解释。",
+      "pitfall": "不能只给十六进制数就默认正数，也不能直接在无符号值前加负号。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 32 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据的机器级表示和运算",
+      "手册自测",
+      "国网2027第32项"
+    ]
+  },
+  {
+    "id": "handbook-33",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "32 位字节地址，Cache 数据容量 64 KiB，块大小 64 B，4 路组相联。地址的 tag、组索引、块内偏移位数依次是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "16，10，6"
+      },
+      {
+        "id": "B",
+        "text": "18，8，6"
+      },
+      {
+        "id": "C",
+        "text": "20，6，6"
+      },
+      {
+        "id": "D",
+        "text": "18，6，8"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "总行数为 1024，4 路使组数为 256；偏移 6 位、组索引 8 位，其余 18 位为 tag。",
+      "steps": [
+        "64 KiB/64 B=1024 行。",
+        "1024/4=256 组，因此组索引 log₂256=8 位。",
+        "块内偏移 log₂64=6 位，tag=32−8−6=18 位。"
+      ],
+      "keyPoint": "组相联的 index 按组数计算，不能按总行数计算。",
+      "pitfall": "漏除相联度会把行索引位数误当成组索引位数。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 33 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "多级层次的存储系统",
+      "手册自测",
+      "国网2027第33项"
+    ]
+  },
+  {
+    "id": "handbook-34",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "instruction-set"
+    ],
+    "type": "single",
+    "stem": "约定 `MOV R1,[R2+8]` 中方括号表示读取内存。若 R2=1000（十进制），内存地址 1008 中的值为 42，则指令执行后 R1 为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "8"
+      },
+      {
+        "id": "B",
+        "text": "42"
+      },
+      {
+        "id": "C",
+        "text": "1008"
+      },
+      {
+        "id": "D",
+        "text": "1000"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先求有效地址 EA=1000+8=1008，再从该地址取值 42 放入 R1。",
+      "steps": [
+        "区分地址计算与取出操作数。",
+        "由 R2+8 得到有效地址 1008。",
+        "方括号要求读取内存，操作数是该处存放的 42。"
+      ],
+      "keyPoint": "有效地址不是操作数值，寻址方式决定是否还需访问内存。",
+      "pitfall": "不要把位移 8 或计算出的地址 1008 直接写入目标寄存器。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 34 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "指令系统",
+      "手册自测",
+      "国网2027第34项"
+    ]
+  },
+  {
+    "id": "handbook-35",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cpu"
+    ],
+    "type": "single",
+    "stem": "理想流水线共 5 级，各级均耗时 1 ns，连续执行 20 条指令，无任何停顿。总耗时为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "5 ns"
+      },
+      {
+        "id": "B",
+        "text": "20 ns"
+      },
+      {
+        "id": "C",
+        "text": "24 ns"
+      },
+      {
+        "id": "D",
+        "text": "100 ns"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "理想流水总时间为 (k+n−1)t=(5+20−1)×1=24 ns。",
+      "steps": [
+        "第一条指令需要填充 5 级流水。",
+        "之后每经过 1 ns 完成一条新的指令，共再需 19 ns。",
+        "5+19=24 ns。"
+      ],
+      "keyPoint": "流水计算需要考虑填充和排空，不能只用 n×t。",
+      "pitfall": "100 ns 是按 20 条逐条完成 5 个阶段的非流水估算；流水也不让单条指令只花 1 ns。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 35 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "中央处理器",
+      "手册自测",
+      "国网2027第35项"
+    ]
+  },
+  {
+    "id": "handbook-36",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-buses"
+    ],
+    "type": "single",
+    "stem": "数据总线宽 32 bit，总线频率 100 MHz，每周期传输一次。只算理论数据带宽，以十进制 MB/s 表示为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "100 MB/s"
+      },
+      {
+        "id": "B",
+        "text": "200 MB/s"
+      },
+      {
+        "id": "C",
+        "text": "400 MB/s"
+      },
+      {
+        "id": "D",
+        "text": "3200 MB/s"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "32 bit=4 B，每秒 10⁸ 次传输，理论带宽为 4×10⁸ B/s=400 MB/s。",
+      "steps": [
+        "先将总线宽度由 bit 转为 Byte。",
+        "每次传输 4 B，频率 100×10⁶ 次/秒。",
+        "相乘并按 10⁶ B/MB 换算得到 400 MB/s。"
+      ],
+      "keyPoint": "总线带宽=每次传输的数据量×每秒传输次数。",
+      "pitfall": "3200 是 Mbit/s 的数值，不能不换单位就写成 MB/s；实际有效吞吐还受协议开销影响。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 36 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "总线与输入输出系统",
+      "手册自测",
+      "国网2027第36项"
+    ]
+  },
+  {
+    "id": "handbook-37",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "parallel-computing"
+    ],
+    "type": "single",
+    "stem": "程序原执行时间中 80% 的部分可以加速到原来的 4 倍，其余 20% 不变。按 Amdahl 定律，整体加速比为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2"
+      },
+      {
+        "id": "B",
+        "text": "2.5"
+      },
+      {
+        "id": "C",
+        "text": "4"
+      },
+      {
+        "id": "D",
+        "text": "5"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "新时间占旧时间的 0.2+0.8/4=0.4，因此整体加速比为 1/0.4=2.5。",
+      "steps": [
+        "把原执行时间归一化为 1。",
+        "不可加速部分为 0.2，可加速部分的新耗时为 0.8/4=0.2。",
+        "新总时间为 0.4，所以加速比为 2.5。"
+      ],
+      "keyPoint": "串行或不可加速部分会限制整体收益。",
+      "pitfall": "局部加速 4 倍不代表整个程序也加速 4 倍。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 37 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "并行计算与异构计算",
+      "手册自测",
+      "国网2027第37项"
+    ]
+  },
+  {
+    "id": "handbook-38",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "software-foundations"
+    ],
+    "type": "multiple",
+    "stem": "关于软件需求与质量属性，下列说法正确的有：",
+    "options": [
+      {
+        "id": "A",
+        "text": "“支持导出学习记录 JSON”是功能性要求。"
+      },
+      {
+        "id": "B",
+        "text": "“约定负载下，95% 请求在 200 ms 内完成”是性能要求。"
+      },
+      {
+        "id": "C",
+        "text": "可维护性属于软件质量属性。"
+      },
+      {
+        "id": "D",
+        "text": "任何带数字的性能要求都应归为功能需求。"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "A 描述系统提供的功能，B、C 描述非功能性质量属性；是否带数字不是区分功能与非功能的标准。",
+      "steps": [
+        "先问这条要求描述“能做什么”还是“做得如何”。",
+        "导出是功能，性能与可维护性是质量属性。",
+        "数字化让要求可验证，但不会自动改变要求的类别。"
+      ],
+      "keyPoint": "软件质量同时涉及功能与非功能属性，不能只用“无 bug”概括。",
+      "pitfall": "不要用是否量化来代替需求类别判断。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 38 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件工程基本概念",
+      "手册自测",
+      "国网2027第38项"
+    ]
+  },
+  {
+    "id": "handbook-39",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "software-process"
+    ],
+    "type": "boolean",
+    "stem": "敏捷强调反馈和迭代，因此可以推导出敏捷项目不需要设计，也不需要必要文档。",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "F"
+    ],
+    "explanation": {
+      "analysis": "敏捷强调适应变化与及时反馈，并不否定为交付和协作所必需的设计、文档。",
+      "steps": [
+        "区分“避免无价值的负担”与“不需要任何设计文档”。",
+        "根据项目的风险、协作和交付需要安排设计与文档。"
+      ],
+      "keyPoint": "开发方法服务于反馈和交付，不能把敏捷简化成任意省略工程活动。",
+      "pitfall": "题目中的“不需要”过于绝对。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 39 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件开发方法和过程",
+      "手册自测",
+      "国网2027第39项"
+    ]
+  },
+  {
+    "id": "handbook-40",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "requirements"
+    ],
+    "type": "single",
+    "stem": "以下哪项最接近可验证、无歧义的性能需求？",
+    "options": [
+      {
+        "id": "A",
+        "text": "系统要很快。"
+      },
+      {
+        "id": "B",
+        "text": "在约定的测试环境与负载下，95% 的知识搜索在 200 ms 内返回。"
+      },
+      {
+        "id": "C",
+        "text": "界面应当很有科技感。"
+      },
+      {
+        "id": "D",
+        "text": "必须采用最新的框架。"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "B 明确了操作、测试条件、统计比例和时限，可以设计测试并判断是否达标。",
+      "steps": [
+        "找出性能需求对应的可观察行为。",
+        "核对环境、负载与统计口径。",
+        "用明确的阈值表达验收条件。"
+      ],
+      "keyPoint": "需求需要可验证，不能只停留在主观形容词。",
+      "pitfall": "“快”“好看”等词没有验收口径；指定技术也不自动等同于用户需要。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 40 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "需求分析",
+      "手册自测",
+      "国网2027第40项"
+    ]
+  },
+  {
+    "id": "handbook-41",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "以下哪种设计最符合“高内聚、低耦合”的方向？",
+    "options": [
+      {
+        "id": "A",
+        "text": "模块围绕清晰职责组织，通过明确接口协作。"
+      },
+      {
+        "id": "B",
+        "text": "每个模块都直接修改其他模块的内部数据。"
+      },
+      {
+        "id": "C",
+        "text": "把所有业务和基础功能放进同一个巨型模块。"
+      },
+      {
+        "id": "D",
+        "text": "复制多份共享逻辑以完全消除模块接口。"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "模块内部职责相关、模块间依赖受清晰接口约束，有助于限制改动传播。",
+      "steps": [
+        "内聚关注模块内部元素是否围绕相关职责。",
+        "耦合关注模块之间的依赖程度。",
+        "A 同时满足职责集中与接口清晰。"
+      ],
+      "keyPoint": "模块化不是单纯把文件分小，而是管理职责与依赖。",
+      "pitfall": "大量跨模块修改内部数据会使局部变化扩散；复制共享逻辑还会带来一致性维护成本。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 41 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "系统设计",
+      "手册自测",
+      "国网2027第41项"
+    ]
+  },
+  {
+    "id": "handbook-42",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "implementation"
+    ],
+    "type": "single",
+    "stem": "合并代码时出现冲突。以下处理方式最合适的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "删除整个冲突文件，无需检查。"
+      },
+      {
+        "id": "B",
+        "text": "永远用任意一方的版本覆盖。"
+      },
+      {
+        "id": "C",
+        "text": "理解两边改动意图，完成合并后验证相关行为。"
+      },
+      {
+        "id": "D",
+        "text": "跳过构建，直接视为合并成功。"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "冲突需要结合双方语义处理，再用相应检查确认最终行为；仅消除冲突标记并不代表正确。",
+      "steps": [
+        "阅读冲突两边的改动目的和依赖。",
+        "组合出符合当前需求的实现。",
+        "运行与改动相关的构建、静态检查或功能验证。"
+      ],
+      "keyPoint": "版本控制保留改动轨迹，工程验证保障合并结果。",
+      "pitfall": "不能把文本上“没有冲突标记”当作功能正确的证据。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 42 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "系统开发",
+      "手册自测",
+      "国网2027第42项"
+    ]
+  },
+  {
+    "id": "handbook-43",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "boundary-testing"
+    ],
+    "type": "boolean",
+    "stem": "一个程序的白盒分支覆盖率达到 100%，就可以证明该程序不存在缺陷。",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "F"
+    ],
+    "explanation": {
+      "analysis": "覆盖率是测试触达某种代码结构的证据，不是无缺陷证明。遗漏需求、错误断言、未覆盖输入组合等仍可能存在。",
+      "steps": [
+        "明确分支覆盖只要求判定结果的各分支被触达。",
+        "即便分支都执行过，也不保证所有数据和业务场景正确。",
+        "还需结合需求、边界、其他测试及实际风险判断质量。"
+      ],
+      "keyPoint": "测试用于发现缺陷和建立证据，不能证明绝无错误。",
+      "pitfall": "分支覆盖也不必然保证每个原子条件独立影响判定，不要与 MC/DC 混同。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 43 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件测试",
+      "手册自测",
+      "国网2027第43项"
+    ]
+  },
+  {
+    "id": "handbook-44",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "software-delivery"
+    ],
+    "type": "single",
+    "stem": "软件原有业务功能不变，为适配新的操作系统版本而调整兼容性，主要属于哪类维护？",
+    "options": [
+      {
+        "id": "A",
+        "text": "纠错性维护"
+      },
+      {
+        "id": "B",
+        "text": "适应性维护"
+      },
+      {
+        "id": "C",
+        "text": "完善性维护"
+      },
+      {
+        "id": "D",
+        "text": "预防性维护"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "外部运行环境发生变化，为保持软件在新环境下工作而调整，属于适应性维护。",
+      "steps": [
+        "题干不是修复已知业务错误。",
+        "主要变化来自外部操作系统环境。",
+        "因此按维护目的归为适应性维护。"
+      ],
+      "keyPoint": "按改动原因区分纠错、适应、完善和预防维护。",
+      "pitfall": "不能因为修改了代码就一律归为纠错性维护。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 44 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件交付与维护",
+      "手册自测",
+      "国网2027第44项"
+    ]
+  },
+  {
+    "id": "handbook-45",
+    "revision": 1,
+    "moduleId": "ai",
+    "knowledgeIds": [
+      "supervised-learning"
+    ],
+    "type": "single",
+    "stem": "二分类结果 TP=30、FP=10、FN=20、TN=40。精确率 Precision 和召回率 Recall 分别为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "60%，75%"
+      },
+      {
+        "id": "B",
+        "text": "75%，75%"
+      },
+      {
+        "id": "C",
+        "text": "75%，60%"
+      },
+      {
+        "id": "D",
+        "text": "60%，60%"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "Precision=30/(30+10)=75%；Recall=30/(30+20)=60%。",
+      "steps": [
+        "精确率关注预测为正的样本中有多少是真的正例。",
+        "召回率关注全部真实正例中找回了多少。",
+        "分别使用 TP+FP 与 TP+FN 作分母。"
+      ],
+      "keyPoint": "精确率与召回率的分母不同，不能与整体准确率混用。",
+      "pitfall": "本例准确率为 (30+40)/100=70%，它不是题目要求的任一指标。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 45 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "人工智能基础",
+      "手册自测",
+      "国网2027第45项"
+    ]
+  },
+  {
+    "id": "handbook-46",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "iot"
+    ],
+    "type": "single",
+    "stem": "MQTT QoS 1 的协议交付语义最准确的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "最多一次，不重传。"
+      },
+      {
+        "id": "B",
+        "text": "至少一次，接收方可能收到重复消息。"
+      },
+      {
+        "id": "C",
+        "text": "恰好一次，并能自动保证所有业务副作用只发生一次。"
+      },
+      {
+        "id": "D",
+        "text": "不提供任何交付约定。"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "QoS 1 对应至少一次交付，确认与重传可能导致重复。端到端业务仍需根据需要做幂等处理。",
+      "steps": [
+        "区分 QoS 0、1、2 的协议语义。",
+        "QoS 1 为至少一次，重复是需要考虑的情况。",
+        "不要将消息层语义直接扩大为所有业务操作的保证。"
+      ],
+      "keyPoint": "协议交付语义与端到端业务效果需要分开判断。",
+      "pitfall": "QoS 2 的协议恰好一次也不能被无条件理解为数据库写入等业务副作用必定恰好一次。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 46 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "物联网基础",
+      "手册自测",
+      "国网2027第46项"
+    ]
+  },
+  {
+    "id": "handbook-47",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "cloud-service-models"
+    ],
+    "type": "single",
+    "stem": "下列关于 CAP 的表述，哪项最准确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "分布式系统在任何时候都只能任选两项。"
+      },
+      {
+        "id": "B",
+        "text": "只要副本足够多，就能在任意网络分区下同时完全保证强一致性和可用性。"
+      },
+      {
+        "id": "C",
+        "text": "发生网络分区时，强一致性与可用性无法同时完全保证。"
+      },
+      {
+        "id": "D",
+        "text": "CAP 与网络故障或分区无关。"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "CAP 的约束针对网络分区存在时的保证，不能简化成任意时候的“三选二”。",
+      "steps": [
+        "先看命题的前提是否包含网络分区。",
+        "分区使节点之间无法保持正常通信。",
+        "此时完整的一致性保证与每个请求都获得可用响应的保证存在冲突。"
+      ],
+      "keyPoint": "理解分布式结论时应同时保留其前提与保证的含义。",
+      "pitfall": "增加副本有助于容错，但不会消除网络分区本身带来的限制。"
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "依据复习手册第 47 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "云计算基础",
+      "手册自测",
+      "国网2027第47项"
+    ]
+  },
+  {
+    "id": "handbook-48",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "big-data"
+    ],
+    "type": "multiple",
+    "stem": "关联规则 A→B 中，P(A)=0.4、P(B)=0.5、P(A∩B)=0.3。下列结论正确的有：",
+    "options": [
+      {
+        "id": "A",
+        "text": "支持度为 30%。"
+      },
+      {
+        "id": "B",
+        "text": "置信度为 75%。"
+      },
+      {
+        "id": "C",
+        "text": "提升度为 1.5。"
+      },
+      {
+        "id": "D",
+        "text": "这些数值足以证明 A 是 B 的原因。"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "支持度为 0.3；置信度 P(B|A)=0.3/0.4=0.75；提升度为 0.75/0.5=1.5。关联不等于因果。",
+      "steps": [
+        "支持度直接取共同出现的概率 P(A∩B)。",
+        "置信度以 A 出现为条件，除以 P(A)。",
+        "提升度将置信度与 B 的总体概率比较，再除以 P(B)。"
+      ],
+      "keyPoint": "支持度、置信度、提升度分别衡量不同侧面，任何一个都不是因果证明。",
+      "pitfall": "置信度不是 P(A|B)；不要把分母误写成 P(B)。"
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 48 节编写的自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "大数据基础",
+      "手册自测",
+      "国网2027第48项"
+    ]
+  }
+]

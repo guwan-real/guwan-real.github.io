@@ -10,6 +10,7 @@ export const knowledgeSchema = z.object({
   description: text,
   order: z.number().int().nonnegative(),
   status: z.enum(['example', 'handbook']),
+  syllabusNumber: z.number().int().min(1).max(48).optional(),
   source: text,
   tags: z.array(text).min(1),
 });

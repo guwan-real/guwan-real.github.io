@@ -33,6 +33,7 @@ const navigation = [
         <div class="review-sidebar-chapters">
           <p class="review-label">复习范围</p>
           <nav aria-label="章节导航">{MODULES.map((m) => <a href={`${reviewUrl('knowledge/')}#${m.id}`}><span>{m.number}</span>{m.short}</a>)}</nav>
+          <a class="review-text-link review-source-link" href={reviewUrl('handbook/')}>整本手册与大纲 ↗</a>
         </div>
         <p class="review-sidebar-note">一点一点，建立自己的知识索引。<br />记录留在当前浏览器。</p>
       </aside>

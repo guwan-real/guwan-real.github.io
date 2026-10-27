@@ -10,7 +10,7 @@ const { knowledge, questions } = await getReviewContent();
     return <article class="review-module-row">
       <span class="review-module-number">{module.number}</span>
       <div><a class="review-module-title" href={`${reviewUrl('knowledge/')}#${module.id}`}>{module.title}</a><p>{module.description}</p></div>
-      <span class="review-module-count">{topics.length} 个示例知识点<br />{count} 道示例题</span>
+      <span class="review-module-count">{topics.length} 个知识点<br />{count} 道自测题</span>
       <a class="review-text-link" href={reviewUrl(`practice/?module=${module.id}&mode=chapter&start=1`)} aria-label={`练习${module.title}`}>练习 <span aria-hidden="true">↗</span></a>
     </article>;
   })}

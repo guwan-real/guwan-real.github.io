@@ -1,8 +1,9 @@
 ---
+import { reviewUrl } from '../../lib/cs-review/catalogue';
 interface Props { compact?: boolean }
 const { compact = false } = Astro.props;
 ---
 <aside class:list={['review-notice', { 'is-compact': compact }]}>
   <span class="review-status-dot" aria-hidden="true"></span>
-  <p><strong>手册待接入</strong>{compact ? ' · 当前内容为自编示例，非官方真题。' : ' · 当前内容与题目均为自编示例，用于走通学习流程，非官方真题。完整复习范围将在接入手册、核对国网 2027 与南网 2026 大纲后确定。'}</p>
+  <p><strong>按你的手册复习</strong>{compact ? ' · 国网 2027 专业知识 48 项，练习题均为自编自测。' : ' · 已对照你提供的国网 2027 大纲接入 48 项知识与专项解题方法。题目根据手册编写，用于自测，非官方真题。'} <a href={reviewUrl('handbook/')}>阅读原稿 ↗</a></p>
 </aside>
