@@ -1,7 +1,9 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { basename } from 'node:path';
 import matter from 'gray-matter';
-import { validateCatalogue, validateExplanations } from '../src/lib/cs-review/content-schema';
+import { validateCatalogue, validateExplanations, validatePaperReview } from '../src/lib/cs-review/content-schema';
+import paperDocuments from '../src/content/cs-review/paper-sources.json';
+import paperReview from '../src/content/cs-review/paper-review-audit.json';
 
 const knowledgeDirectory = new URL('../src/content/cs-review/knowledge/', import.meta.url);
 const questionDirectory = new URL('../src/content/cs-review/questions/', import.meta.url);
@@ -25,4 +27,5 @@ const explanations = await Promise.all((await readdir(explanationDirectory)).fil
   return data;
 }));
 validateExplanations(catalogue.knowledge, explanations);
+validatePaperReview(catalogue.knowledge, catalogue.questions, paperDocuments, paperReview);
 console.log(`CS Review 内容校验通过：${catalogue.knowledge.length} 个知识点，${explanations.length} 篇基础讲义，${catalogue.questions.length} 道题目。`);

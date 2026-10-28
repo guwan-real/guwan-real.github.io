@@ -48,10 +48,11 @@ test('all answer files match the published question revisions and options', asyn
     assert.equal(answer.id, q.id); assert.equal(answer.revision, q.revision);
     assert.ok(answer.correctOptionIds.length && answer.correctOptionIds.every((id) => q.options.some((o) => o.id === id)));
     assert.ok(answer.analysisHtml && answer.keyPointHtml && answer.pitfallHtml);
-    if (q.id.startsWith('review-extra-') || q.id.startsWith('review-drill-')) {
+    if (q.id.startsWith('review-extra-') || q.id.startsWith('review-drill-') || q.source.reference) {
       assert.deepEqual(answer.optionAnalysisHtml?.map((o) => o.id), q.options.map((o) => o.id));
       assert.ok(answer.optionAnalysisHtml?.every((o) => o.html));
     }
+    assert.doesNotMatch(JSON.stringify(answer), /class=\\"katex-error/);
   }
 });
 test('exam HTML and client bundles do not embed question answers', async () => {
@@ -107,4 +108,21 @@ test('teaching diagrams have accessible descriptions and contain no executable o
     assert.match(svg, /<desc[\s>]/);
     assert.doesNotMatch(svg, /<script\b|<foreignObject\b|\son\w+=|(?:href|src)=["'](?:https?:|javascript:)/i, path);
   }
+});
+test('paper-derived practice links to a published audit with real source and topic anchors', async () => {
+  const page = await readFile(new URL('materials/index.html', root), 'utf8');
+  assert.match(page, /资料对照与补充/);
+  assert.match(page, /PDF 共 322 页/);
+  assert.doesNotMatch(page, /\/Users\/|github_pat_/);
+  const adapted = questions.filter((question) => question.source.reference);
+  assert.ok(adapted.length > 0);
+  for (const question of adapted) {
+    assert.ok(page.includes(`id="${question.source.reference!.documentId}"`));
+    const answer = await readFile(new URL(`data/answers/${question.id}.json`, root), 'utf8');
+    assert.ok(answer.length > 0);
+  }
+  const search: { id: string; text: string }[] = JSON.parse(await readFile(new URL('data/search.json', root), 'utf8'));
+  assert.match(search.find((entry) => entry.id === 'trees')!.text, /三叉|三元/);
+  assert.match(search.find((entry) => entry.id === 'acid-transactions')!.text, /三级封锁/);
+  assert.match(search.find((entry) => entry.id === 'data-link')!.text, /海明/);
 });

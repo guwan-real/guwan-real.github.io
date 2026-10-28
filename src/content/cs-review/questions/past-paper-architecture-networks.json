@@ -1,0 +1,2387 @@
+[
+  {
+    "id": "paper-review-system-overview-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-overview"
+    ],
+    "type": "single",
+    "stem": "某CPU主频1.2GHz。给定三类动态指令的数量比例为40%、40%、20%，各类CPI分别为1、2、4。忽略其他耗时，该负载的平均CPI和MIPS分别为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2、600MIPS"
+      },
+      {
+        "id": "B",
+        "text": "7/3、约514MIPS"
+      },
+      {
+        "id": "C",
+        "text": "2、2.4MIPS"
+      },
+      {
+        "id": "D",
+        "text": "1.2、1000MIPS"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "先按指令数量加权求每条平均周期，再用每秒周期数除以它。原资料相应表格缺失，此处明确补给完整比例。",
+      "steps": [
+        "平均CPI=0.4×1+0.4×2+0.2×4=2。",
+        "1.2GHz=1200MHz，每秒可完成1200/2=600百万条该负载指令。",
+        "因此是600MIPS；跨ISA时还需比较任务总指令数，不能只按MIPS断定整体快慢。"
+      ],
+      "keyPoint": "MIPS=f/(CPI×10⁶)，前提是同一明确负载的动态指令比例。",
+      "pitfall": "不加权直接平均类别CPI，或把GHz数值未经换算当MHz。",
+      "optionAnalysis": {
+        "A": "加权CPI和频率单位都正确。",
+        "B": "使用三个类别CPI的算术平均，忽略实际数量比例。",
+        "C": "把CPI乘主频并混淆单位，方向错误。",
+        "D": "把主频数值当平均CPI，缺乏依据。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第10页第62题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第10页，第62题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-twos-complement-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "约定总长5位，最高位为符号、其余4位为二进制小数。真值−0.1101₂的原码、反码和补码依次是？小数点只用于标识格式，不占存储位。",
+    "options": [
+      {
+        "id": "A",
+        "text": "1.1101、1.0010、1.0011"
+      },
+      {
+        "id": "B",
+        "text": "1.1101、1.0011、1.0010"
+      },
+      {
+        "id": "C",
+        "text": "1.0011、1.0010、1.1101"
+      },
+      {
+        "id": "D",
+        "text": "0.1101、1.0010、1.0011"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "先固定小数点位置，负数原码保留绝对值，反码按相应正码取反，补码再加最低位1。",
+      "steps": [
+        "正数+0.1101的格式位串为0.1101；负数原码为1.1101。",
+        "对应正数逐位取反得到反码1.0010，再加最低位1得到补码1.0011。",
+        "也可把真值写成−13/16，5位补码整数编码−13 mod32=19，即10011，再按4位小数解释。"
+      ],
+      "keyPoint": "位宽之外还要确定小数点，反码和补码只差最低位加1。",
+      "pitfall": "把整数真值直接套到定点小数，或颠倒反码与补码。",
+      "optionAnalysis": {
+        "A": "三种编码都符合题设固定小数格式。",
+        "B": "把反码与补码颠倒。",
+        "C": "把补码误标作原码，原码的数值部分应为1101。",
+        "D": "原码符号位为0会表示正数。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第12页第79题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第12页，第79题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-twos-complement-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "明确采用8位移码、偏置为128。位串9BH对应的真值是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "155"
+      },
+      {
+        "id": "B",
+        "text": "−101"
+      },
+      {
+        "id": "C",
+        "text": "27"
+      },
+      {
+        "id": "D",
+        "text": "−27"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "移码先按无符号读编码，再减去题目给定偏置；不要改用补码或IEEE阶码的不同偏置。",
+      "steps": [
+        "9BH=9×16+11=155。",
+        "移码编码=真值+128，所以真值=155−128。",
+        "结果27；同一位串按8位补码会是−101，但题目不是补码。"
+      ],
+      "keyPoint": "偏置编码的真值=编码的无符号值−明确偏置。",
+      "pitfall": "看最高位为1就判负，或未经约定套用偏置127。",
+      "optionAnalysis": {
+        "A": "只读出无符号编码，没有减偏置。",
+        "B": "这是155−256，误按8位补码解释。",
+        "C": "按题设偏置128正确反解。",
+        "D": "符号方向错误，编码155大于偏置，应为正。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2015年国家电网考试真题（计算机类）.pdf》PDF第24页第203题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-f91567e90b49",
+        "locator": "PDF 第24页，第203题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-twos-complement-03",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "位串C6400000H按IEEE 754 binary32解释。其真值为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "−1.5×2¹³"
+      },
+      {
+        "id": "B",
+        "text": "−1.5×2¹²"
+      },
+      {
+        "id": "C",
+        "text": "−0.5×2¹³"
+      },
+      {
+        "id": "D",
+        "text": "按8位补码解释为−58"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "按符号、8位阶码和23位小数字段拆分，先确认它属于正规数。",
+      "steps": [
+        "最高符号位为1；阶码字段E=140，处于1到254之间。",
+        "真实指数140−127=13；小数字段表示0.5，带隐含前导1的有效数为1.5。",
+        "因此真值为−1.5×2¹³=−12288；整段十六进制不能改成短补码解释。"
+      ],
+      "keyPoint": "binary32正规数为(−1)^s×(1.f)₂×2^(E−127)。",
+      "pitfall": "漏掉隐含1、把偏置减错，或按整数编码解释浮点格式。",
+      "optionAnalysis": {
+        "A": "字段拆分、隐含位和指数都正确。",
+        "B": "真实指数少算1。",
+        "C": "把有效数1.5误作0.5。",
+        "D": "题设是32位浮点数，不能只取最高字节按8位补码读。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第10页第63题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第10页，第63题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-twos-complement-04",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "四个8位补码整数分别为FEH、F2H、90H、F8H。若乘积也必须保存在8位补码寄存器中，以下哪项会溢出？",
+    "options": [
+      {
+        "id": "A",
+        "text": "FEH×F2H"
+      },
+      {
+        "id": "B",
+        "text": "F2H×90H"
+      },
+      {
+        "id": "C",
+        "text": "FEH×F8H"
+      },
+      {
+        "id": "D",
+        "text": "F2H×F8H"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先把每个操作数转成真值，再用精确乘积检查8位有符号范围，不沿用原资料的错误标答。",
+      "steps": [
+        "四数分别为−2、−14、−112、−8，8位补码范围−128到127。",
+        "四个精确乘积分别为28、1568、16、112。",
+        "只有1568超出范围，所以F2H×90H溢出；若允许16位结果，判断又会不同。"
+      ],
+      "keyPoint": "乘法溢出取决于精确积与目标结果宽度。",
+      "pitfall": "只看截断后的位串是否像一个合法数，或直接套原题标注答案。",
+      "optionAnalysis": {
+        "A": "乘积28在范围内。",
+        "B": "乘积1568超出8位补码范围。",
+        "C": "乘积16在范围内。",
+        "D": "乘积112仍不超过127。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第3页第13题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第3页，第13题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-cache-mapping-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "用容量16K×1bit的RAM芯片组成32KiB、每个地址读写8bit的存储器。需要多少片，以及怎样扩展？K=1024。",
+    "options": [
+      {
+        "id": "A",
+        "text": "2片，只作字扩展"
+      },
+      {
+        "id": "B",
+        "text": "8片，只作位扩展"
+      },
+      {
+        "id": "C",
+        "text": "16片，每组8片位扩展，再用2组字扩展"
+      },
+      {
+        "id": "D",
+        "text": "32片，每组16片位扩展，再用2组字扩展"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "总容量先算bit与byte，再分别匹配每地址位宽和地址个数。",
+      "steps": [
+        "每片16K个地址、每地址1bit；并联8片可形成16K×8bit，即16KiB。",
+        "目标为32K个字节地址，需要2个这样的组。",
+        "共8×2=16片；总位容量32×1024×8/(16×1024×1)也得到16。"
+      ],
+      "keyPoint": "位扩展补每地址宽度，字扩展补地址数量。",
+      "pitfall": "把16Kbit误当16KiB，或只补位宽却不补地址数。",
+      "optionAnalysis": {
+        "A": "两片只增加到32Kbit，远小于目标。",
+        "B": "8片只有16KiB，还缺一倍地址空间。",
+        "C": "两个扩展方向和总片数都正确。",
+        "D": "16片一组会变为16位宽，题设只要8位宽。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第12页第83题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第12页，第83题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-cache-mapping-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "某内存按字节编址，使用90000H到CFFFFH全部地址，首尾都包含。用16K×8bit芯片组成，且无冗余，至少需要多少片？",
+    "options": [
+      {
+        "id": "A",
+        "text": "8"
+      },
+      {
+        "id": "B",
+        "text": "15"
+      },
+      {
+        "id": "C",
+        "text": "16"
+      },
+      {
+        "id": "D",
+        "text": "32"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "地址区间长度必须包含末端，再除每片提供的字节容量。",
+      "steps": [
+        "容量=CFFFFH−90000H+1=40000H=262144B=256KiB。",
+        "每片16K×8bit=16KiB，位宽已符合字节读写。",
+        "所需片数256/16=16；直接相减忘记加1会错误描述区间大小。"
+      ],
+      "keyPoint": "闭区间容量=末地址−首地址+1，芯片K×位宽需换成同单位。",
+      "pitfall": "把CFFFF当容量本身，或漏掉区间最后一个地址。",
+      "optionAnalysis": {
+        "A": "只提供128KiB，不够。",
+        "B": "少一片就缺16KiB，不能覆盖整个闭区间。",
+        "C": "精确覆盖256KiB。",
+        "D": "把8bit当成还需重复位扩展，导致翻倍。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案.docx》Word第178段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-fb20ded1a61c",
+        "locator": "Word 第178段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-cache-mapping-03",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "Cache有16行、2路组相联，每块32B，按字节编址，组号从0开始。字节地址129所在块应放入哪一组？",
+    "options": [
+      {
+        "id": "A",
+        "text": "第1号组"
+      },
+      {
+        "id": "B",
+        "text": "第2号组"
+      },
+      {
+        "id": "C",
+        "text": "第4号组中的任一路"
+      },
+      {
+        "id": "D",
+        "text": "第4号组中的第4路"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "先把字节地址变成主存块号，再对组数取模。",
+      "steps": [
+        "组数16/2=8。",
+        "主存块号floor(129/32)=4，块内偏移1。",
+        "组号4 mod8=4，可放在该组两路中任一路，但命中还要核对有效位与tag。"
+      ],
+      "keyPoint": "映射使用块号对组数取模，而不是原字节地址直接取模。",
+      "pitfall": "混淆字节、块、行、组，或忘记只有2路。",
+      "optionAnalysis": {
+        "A": "129 mod8=1误把字节地址当块号。",
+        "B": "把组相联或块大小的除法次序混淆。",
+        "C": "块号、组数与组内放置范围都正确。",
+        "D": "组号正确，但一组只有2路，不存在第4路。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第14页第78题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第14页，第78题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-instruction-set-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "instruction-set"
+    ],
+    "type": "single",
+    "stem": "某扩展操作码体系：指令固定16位，每个地址字段4位。已有15条三地址指令；在剩余前缀下使用12条二地址指令，其余继续扩展一地址指令。最多可有多少条一地址指令？",
+    "options": [
+      {
+        "id": "A",
+        "text": "16"
+      },
+      {
+        "id": "B",
+        "text": "48"
+      },
+      {
+        "id": "C",
+        "text": "64"
+      },
+      {
+        "id": "D",
+        "text": "256"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "短操作码使用掉的前缀不能再扩成长操作码，逐层计算剩余分支。",
+      "steps": [
+        "三地址需12位地址，留4位操作码；16种前缀中15种已用，只剩1种。",
+        "二地址把一个4位字段扩入操作码，该前缀下有16种二地址编码，使用12种后剩4种。",
+        "每个剩余前缀可再扩4位，得到4×16=64种一地址编码。"
+      ],
+      "keyPoint": "扩展操作码按未占用前缀计数，不能把不同长度最大编码量独立相加。",
+      "pitfall": "把所有16种二地址前缀都当成仍可扩展，忽略已有指令占用。",
+      "optionAnalysis": {
+        "A": "只扩了一个剩余前缀，漏掉另外3个。",
+        "B": "剩余前缀不是3个，而是16−12=4个。",
+        "C": "逐层预留与扩展得到64。",
+        "D": "等于把已用二地址编码也继续使用，编码发生冲突。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2019年国家电网-计算机类真题.pdf》PDF第7页第61题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-e420041ad210",
+        "locator": "PDF 第7页，第61题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-instruction-set-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "instruction-set"
+    ],
+    "type": "single",
+    "stem": "4种操作出现概率为1/2、1/4、1/8、1/8。采用前缀操作码0、10、110、111，平均操作码长度为多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1.5位"
+      },
+      {
+        "id": "B",
+        "text": "1.75位"
+      },
+      {
+        "id": "C",
+        "text": "2位"
+      },
+      {
+        "id": "D",
+        "text": "2.25位"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "按执行概率加权编码长度，而不是直接平均四个码字长度。",
+      "steps": [
+        "四个码字长度依次为1、2、3、3，且没有码字是另一个码字的前缀。",
+        "加权平均为1/2×1+1/4×2+1/8×3+1/8×3。",
+        "结果0.5+0.5+0.375+0.375=1.75位；固定2位的平均才是2位。"
+      ],
+      "keyPoint": "变长编码的平均长度必须按概率加权，前缀条件保证可识别边界。",
+      "pitfall": "把码字个数当权重，或认为平均长度必须是整数。",
+      "optionAnalysis": {
+        "A": "遗漏了部分长码字的概率贡献。",
+        "B": "概率加权结果正确。",
+        "C": "这是固定2位编码的长度，非题设加权平均。",
+        "D": "这是四种长度的等权算术平均，未使用出现概率。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2019年国家电网-计算机类真题.pdf》PDF第7页第61题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-e420041ad210",
+        "locator": "PDF 第7页，第61题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-instruction-set-03",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "instruction-set"
+    ],
+    "type": "single",
+    "stem": "一条相对转移指令位于1000H，长2字节，存储器按字节编址。题设PC基准是下一条指令，8位位移F6H按补码解释，单位为字节。目标地址是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "0FF6H"
+      },
+      {
+        "id": "B",
+        "text": "0FF8H"
+      },
+      {
+        "id": "C",
+        "text": "10F8H"
+      },
+      {
+        "id": "D",
+        "text": "1002H"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先按指令长度推进PC，再解释位移的符号和单位。",
+      "steps": [
+        "下一条地址1000H+2=1002H。",
+        "F6H无符号值246，8位补码真值246−256=−10，即−0AH。",
+        "目标1002H−0AH=0FF8H；机器字长并不能替代题设编址与PC基准。"
+      ],
+      "keyPoint": "PC相对寻址要同时确定基准、指令长度、符号扩展和位移单位。",
+      "pitfall": "使用当前指令地址作基准，或将F6H误当正246。",
+      "optionAnalysis": {
+        "A": "以1000H为基准，漏掉2字节指令长度。",
+        "B": "按下一条基准加带符号字节位移，结果正确。",
+        "C": "把F6H作为正位移246相加。",
+        "D": "只算顺序后继，没有执行相对转移。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第12页第56题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第12页，第56题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-cpu-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cpu"
+    ],
+    "type": "single",
+    "stem": "某同步四级流水线各段组合逻辑耗时为8、9、4、8ns，忽略级间寄存器开销。流水节拍至少为多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4ns"
+      },
+      {
+        "id": "B",
+        "text": "7.25ns"
+      },
+      {
+        "id": "C",
+        "text": "9ns"
+      },
+      {
+        "id": "D",
+        "text": "29ns"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "一个节拍必须容纳最慢阶段的工作，不能让它来不及产生稳定结果。",
+      "steps": [
+        "列出四段耗时8、9、4、8ns。",
+        "同步各级使用共同节拍，最慢9ns形成下限。",
+        "忽略额外开销时至少9ns；若另给寄存器开销还需按模型计入。"
+      ],
+      "keyPoint": "流水周期受最慢段约束，总阶段延迟与平均段耗时是不同量。",
+      "pitfall": "对各级求算术平均来设置时钟，或把单条路径总延迟当节拍。",
+      "optionAnalysis": {
+        "A": "最快段不代表其他段也能在4ns完成。",
+        "B": "平均值会让9ns阶段违反时限。",
+        "C": "覆盖所有阶段的最长工作时间。",
+        "D": "这是四段组合延迟和，不是可重叠流水的周期。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第12页第85题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第12页，第85题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-cpu-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cpu"
+    ],
+    "type": "single",
+    "stem": "CPU主频1.03GHz，四级单发射流水线每级1周期。连续执行100条指令，无停顿。按完整批次完成时间计算吞吐量是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.25×10⁹条/秒"
+      },
+      {
+        "id": "B",
+        "text": "约0.971×10⁹条/秒"
+      },
+      {
+        "id": "C",
+        "text": "1.00×10⁹条/秒"
+      },
+      {
+        "id": "D",
+        "text": "1.03×10⁹条/秒"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "有限批次要算填充和排空，不能直接使用填满后的稳态吞吐。",
+      "steps": [
+        "总周期4+100−1=103。",
+        "总时间103/(1.03×10⁹)=100×10⁻⁹秒。",
+        "批次吞吐100/(100ns)=1.00×10⁹条/秒；1.03×10⁹是相应理想稳态值。"
+      ],
+      "keyPoint": "批次平均吞吐=完成指令数/该批总时间，包含流水首尾开销。",
+      "pitfall": "忽略填充排空，或把每条都按4周期完全串行处理。",
+      "optionAnalysis": {
+        "A": "把四级流水当不重叠执行，未利用流水。",
+        "B": "未按主频与103个周期的精确关系换算。",
+        "C": "总时间100ns，批次平均值正确。",
+        "D": "这是每周期一条的稳态上限，没有计有限批次的首尾。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第11页第68题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第11页，第68题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-cpu-03",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cpu"
+    ],
+    "type": "single",
+    "stem": "在约定可正常返回的中断处理中，“保存被中断程序的PC”和“查询中断向量表”分别主要解决什么问题？",
+    "options": [
+      {
+        "id": "A",
+        "text": "两者都是保存外设的数据内容"
+      },
+      {
+        "id": "B",
+        "text": "前者保存返回断点，后者定位服务程序入口"
+      },
+      {
+        "id": "C",
+        "text": "前者找到服务入口，后者保存返回断点"
+      },
+      {
+        "id": "D",
+        "text": "前者只用于提高主频，后者只用于加密"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "返回地址与处理入口是两个不同方向的控制转移信息。",
+      "steps": [
+        "响应中断时，需要保留原程序按体系规定应继续或重试的位置。",
+        "中断向量或相关表项帮助定位相应中断服务程序。",
+        "服务结束后再恢复所需现场和返回信息，因此两种信息不可互相代替。"
+      ],
+      "keyPoint": "保存PC回答处理后回哪里，向量定位回答现在去哪里处理。",
+      "pitfall": "把入口地址和返回地址当作同一个存储对象。",
+      "optionAnalysis": {
+        "A": "这两项关注程序控制位置，外设数据另有处理。",
+        "B": "两者职责对应正确。",
+        "C": "把返回与入口的方向颠倒。",
+        "D": "与主频提升或加密无直接对应关系。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案.docx》Word第45段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-fb20ded1a61c",
+        "locator": "Word 第45段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-system-buses-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-buses"
+    ],
+    "type": "single",
+    "stem": "存储器总容量64KiB，字长32位，明确按字编址，地址从0开始。共有多少个地址单元、最高地址是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "64K个，FFFFH"
+      },
+      {
+        "id": "B",
+        "text": "16K个，3FFFH"
+      },
+      {
+        "id": "C",
+        "text": "16K个，4000H"
+      },
+      {
+        "id": "D",
+        "text": "32K个，7FFFH"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先从字节容量除每个字的字节数，再把个数换成从0开始的闭区间。",
+      "steps": [
+        "32bit=4B，每个字地址对应4字节。",
+        "地址单元数64×1024/4=16384=16K。",
+        "最高编号16384−1=16383=3FFFH，至少14位地址可覆盖。"
+      ],
+      "keyPoint": "容量字节数不等于字地址个数，最高编号比个数小1。",
+      "pitfall": "把按字编址看成按字节编址，或把末地址写成个数。",
+      "optionAnalysis": {
+        "A": "这是按字节编址时的地址数量和范围。",
+        "B": "每单元4B且从0编号，计算正确。",
+        "C": "4000H是地址数量，不是最后编号。",
+        "D": "将每字误算为2字节，而题设是32位。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2015年国家电网考试真题（计算机类）.pdf》PDF第21页第178题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-f91567e90b49",
+        "locator": "PDF 第21页，第178题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-system-buses-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-buses"
+    ],
+    "type": "single",
+    "stem": "一个16K×32bit存储器使用非复用二进制地址信号和32条数据线。仅计算逻辑地址线与数据线，共多少条？不计电源、控制与片选。",
+    "options": [
+      {
+        "id": "A",
+        "text": "48"
+      },
+      {
+        "id": "B",
+        "text": "46"
+      },
+      {
+        "id": "C",
+        "text": "36"
+      },
+      {
+        "id": "D",
+        "text": "32"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "K×位宽的前项表示地址个数，后项表示每地址读写宽度。",
+      "steps": [
+        "16K=16384=2¹⁴，地址线需14条。",
+        "每个位置32bit，按题设数据线为32条。",
+        "合计14+32=46；这个数不是芯片全部物理引脚数。"
+      ],
+      "keyPoint": "地址个数取log₂求地址位宽，数据位宽另计。",
+      "pitfall": "把16K中的16直接当地址线数量，或遗漏题目排除项。",
+      "optionAnalysis": {
+        "A": "把16直接加32，未对16K地址取对数。",
+        "B": "14位地址加32位数据，正确。",
+        "C": "把K或数据位宽误作不同单位。",
+        "D": "只计算了数据线，遗漏地址线。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第12页第78题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第12页，第78题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-parallel-computing-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "parallel-computing"
+    ],
+    "type": "single",
+    "stem": "关于指令级并行，下列哪项最准确地区分超流水、超标量和VLIW？",
+    "options": [
+      {
+        "id": "A",
+        "text": "三者都仅表示芯片上有两个CPU核心"
+      },
+      {
+        "id": "B",
+        "text": "超流水细分阶段；超标量可同周期发射多条；VLIW显式打包多个可并行操作字段"
+      },
+      {
+        "id": "C",
+        "text": "超标量只指缩短每个流水级的时间，绝不会多发射"
+      },
+      {
+        "id": "D",
+        "text": "VLIW表示任何一条指令都必须只包含一个操作码"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "按改变的是流水粒度、发射宽度还是指令打包来分辨，不能都等同多核。",
+      "steps": [
+        "细分工序、缩短可能的节拍是超流水的典型思路。",
+        "超标量提高按条件同周期发射多条指令的能力，但仍受相关性与资源限制。",
+        "VLIW由软件等显式组织多个操作字段；发射周期减少还不等于全部完成时间同样减少。"
+      ],
+      "keyPoint": "流水级深度、发射宽度、软件打包是不同组织维度。",
+      "pitfall": "把指令级并行与多核并行等同，或把“发射”与“完成”混用。",
+      "optionAnalysis": {
+        "A": "指令级并行可以在单核心内部实现。",
+        "B": "三种组织方式的主要差异正确。",
+        "C": "把超流水的描述误当超标量，并否认其发射特征。",
+        "D": "与VLIW的多操作字段思想相反。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案.docx》Word第227段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-fb20ded1a61c",
+        "locator": "Word 第227段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-network-architecture-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-architecture"
+    ],
+    "type": "single",
+    "stem": "文件196000B分成总长1000B的等长分组，每组含20B首部。经过3条100Mbit/s链路，采用完整分组存储转发，忽略传播、排队和处理。源端开始发送到目的端收齐文件，至少需多久？",
+    "options": [
+      {
+        "id": "A",
+        "text": "15.68ms"
+      },
+      {
+        "id": "B",
+        "text": "16.00ms"
+      },
+      {
+        "id": "C",
+        "text": "16.16ms"
+      },
+      {
+        "id": "D",
+        "text": "48.00ms"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "先按有效载荷计算包数，再用等长分组在多链路流水完成的时间模型。",
+      "steps": [
+        "每包有效载荷1000−20=980B，包数196000/980=200。",
+        "每包发送时间1000×8/10⁸=0.08ms；第一包走3条链路用3个这样的时间。",
+        "后续199包每隔0.08ms到达，合计(200+3−1)×0.08=16.16ms。"
+      ],
+      "keyPoint": "等长分组经k条相同速率链路时，理想存储转发时间为(N+k−1)L/R。",
+      "pitfall": "忽略首部或后续链路的尾包，也可能把整文件在所有链路串行相乘。",
+      "optionAnalysis": {
+        "A": "只用文件原始数据除速率，漏首部和尾包后续传送。",
+        "B": "算了200包在第一条链路上的时间，尚差两次尾部转发。",
+        "C": "包数、报头和流水首尾均计入。",
+        "D": "让每条链路完全等前一条发送整个文件，忽略流水重叠。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第7页第34题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第7页，第34题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-network-architecture-02",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-architecture"
+    ],
+    "type": "single",
+    "stem": "一台路由器只按题设承担普通IP分组转发，不做代理，也不作为业务TCP端点。下列说法正确的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "必须与每个客户端建立相同的业务TCP连接，才能转发其中的IP分组"
+      },
+      {
+        "id": "B",
+        "text": "必须具备相应IP与链路层转发能力，但不因转发TCP载荷就必须终止该TCP连接"
+      },
+      {
+        "id": "C",
+        "text": "只能处理UDP，不能转发含TCP的IP分组"
+      },
+      {
+        "id": "D",
+        "text": "只需要识别HTTP页面，不需要IP地址"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "分组载荷属于哪种上层协议，与中间设备是否成为该协议端点是不同问题。",
+      "steps": [
+        "路由器根据IP层信息与转发表决定下一跳，并用相应链路封装送出。",
+        "TCP通常是两端主机之间的传输连接，普通中间IP转发不替它进行业务端点握手。",
+        "路由器也可能因管理或特定功能运行TCP，但那不是题设普通转发的必需条件。"
+      ],
+      "keyPoint": "同层协议端点与途中转发设备的职责不能混同。",
+      "pitfall": "把封装中的TCP头看成每个路由器都必须建立的独立连接。",
+      "optionAnalysis": {
+        "A": "把路由器错误变成每条业务连接的TCP端点。",
+        "B": "符合题设普通IP转发功能。",
+        "C": "IP转发不因为载荷是TCP而必然禁止。",
+        "D": "HTTP是应用内容，普通IP转发依据网络层信息。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机题库与答案.docx》Word第383段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-c0e0166ea582",
+        "locator": "Word 第383段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-physical-layer-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "physical-layer"
+    ],
+    "type": "single",
+    "stem": "采用差分曼彻斯特编码：每个位中间必跳变，位开始处有跳变代表0，无跳变代表1。开始前电平为H。用“前半位/后半位”的H、L表示，数据1010应编码为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "LH | HL | LH | HL"
+      },
+      {
+        "id": "B",
+        "text": "HL | HL | LH | LH"
+      },
+      {
+        "id": "C",
+        "text": "HL | LH | HL | LH"
+      },
+      {
+        "id": "D",
+        "text": "HH | LL | HH | LL"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "逐位继承前一位末尾电平，再按开始处是否跳变和中间必跳变计算。",
+      "steps": [
+        "第一位1不在开始跳变，从H开始，半位为HL。",
+        "第二位0从上一位末尾L开始先跳到H，中间再跳为L，所以仍为HL。",
+        "第三位1继承L、不在开始跳变，得LH；第四位0从末尾H先跳到L，再中间跳为H，得LH。"
+      ],
+      "keyPoint": "差分编码用相对变化表示数据，必须明确初始电平和0/1规则。",
+      "pitfall": "每个数据位都擅自重新从H开始，或照普通曼彻斯特的绝对方向编码。",
+      "optionAnalysis": {
+        "A": "这是按某个普通曼彻斯特方向规则直接映射，非题设差分过程。",
+        "B": "逐位继承末电平，四段均正确。",
+        "C": "没有按第二位0在开始处跳变的规则计算。",
+        "D": "每位中间没有跳变，违背题设必要条件。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).pdf》PDF第1页第3题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bca354628009",
+        "locator": "PDF 第1页，第3题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-physical-layer-02",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "physical-layer"
+    ],
+    "type": "single",
+    "stem": "自测明确规定：QAM有4种不同非零幅度、8种相位，所有幅度与相位组合都合法且形成互异码元，码元率600Baud。忽略编码冗余，比特率为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "600bit/s"
+      },
+      {
+        "id": "B",
+        "text": "2400bit/s"
+      },
+      {
+        "id": "C",
+        "text": "3000bit/s"
+      },
+      {
+        "id": "D",
+        "text": "4800bit/s"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "原资料幅度、相位数与声明码元数冲突；本题用明确的全部组合条件消除矛盾。",
+      "steps": [
+        "合法互异码元总数M=4×8=32。",
+        "每码元log₂32=5bit。",
+        "比特率600×5=3000bit/s，不能同时又按16码元计算。"
+      ],
+      "keyPoint": "先确定实际有效状态集合，再用码元率乘每码元比特数。",
+      "pitfall": "将4×8错误当16，或把相位个数直接当每码元比特数。",
+      "optionAnalysis": {
+        "A": "假定每码元只有1bit，忽略32种状态。",
+        "B": "对应16种状态，但不符合本题全部32个组合条件。",
+        "C": "组合数与log₂转换均正确。",
+        "D": "600×8错误把8种相位当成8bit。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(2).docx》Word第158段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-c2a0b6166a76",
+        "locator": "Word 第158段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-data-link-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "single",
+    "stem": "8位数据使用普通海明码，要求能定位并纠正任意单比特错误，不额外要求同时区分所有双错。至少需要多少个校验位？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2"
+      },
+      {
+        "id": "B",
+        "text": "3"
+      },
+      {
+        "id": "C",
+        "text": "4"
+      },
+      {
+        "id": "D",
+        "text": "5"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "校验综合需区分无错与码字各个单错位置，总状态数不只是原8位数据的位置。",
+      "steps": [
+        "设校验位r，码字长8+r，无错加各单错位置共需8+r+1种状态。",
+        "r=3时2³=8，小于8+3+1=12，不够。",
+        "r=4时2⁴=16，不小于8+4+1=13，首次满足，所以至少4位。"
+      ],
+      "keyPoint": "单错定位状态计数条件为2^r≥m+r+1。",
+      "pitfall": "只为数据位编号而忽略校验位本身也可能出错，以及无错状态。",
+      "optionAnalysis": {
+        "A": "4种状态不足以区分所有单错位置。",
+        "B": "8种状态连12种需要都覆盖不了。",
+        "C": "最小满足状态数条件。",
+        "D": "可以提供更多状态，但不是最少。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第10页第65题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第10页，第65题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-data-link-02",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "single",
+    "stem": "采用一个普通偶校验位保护数据。以下关于其检错能力的判断正确的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "能保证纠正任意一位错并指出位置"
+      },
+      {
+        "id": "B",
+        "text": "若两位数据同时翻转，总奇偶性可能仍通过，且单个奇偶位不能定位错误"
+      },
+      {
+        "id": "C",
+        "text": "所有偶数位错误必然都能检出"
+      },
+      {
+        "id": "D",
+        "text": "校验通过就证明发送者身份可信"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "一个校验位只表达整体奇偶性，不携带足够的错误位置与发送者身份信息。",
+      "steps": [
+        "翻转一位会改变1的个数的奇偶性，因此可检测任意单比特翻转。",
+        "翻转两位会使总体奇偶性保持，即使内容变化也可能通过。",
+        "一个奇偶结果不能确定是哪一位错，更不是带密钥的来源认证。"
+      ],
+      "keyPoint": "检出、定位、纠正和来源认证是不同能力。",
+      "pitfall": "把“能检测一位错”误解成能定位纠正所有错误。",
+      "optionAnalysis": {
+        "A": "普通单奇偶位不能确定位置，更不能保证纠正。",
+        "B": "同时说明双错漏检和不能定位，正确。",
+        "C": "偶数位翻转恰好可能保持奇偶性。",
+        "D": "奇偶校验不是签名或消息认证。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).docx》Word第136段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-20e0dbeaef8c",
+        "locator": "Word 第136段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-data-link-03",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "multiple",
+    "stem": "关于基本PPP，下列说法正确的有哪些？",
+    "options": [
+      {
+        "id": "A",
+        "text": "它用于点到点链路，可封装不同网络层协议"
+      },
+      {
+        "id": "B",
+        "text": "LCP用于链路建立配置等，NCP族用于配置相应网络层协议"
+      },
+      {
+        "id": "C",
+        "text": "有FCS检错并不表示基本PPP提供TCP式逐数据帧确认重传"
+      },
+      {
+        "id": "D",
+        "text": "只要建立了链路，就必然同时获得加密、可靠重传和多点总线访问"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "应把链路协商、封装、检测与可靠传送分开，不能从建立链路推导所有能力。",
+      "steps": [
+        "PPP的标准对象是点到点链路，提供多协议数据封装。",
+        "LCP处理链路层配置，NCP为相关网络层协议作配置，认证还取决于协商安排。",
+        "基本PPP不靠FCS实现任意纠错，也不因此提供TCP式确认重传；更不等于加密或共享多点访问。"
+      ],
+      "keyPoint": "协议建立连接和是否提供可靠数据交付是不同维度。",
+      "pitfall": "以为有链路建立和FCS就必然等于TCP或安全隧道。",
+      "optionAnalysis": {
+        "A": "符合PPP对象及封装用途。",
+        "B": "LCP与NCP的职责正确。",
+        "C": "FCS主要用于检错，不能包办可靠重传。",
+        "D": "把未必具备的安全、可靠与多点能力强加给基本PPP。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第5页第28题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第5页，第28题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-data-link-04",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "single",
+    "stem": "在传统IEEE 802链路层教学模型中，下列配对正确的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "LLC负责模拟电压，MAC负责跨自治系统路由"
+      },
+      {
+        "id": "B",
+        "text": "LLC提供较统一的逻辑链路接口，MAC处理相应介质访问与链路寻址等"
+      },
+      {
+        "id": "C",
+        "text": "802.3表示无线局域网，802.11表示以太网"
+      },
+      {
+        "id": "D",
+        "text": "每一种LLC服务都必然提供与TCP相同的可靠字节流"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先区分链路子层功能，再辨主标准编号；历史模型不等于现代产品的全部实现。",
+      "steps": [
+        "传统802模型把数据链路层分为LLC与MAC。",
+        "LLC负责较统一的逻辑链路控制接口，MAC与相应介质访问方式、地址等有关。",
+        "802.3对应以太网，802.11对应无线局域网，不能将LLC泛化成必然的TCP字节流。"
+      ],
+      "keyPoint": "子层功能、标准家族与具体服务类型分别判断。",
+      "pitfall": "把MAC当网络层路由，或把旧LLC模型的一种能力推广到所有服务。",
+      "optionAnalysis": {
+        "A": "电压属物理问题，自治系统路由属网络层问题。",
+        "B": "基本分工正确。",
+        "C": "两个主标准家族写反。",
+        "D": "LLC有不同服务，不可一律等同TCP可靠字节流。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).pdf》PDF第9页第30题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bca354628009",
+        "locator": "PDF 第9页，第30题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-data-link-05",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "single",
+    "stem": "只按题设共享半双工CSMA/CD传播模型计算：R=1Gbit/s，信号速度2×10⁸m/s，忽略其他延迟。若最小帧长减少400bit，为维持同样的最远冲突可检测条件，最大站间距离至少需怎样变化？",
+    "options": [
+      {
+        "id": "A",
+        "text": "增加40m"
+      },
+      {
+        "id": "B",
+        "text": "减少80m"
+      },
+      {
+        "id": "C",
+        "text": "减少40m"
+      },
+      {
+        "id": "D",
+        "text": "不变"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "最远冲突需约往返传播时间，帧发送时间必须覆盖它。此处是题设抽象模型，不是修改现代以太网标准的建议。",
+      "steps": [
+        "基本条件Lmin/R≥2d/v，得到最大距离dmax=Lmin×v/(2R)。",
+        "距离变化量400×2×10⁸/(2×10⁹)=40m。",
+        "帧变短，能等待发现冲突的时间变少，所以最大距离减少40m。"
+      ],
+      "keyPoint": "碰撞约束有往返因子2，且只适用题设共享半双工模型。",
+      "pitfall": "漏除2，或者认为帧变短反而可拉长电缆。",
+      "optionAnalysis": {
+        "A": "变化量大小虽为40，但方向相反。",
+        "B": "漏掉往返因子2，算成80m。",
+        "C": "方向与大小均正确。",
+        "D": "发送时间变短而传播条件相同，最大允许距离不能不变。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第16页第77题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第16页，第77题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-data-link-06",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "single",
+    "stem": "GBN已发出0至7号帧。明确ACK(k)表示已连续正确收到0至k号帧。发送方依次收到ACK0、ACK2、ACK3，其后最早未确认帧超时。按GBN规则需重传哪些帧？",
+    "options": [
+      {
+        "id": "A",
+        "text": "仅1号，共1帧"
+      },
+      {
+        "id": "B",
+        "text": "1至7号，共7帧"
+      },
+      {
+        "id": "C",
+        "text": "仅4号，共1帧"
+      },
+      {
+        "id": "D",
+        "text": "4至7号，共4帧"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "累计ACK可以覆盖丢失的较早ACK，重传从最早未确认的数据帧开始。",
+      "steps": [
+        "ACK3已经累计确认0、1、2、3号帧，ACK1未到不表示1号数据未确认。",
+        "最早未确认是4号，后面5、6、7也尚未累计确认。",
+        "GBN超时回退重传4至7，共4帧；不是选择重传只补一个。"
+      ],
+      "keyPoint": "先写明ACK语义，再求最早未确认帧与GBN回退范围。",
+      "pitfall": "把缺失ACK当缺失同号数据，或把选择重传策略套到GBN。",
+      "optionAnalysis": {
+        "A": "ACK3已包含1号数据的累计确认。",
+        "B": "忽视ACK2、ACK3能覆盖此前帧。",
+        "C": "属于只补缺口的想法，不符合本题GBN回退范围。",
+        "D": "最早未确认4号起全部未确认帧，正确。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第15页第75题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第15页，第75题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-network-layer-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-layer"
+    ],
+    "type": "single",
+    "stem": "一个IPv4 /20地址块按现代常规CIDR规则等长划为16个子网，每网保留网络与广播地址。新前缀和每个子网最大传统可用主机数为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "/24、254"
+      },
+      {
+        "id": "B",
+        "text": "/24、256"
+      },
+      {
+        "id": "C",
+        "text": "/25、126"
+      },
+      {
+        "id": "D",
+        "text": "/28、14"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "先按子网数借位，再从剩余主机位计算单网容量。",
+      "steps": [
+        "16=2⁴，需要从主机部分再借4位，新前缀20+4=24。",
+        "每个子网还剩8个主机位，总地址2⁸=256。",
+        "保留网络和广播后可分配254；题目没有采用旧式额外禁用全0/全1子网的规则。"
+      ],
+      "keyPoint": "借位增加前缀长度，主机地址保留与子网编号规则是两件事。",
+      "pitfall": "把16个子网误当还剩16位，或不区分总地址与可用主机数。",
+      "optionAnalysis": {
+        "A": "借4位得/24，256−2=254，正确。",
+        "B": "256是总地址数，未保留网络与广播。",
+        "C": "这是从/20借5位划32网的情况，不符合16个等长子网。",
+        "D": "借了8位，会划256网而非16网。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).docx》Word第157段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-20e0dbeaef8c",
+        "locator": "Word 第157段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-network-layer-02",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-layer"
+    ],
+    "type": "single",
+    "stem": "四个地址为10.10.15.254、10.10.17.1、10.10.24.5、10.10.29.3，均采用掩码255.255.248.0。它们共属于几个不同网络前缀？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1"
+      },
+      {
+        "id": "B",
+        "text": "2"
+      },
+      {
+        "id": "C",
+        "text": "3"
+      },
+      {
+        "id": "D",
+        "text": "4"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "掩码/21使第三字节按8划块，判断网络前缀不能只看最后一个字节。",
+      "steps": [
+        "255.255.248.0为/21，第三字节的块起点为0、8、16、24等。",
+        "15落在8至15；17落在16至23；24和29均落在24至31。",
+        "因此前缀分别是10.10.8.0/21、10.10.16.0/21、10.10.24.0/21，共3个。"
+      ],
+      "keyPoint": "同网判断对每个地址与同一掩码相与，再比较网络前缀。",
+      "pitfall": "把第三字节不同直接当不同网络，或误套/24。",
+      "optionAnalysis": {
+        "A": "忽略第三字节中仍有网络位，不是整个10.10前缀都同网。",
+        "B": "24与29确同网，但15和17并不同网，共3组。",
+        "C": "按8边界分组，结果正确。",
+        "D": "把24和29也拆开，忽略/21的块大小。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案.docx》Word第171段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-fb20ded1a61c",
+        "locator": "Word 第171段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-network-layer-03",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-layer"
+    ],
+    "type": "single",
+    "stem": "RIP采用常见跳数度量。甲收到邻居乙通告“网N的度量为16”。对“经乙到达N”的判断哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "经乙可达，甲只需记17跳"
+      },
+      {
+        "id": "B",
+        "text": "经乙不可达，16表示无穷大；但甲可能另有其他有效路径"
+      },
+      {
+        "id": "C",
+        "text": "经乙恰好16跳，仍处于正常可达范围"
+      },
+      {
+        "id": "D",
+        "text": "甲应直接把16当作TCP端口号"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "RIP的16是不可达标记，不是一个还可使用的正常长路径。",
+      "steps": [
+        "常见RIP有效跳数最高15，16代表不可达。",
+        "经乙候选度量按加1并封顶16处理，不能创建17跳正常路由。",
+        "这否定的是经乙的路径，不足以证明其他邻居或其他路由机制全无有效路径。"
+      ],
+      "keyPoint": "RIP无穷大语义优先于普通整数加法，路径作用范围也要明确。",
+      "pitfall": "沿用原资料错误标答，把16继续累加成可达17跳。",
+      "optionAnalysis": {
+        "A": "17超过RIP可达范围，不能按正常路由使用。",
+        "B": "正确解释不可达标志，并限定到经乙这条路径。",
+        "C": "16不在正常可达跳数内。",
+        "D": "路由度量与传输层端口无关。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第7页第35题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第7页，第35题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-network-layer-04",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-layer"
+    ],
+    "type": "multiple",
+    "stem": "关于IPv6地址及邻居发现，下列说法正确的有哪些？",
+    "options": [
+      {
+        "id": "A",
+        "text": "地址长度为128bit"
+      },
+      {
+        "id": "B",
+        "text": "1300:0000:0000:03FF:001E:0000:BF02:8A4D可简写为1300::3FF:1E:0:BF02:8A4D"
+      },
+      {
+        "id": "C",
+        "text": "邻居发现可帮助主机发现本链路路由器、前缀与相关配置，并不限于链路地址解析"
+      },
+      {
+        "id": "D",
+        "text": "邻居发现必须依靠IPv4 ARP广播完成，因此IPv6也必须有IPv4式广播"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "压缩只改变书写，不改变8组16位结构；邻居发现承担多项本链路功能。",
+      "steps": [
+        "IPv6为8组各16位，共128位。",
+        "题设简写中::补回两组0000，其他组只省略前导0，能恢复原地址。",
+        "IPv6邻居发现基于ICMPv6等机制，包含路由器发现及前缀等信息，不直接照搬IPv4 ARP广播。"
+      ],
+      "keyPoint": "地址压缩要能唯一展开，邻居发现功能大于简单地址映射。",
+      "pitfall": "一条地址使用多个::，或把IPv6全部邻接机制套成ARP。",
+      "optionAnalysis": {
+        "A": "地址位数正确。",
+        "B": "仅使用一次::且补回后正好8组，等值。",
+        "C": "符合邻居发现的功能范围。",
+        "D": "IPv6不依赖IPv4式ARP广播，前提错误。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).pdf》PDF第2页第5题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bca354628009",
+        "locator": "PDF 第2页，第5题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-tcp-stream-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "tcp-stream"
+    ],
+    "type": "single",
+    "stem": "接收方通告TCP接收窗口为0，随后窗口重开但更新报文丢失。以下哪种处理理解正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "发送方永远不能再发送任何TCP报文，否则就违反零窗口"
+      },
+      {
+        "id": "B",
+        "text": "发送方可无视窗口继续发送原来整窗业务数据"
+      },
+      {
+        "id": "C",
+        "text": "发送方按规定进行零窗口探测，以取得当前窗口；这不等于允许任意整窗新数据"
+      },
+      {
+        "id": "D",
+        "text": "收到零窗口就说明网络拥塞窗口必须永久为0"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "零窗口限制普通数据发送，但协议仍需避免因丢失窗口更新而永久互等。",
+      "steps": [
+        "rwnd=0表示接收缓存暂不提供普通新数据的接收空间。",
+        "窗口更新丢失时，若发送方永久静默，无法可靠得知它已重新开放。",
+        "规定的零窗口探测可引出当前窗口响应；探测例外不意味着普通业务数据能不受窗口限制。"
+      ],
+      "keyPoint": "接收窗口、零窗口探测和网络拥塞控制分别理解。",
+      "pitfall": "把“停止普通整窗发送”说成禁止一切TCP报文，或反过来完全无视流控。",
+      "optionAnalysis": {
+        "A": "过度绝对化，ACK、管理与规定探测等并不因此全被禁止。",
+        "B": "会违背接收方流控，探测不是无限发送许可。",
+        "C": "正确说明探测目的和边界。",
+        "D": "rwnd与cwnd目标不同，零接收窗口不等于永久网络拥塞。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2020年国家电网-计算机类真题.pdf》PDF第12页第124题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-d91ce57b3763",
+        "locator": "PDF 第12页，第124题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-tcp-stream-02",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "tcp-stream"
+    ],
+    "type": "single",
+    "stem": "TCP甲向乙发送不带数据的FIN，seq=5000。乙此前已按序接收至4999，并成功按序接收该FIN；乙确认后还有自己的剩余数据要发。以下哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "乙确认号为5001，且在乙关闭发送方向前仍可向甲发送自己的数据"
+      },
+      {
+        "id": "B",
+        "text": "乙确认号为5000，因为FIN不占序号"
+      },
+      {
+        "id": "C",
+        "text": "甲发FIN就必然使乙立即失去发送数据的能力"
+      },
+      {
+        "id": "D",
+        "text": "乙后续数据必须从甲的5001继续使用同一序号空间"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "FIN占一个序号，但只关闭发出FIN一方的发送方向，TCP有两套方向独立的字节序号。",
+      "steps": [
+        "FIN seq5000占一个序号，乙确认甲方向下一期待位置5001。",
+        "甲方向关闭不立即关闭乙方向，乙可以完成剩余发送再发自己的FIN。",
+        "乙数据使用乙自己的序号空间，不是续接甲的序号。"
+      ],
+      "keyPoint": "全双工半关闭与双方最终关闭不同，FIN与SYN一样占序号。",
+      "pitfall": "把一次FIN当整条双向连接立即消失，或混用双向序号。",
+      "optionAnalysis": {
+        "A": "确认号及半关闭行为都正确。",
+        "B": "FIN占序号，确认应前进1。",
+        "C": "忽略TCP独立关闭两方向的能力。",
+        "D": "两个方向使用各自序号，不要求连续。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(2).docx》Word第172段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-c2a0b6166a76",
+        "locator": "Word 第172段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-application-layer-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "application-layer"
+    ],
+    "type": "single",
+    "stem": "某名称的A记录可正确解析到192.0.2.7，但反向查询该地址没有对应名称。最直接应核对哪项？",
+    "options": [
+      {
+        "id": "A",
+        "text": "把ARP缓存清空，就必然自动补出DNS反向记录"
+      },
+      {
+        "id": "B",
+        "text": "把A记录删除，反向查询才可能成功"
+      },
+      {
+        "id": "C",
+        "text": "核对相应反向区域与PTR记录；正向A记录不必然自动产生PTR"
+      },
+      {
+        "id": "D",
+        "text": "把UDP全部禁用，让DNS只能使用SMTP"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "正向和反向是分别维护的DNS记录与查询，不是同一条映射自动可逆。",
+      "steps": [
+        "A记录解决名称到IPv4地址的映射。",
+        "IPv4反向查询通常查7.2.0.192.in-addr.arpa下的PTR。",
+        "应检查反向区域及PTR配置，而不是因正向成功就假定反向一定存在。"
+      ],
+      "keyPoint": "A/AAAA与PTR分别维护，DNS反向解析也不是ARP。",
+      "pitfall": "把名称和地址想成系统必然自动维护的一一可逆函数。",
+      "optionAnalysis": {
+        "A": "ARP处理本地链路地址映射，不能生成DNS的PTR。",
+        "B": "删A与补PTR无必然关系，还会破坏正向服务。",
+        "C": "针对缺失反向记录的正确检查方向。",
+        "D": "SMTP负责邮件传送，与DNS反向记录配置无此关系。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第17页第105题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第17页，第105题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-application-layer-02",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "application-layer"
+    ],
+    "type": "single",
+    "stem": "FTP客户端已连接服务端默认控制端口并登录，现明确使用被动模式，服务端给出数据监听端口51000。下列哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "控制连接通常为服务端TCP/21；客户端另连51000传数据，控制成功不代表数据一定能通"
+      },
+      {
+        "id": "B",
+        "text": "无论主动被动，上传文件都必须复用同一条21端口连接"
+      },
+      {
+        "id": "C",
+        "text": "因为是上传，所以服务端数据监听端口必定是20，51000不可能合法"
+      },
+      {
+        "id": "D",
+        "text": "FTP控制必须使用UDP，只有数据用TCP"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "原资料对上传端口缺少模式条件；本题明确被动模式，按控制和独立数据连接分别判断。",
+      "steps": [
+        "FTP默认控制连接通常到服务端TCP/21。",
+        "被动模式由服务端提供数据监听地址端口，客户端再建立数据连接，本例是51000。",
+        "数据路径可能另受防火墙或监听状态影响，因此登录成功不能保证文件数据路径成功。"
+      ],
+      "keyPoint": "上传下载方向不决定固定数据端口，主动被动模式决定连接组织。",
+      "pitfall": "把数据连接与控制连接合成一条，或把20写成所有数据传送的固定端口。",
+      "optionAnalysis": {
+        "A": "控制与被动数据连接均解释正确。",
+        "B": "FTP分离控制和数据，不自动复用控制连接承载所有文件。",
+        "C": "20是经典主动模式的相关默认端口，不能覆盖本题被动监听安排。",
+        "D": "基本FTP控制也使用TCP，不是UDP。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案.docx》Word第59段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-fb20ded1a61c",
+        "locator": "Word 第59段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-network-security-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-security"
+    ],
+    "type": "single",
+    "stem": "按算法能力辨认，以下哪项正确？这里不把旧算法名称当作新系统部署建议。",
+    "options": [
+      {
+        "id": "A",
+        "text": "DSA用了公私钥，因此能直接加密任意文件内容"
+      },
+      {
+        "id": "B",
+        "text": "AES是公钥签名算法，RSA只能计算普通无密钥摘要"
+      },
+      {
+        "id": "C",
+        "text": "历史DSA用于数字签名，不能因其属于公钥体系就把它当作内容加密方案"
+      },
+      {
+        "id": "D",
+        "text": "公钥算法一定比任何对称算法安全，与参数实现无关"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "算法所属密码家族与具体能实现的功能应分开，原资料将DSA称密钥加密算法不够准确。",
+      "steps": [
+        "公钥体系可用于签名、密钥建立或特定加密机制，不是每个算法同时提供全部能力。",
+        "DSA是历史数字签名算法；AES是对称分组密码，RSA可构造规定的加密或签名方案。",
+        "应根据目标和具体方案选择，不能以“非对称”标签推出可加密内容或绝对更安全。"
+      ],
+      "keyPoint": "签名、加密和摘要的功能区别优先于一个笼统的算法分类词。",
+      "pitfall": "把公私钥结构等同内容加密能力，或把类别当绝对安全等级。",
+      "optionAnalysis": {
+        "A": "DSA不提供题述文件内容加密能力。",
+        "B": "把AES与RSA功能都错分。",
+        "C": "准确区分公钥签名与内容加密。",
+        "D": "安全取决于算法、参数、实现与使用方式，绝对化错误。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机题库与答案.docx》Word第234段 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-c0e0166ea582",
+        "locator": "Word 第234段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-network-security-02",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-security"
+    ],
+    "type": "multiple",
+    "stem": "某设备公开自己的公钥证书，但私钥未泄露。关于公开证书、签名与身份验证，下列说法正确的有哪些？",
+    "options": [
+      {
+        "id": "A",
+        "text": "公开公钥证书不等于公开私钥，不能仅据此伪造主体的有效私钥签名"
+      },
+      {
+        "id": "B",
+        "text": "验证方仍需检查可信链、预期身份与相应协议证明，不能只见到证书就信任"
+      },
+      {
+        "id": "C",
+        "text": "给接收者保密与由发送者签名应区分“谁的密钥”和具体算法能力"
+      },
+      {
+        "id": "D",
+        "text": "公开证书后，任何人都必然能推导出私钥，所以应把所有证书当秘密藏起来"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "证书通常是可公开的身份与公钥绑定材料，私钥保护和正确验证才是关键。",
+      "steps": [
+        "证书包含公钥等公开信息，不直接包含主体私钥。",
+        "签名使用发送者私钥、验证用其可信公钥；保密机制则按相应接收者密钥与方案设计。",
+        "可信链、身份匹配和握手验证仍需完成，攻击者自己造一张证书不能自动取得他人的信任。"
+      ],
+      "keyPoint": "公开公钥与保护私钥并不矛盾，证书也不是免验证的通行证。",
+      "pitfall": "把证书公开误解为私钥公开，或忽略证书绑定和密钥主体。",
+      "optionAnalysis": {
+        "A": "符合公钥体系的基本设计目标。",
+        "B": "证书需按信任与身份规则验证。",
+        "C": "正确区分发送者签名与接收者保密的密钥方向。",
+        "D": "在安全前提下不能由已知公钥高效必然求出私钥，这一说法错误。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2017年国家电网-计算机类真题.pdf》PDF第5页第65题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-811b4f73077b",
+        "locator": "PDF 第5页，第65题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-wireless-mobile-01",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "wireless-mobile"
+    ],
+    "type": "single",
+    "stem": "关于无线自组通信与移动IP，下列哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "无AP的无线自组模式就是移动IP，两者解决同一层面的全部问题"
+      },
+      {
+        "id": "B",
+        "text": "终端直接通信就一定不需要链路协议，也一定能访问互联网"
+      },
+      {
+        "id": "C",
+        "text": "有基础设施的无线局域网才可能使用IP，其他模式不能承载IP"
+      },
+      {
+        "id": "D",
+        "text": "自组模式讨论接入与节点组织，移动IP讨论移动中的地址和通信连续性，不能因名称含移动就等同"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "网络组织方式与跨接入位置的移动性管理是不同概念，可能组合但不等价。",
+      "steps": [
+        "有基础设施模式通常由AP组织接入，自组模式可由终端直接组织相应本地通信。",
+        "移动IP一类机制关注位置变化后的地址绑定与通信连续性，不要求网络必定没有AP。",
+        "自组是否有网关、是否提供多跳路由和互联网接入，还需另外分析。"
+      ],
+      "keyPoint": "接入组织、路由与移动性管理按各自功能判断。",
+      "pitfall": "用“无线”或“移动”两个词把不同层次机制合成同一概念。",
+      "optionAnalysis": {
+        "A": "把组织方式与移动性管理等同。",
+        "B": "无线通信仍需协议，互联网可达性也需相应网络配置。",
+        "C": "自组网络也可承载IP，不能用有无AP作这种绝对限制。",
+        "D": "正确区分问题范围及组合关系。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第7页第33题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第7页，第33题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  },
+  {
+    "id": "paper-review-twos-complement-05",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "教学模型采用双符号位补码，运算结果两个符号位依次为01或10。下列解释正确的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "01表示负溢出，10表示正溢出"
+      },
+      {
+        "id": "B",
+        "text": "两个符号位不同说明发生溢出；01为正溢出，10为负溢出"
+      },
+      {
+        "id": "C",
+        "text": "只要两个符号位都为1就必然溢出"
+      },
+      {
+        "id": "D",
+        "text": "双符号位能让任何超范围结果都变成可表示结果"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "双符号位用于检测超范围，不能以“产生任意进位”或“两个进位同时出现”代替正确判据。",
+      "steps": [
+        "未溢出的正常符号扩展为非负00、负数11。",
+        "结果01显示正数方向超出原范围，10显示负数方向超出原范围。",
+        "因此不同符号位指示溢出，但不能避免溢出，也不能使固定目标格式无限扩容。"
+      ],
+      "keyPoint": "双符号位相同为正常符号扩展，不同为相应溢出指示。",
+      "pitfall": "把同号11误当溢出，或把检测机制当扩大范围的机制。",
+      "optionAnalysis": {
+        "A": "正负溢出方向写反。",
+        "B": "双符号位判据与方向都正确。",
+        "C": "11是正常负数的符号扩展，不足以证明溢出。",
+        "D": "检测超范围不等于解决超范围，目标格式仍有限。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).pdf》PDF第5页第16题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bca354628009",
+        "locator": "PDF 第5页，第16题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "资料补缺",
+      "基础推演"
+    ]
+  }
+]

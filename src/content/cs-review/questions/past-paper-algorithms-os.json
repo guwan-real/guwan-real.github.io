@@ -1,0 +1,2022 @@
+[
+  {
+    "id": "paper-review-linear-lists-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "linear-lists"
+    ],
+    "type": "single",
+    "stem": "两个非空单链表长度分别为 m、n，只提供各自头指针，没有尾指针。把第二条整链接到第一条之后，不复制结点。该操作的紧确时间量级是什么？",
+    "options": [
+      {
+        "id": "A",
+        "text": "Θ(1)"
+      },
+      {
+        "id": "B",
+        "text": "Θ(n)"
+      },
+      {
+        "id": "C",
+        "text": "Θ(m)"
+      },
+      {
+        "id": "D",
+        "text": "Θ(mn)"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "题目明确只有头指针，关键工作是找到第一条链的末尾。",
+      "steps": [
+        "先沿第一条单链表访问 next，直到找到尾结点，耗时 Θ(m)。",
+        "让该尾结点的 next 指向第二条的首结点，这一步为常数时间。",
+        "不复制、不遍历第二条，合计 Θ(m)+Θ(1)=Θ(m)；若另给尾指针，条件才变为常数连接。"
+      ],
+      "keyPoint": "把定位成本与修改链接的成本分开。",
+      "pitfall": "把所有“链表连接”都当成常数时间，忽略给了哪些指针。",
+      "optionAnalysis": {
+        "A": "只计改链接，漏掉从第一条头结点寻找尾结点。",
+        "B": "第二条整链接入，无需遍历它的 n 个结点。",
+        "C": "先沿第一条找尾部，再修改一条链接，随 m 线性增长。",
+        "D": "没有两链逐项配对的嵌套过程。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第15页第87题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第15页，第87题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "链表定位与连接成本"
+    ]
+  },
+  {
+    "id": "paper-review-linear-lists-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "linear-lists"
+    ],
+    "type": "single",
+    "stem": "普通单链表只给结点 p 的地址，没有前驱指针。若只要求逻辑上删除 p 对应的数据，不要求保持结点身份，以下哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "任意 p 都能复制后继后删除，尾结点也一样"
+      },
+      {
+        "id": "B",
+        "text": "仅执行 p->next=p->next->next 就删除了 p"
+      },
+      {
+        "id": "C",
+        "text": "复制后继数据后应释放 p 自己"
+      },
+      {
+        "id": "D",
+        "text": "p 非尾时可把后继数据复制到 p，再绕过并释放后继；尾结点不能直接套用"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "这不是对任意单链表结点都适用的常数删除操作。",
+      "steps": [
+        "若 p 有后继 q，可用 q 的数据覆盖 p 的数据。",
+        "把 p.next 改成 q.next，再释放 q，逻辑序列少掉原 p 的数据，但实际释放的是 q。",
+        "若 p 为尾，或必须删除原 p 对象本身，这个技巧不适用，需要前驱等额外信息。"
+      ],
+      "keyPoint": "复制后继删除法有非尾和结点身份两个前提。",
+      "pitfall": "只看数据序列变化，忘记实际释放了哪个结点。",
+      "optionAnalysis": {
+        "A": "尾结点没有后继，无法使用这种技巧。",
+        "B": "这绕过的是 p 的后继，且还缺少必要的释放处理，未删除 p 对应数据。",
+        "C": "前驱仍指向 p，直接释放 p 会使已有链接失效。",
+        "D": "符合逻辑删除技巧，也说明物理释放对象与逻辑删除对象不同。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2015年国家电网考试真题（计算机类）.pdf》PDF第9页第71题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-f91567e90b49",
+        "locator": "PDF 第9页，第71题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "只给结点指针的删除边界"
+    ]
+  },
+  {
+    "id": "paper-review-stacks-queues-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "stacks-queues"
+    ],
+    "type": "single",
+    "stem": "元素 1、2、3、4、5、6 依次入栈，可交替入栈出栈，目标出栈序列为 2、5、4、3、1、6。完成它所需栈容量至少是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2"
+      },
+      {
+        "id": "B",
+        "text": "3"
+      },
+      {
+        "id": "C",
+        "text": "4"
+      },
+      {
+        "id": "D",
+        "text": "5"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "按目标按需压栈，并记录每一步元素个数。",
+      "steps": [
+        "先压 1、2，弹 2，剩下 1。",
+        "下一个要弹 5，必须再压 3、4、5，此时同时有 1、3、4、5 四个元素，因此容量至少 4。",
+        "依次弹 5、4、3、1，再压 6 弹 6，峰值未超过 4，故最小容量恰为 4。"
+      ],
+      "keyPoint": "最小容量需要同时证明必要峰值和可行操作。",
+      "pitfall": "把序列长度当作必须同时入栈的元素数。",
+      "optionAnalysis": {
+        "A": "只能完成部分早期操作，压入 5 前需同时保存更多元素。",
+        "B": "压入 5 时栈中是 1、3、4、5，共 4 个。",
+        "C": "既有必须达到的 4 个同时驻栈元素，也有容量 4 的完整可行过程。",
+        "D": "无需让全部尚未输出的元素提前入栈，4 已足够。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第9页第42题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第9页，第42题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "最小栈容量"
+    ]
+  },
+  {
+    "id": "paper-review-stacks-queues-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "stacks-queues"
+    ],
+    "type": "single",
+    "stem": "1、2、3、4 依次入栈，允许交替操作，但禁止连续三次出栈。以下哪一个序列不能得到？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2、1、4、3"
+      },
+      {
+        "id": "B",
+        "text": "1、4、3、2"
+      },
+      {
+        "id": "C",
+        "text": "2、3、4、1"
+      },
+      {
+        "id": "D",
+        "text": "1、2、3、4"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "本题多了一条对操作串的限制，不能只用通常的栈排列判断。",
+      "steps": [
+        "普通栈规则下四个序列均可行，还要检查连续出栈限制。",
+        "若先弹1，再弹4，则2、3已在4下面，且所有输入已完成。",
+        "接下来只能连续弹4、3、2，没有可插入的入栈操作打断，所以 B 违反限制；其余有满足限制的构造。"
+      ],
+      "keyPoint": "附加操作限制独立于普通出栈合法性。",
+      "pitfall": "只模拟输出先后，不记录入栈与出栈的连续次数。",
+      "optionAnalysis": {
+        "A": "压1压2弹2弹1，再压3压4弹4弹3，最多两次连续弹出。",
+        "B": "弹1后为得到4必须压完2、3、4，此后4、3、2只能连续弹出三次。",
+        "C": "可在弹2与弹3、弹3与弹4之间分别压入新元素，最后连续弹4、1。",
+        "D": "每次压入一个立即弹出即可。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第1页第1题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第1页，第1题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "禁止连续弹出的受限栈"
+    ]
+  },
+  {
+    "id": "paper-review-stacks-queues-03",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "stacks-queues"
+    ],
+    "type": "single",
+    "stem": "1、2、3、4 按此顺序进入双端队列，每个元素可选择从左端或右端入队，但只能从左端出队，入队出队可交替。以下哪一输出不可行？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4、3、2、1"
+      },
+      {
+        "id": "B",
+        "text": "1、4、3、2"
+      },
+      {
+        "id": "C",
+        "text": "4、1、3、2"
+      },
+      {
+        "id": "D",
+        "text": "2、1、4、3"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "按队列两端约束追踪尚未输出的元素，而不是套单栈规则。",
+      "steps": [
+        "先出4意味着1、2、3此前均已入队且未出队，4必须放在左端。",
+        "4之后要出1，要求4移走后的队列左端是1；由于2、3按序从两端插入而都未出队，若1仍在左端，只能依次把2、3放右边，形成1、2、3。",
+        "弹出1后左端是2，不能先出3，因此 C 不可行；其余可分别构造。"
+      ],
+      "keyPoint": "两端入、固定一端出仍有排列限制。",
+      "pitfall": "误以为允许两端入队就可以任意重新排列队内元素。",
+      "optionAnalysis": {
+        "A": "全部从左端依次入队，再从左端取出即可。",
+        "B": "先入1并取1，再将2、3、4均从左入队后取出。",
+        "C": "4先出时1、2、3仍在队列；要让1随后先出，则原队列只能从1开始保留1、2、3的次序，无法跳过2先出3。",
+        "D": "1右入、2左入，取2再取1；3右入、4左入，取4再取3。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第1页第2题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第1页，第2题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "输出受限双端队列"
+    ]
+  },
+  {
+    "id": "paper-review-arrays-strings-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "arrays-strings"
+    ],
+    "type": "single",
+    "stem": "二维数组按行优先、0 下标存储，每元素 2 B。A[0][0] 地址为 1000，A[2][2] 地址为 1052。假设下标合法，A[3][4] 的地址是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1040"
+      },
+      {
+        "id": "B",
+        "text": "1052"
+      },
+      {
+        "id": "C",
+        "text": "1080"
+      },
+      {
+        "id": "D",
+        "text": "1160"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "本题不是直接给列数，需要先由两个地址反推出列数。",
+      "steps": [
+        "A[2][2] 与首元素相差52 B，相当于26个元素。",
+        "行优先偏移满足2×列数+2=26，所以列数为12。",
+        "A[3][4] 前有3×12+4=40个元素，地址为1000+40×2=1080。"
+      ],
+      "keyPoint": "先把地址差换成元素差，再求数组维度。",
+      "pitfall": "没有先除元素大小，直接把字节数代入行列公式。",
+      "optionAnalysis": {
+        "A": "40 是目标前面的元素数，仍需乘每元素 2 B。",
+        "B": "这是给定 A[2][2] 的位置，并非目标位置。",
+        "C": "由字节差反求列数12，再计算40个元素的字节偏移80。",
+        "D": "把字节差与元素个数混用，会多乘元素大小。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2015年国家电网考试真题（计算机类）.pdf》PDF第7页第54题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-f91567e90b49",
+        "locator": "PDF 第7页，第54题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "反求二维数组列数"
+    ]
+  },
+  {
+    "id": "paper-review-arrays-strings-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "arrays-strings"
+    ],
+    "type": "single",
+    "stem": "在本题 C 实现中 int 占4 B、指针占8 B。声明 int (*p)[5]，p 指向有效二维数组的非末行；声明的 int *q[5] 是本作用域中的完整数组而非函数形参。p+1 跨过的字节数、sizeof(q) 依次为多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "8、8"
+      },
+      {
+        "id": "B",
+        "text": "20、40"
+      },
+      {
+        "id": "C",
+        "text": "40、20"
+      },
+      {
+        "id": "D",
+        "text": "4、40"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "题目明确了类型、对象位置和机器大小，避免未初始化指针或参数退化的歧义。",
+      "steps": [
+        "int (*p)[5] 的p是指针，所指一行含5个int，指针加1跨过5×4=20 B。",
+        "int *q[5] 的q是数组，含5个int指针。",
+        "q未作为形参退化，每个指针8 B，因此sizeof(q)=5×8=40 B。"
+      ],
+      "keyPoint": "指针所指对象决定加一跨度，数组元素类型决定整体sizeof。",
+      "pitfall": "只看声明中都有*和[5]，不看括号与结合关系。",
+      "optionAnalysis": {
+        "A": "把被指对象的跨度与指针本身大小混淆，也把整个数组误当成一个指针。",
+        "B": "p指向5个int的一行，跨20 B；q含5个指针，共40 B。",
+        "C": "把int大小与指针大小颠倒了。",
+        "D": "q的大小正确，但p不是指向单个int的指针。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(2).docx》Word段落243 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-c2a0b6166a76",
+        "locator": "Word 第243段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "数组指针与指针数组"
+    ]
+  },
+  {
+    "id": "paper-review-trees-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "trees"
+    ],
+    "type": "single",
+    "stem": "一棵非空树只有度0、1、2、3的结点，其中度3有4个、度2有5个、度1有2个。叶结点有多少个？树的度指孩子数。",
+    "options": [
+      {
+        "id": "A",
+        "text": "6"
+      },
+      {
+        "id": "B",
+        "text": "12"
+      },
+      {
+        "id": "C",
+        "text": "14"
+      },
+      {
+        "id": "D",
+        "text": "16"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "无需猜树形，边数守恒足以求解。",
+      "steps": [
+        "设叶数L，总结点为L+4+5+2=L+11，树边数为L+10。",
+        "按每个结点的孩子数计边，共3×4+2×5+1×2=24。",
+        "令L+10=24，得到L=14；度1结点在相减时抵消。"
+      ],
+      "keyPoint": "一般树用总边数=Σ度数=总结点−1推导。",
+      "pitfall": "将只适用于二叉树的n0=n2+1直接用于多叉树。",
+      "optionAnalysis": {
+        "A": "只套二叉树叶数=度2结点数+1，忽略了度3结点。",
+        "B": "没有把非空树的边数比结点数少1纳入等式。",
+        "C": "由边数两种计数得到1+2×4+5=14。",
+        "D": "把度1结点也当成会增加叶数的贡献。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第2页第5题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第2页，第5题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "一般树的度数与叶数"
+    ]
+  },
+  {
+    "id": "paper-review-trees-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "trees"
+    ],
+    "type": "single",
+    "stem": "根为第1层，某完全二叉树第5层恰有4个叶结点。该树结点总数最多是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "19"
+      },
+      {
+        "id": "B",
+        "text": "31"
+      },
+      {
+        "id": "C",
+        "text": "63"
+      },
+      {
+        "id": "D",
+        "text": "55"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "先确认末层可能位于哪里，再把允许的子结点尽量补满。",
+      "steps": [
+        "若存在第6层，则前5层完整，第5层共有16个结点。",
+        "其中4个是叶，剩12个有孩子；为使总数最多，这12个各有2个孩子，第6层为24。",
+        "前4层共15个，总数15+16+24=55；若再有第7层，第5层便没有叶子，不能满足题设。"
+      ],
+      "keyPoint": "完全树的叶子可能分布在最后两层，最多题应分类考虑树高。",
+      "pitfall": "把“第5层有4个叶子”直接读成“第5层只有4个结点”。",
+      "optionAnalysis": {
+        "A": "只考虑第5层就是最后一层，未考虑第6层存在时可更多。",
+        "B": "只把前5层全满相加，既未满足其叶数，也未考虑末层。",
+        "C": "这是6层全满，届时第5层没有叶结点，违反题设。",
+        "D": "第5层满16，其中12个有孩子，末层最多24，总数15+16+24。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第9页第45题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第9页，第45题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "完全二叉树的末两层"
+    ]
+  },
+  {
+    "id": "paper-review-trees-03",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "trees"
+    ],
+    "type": "single",
+    "stem": "六个符号权值为1、2、3、4、5、6，用三叉哈夫曼构造最小带权路径长度，必要时补0权虚叶；根到叶按边数计长度。最小WPL是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "21"
+      },
+      {
+        "id": "B",
+        "text": "34"
+      },
+      {
+        "id": "C",
+        "text": "46"
+      },
+      {
+        "id": "D",
+        "text": "42"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "补零只服务构造完整多叉树，零叶本身不直接贡献带权成本。",
+      "steps": [
+        "满三叉的叶数须使(叶数−1)能被2整除，6个叶子需补一个0。",
+        "先合并0、1、2得3；再从3、3、4、5、6中合并3、3、4得10。",
+        "最后5+6+10=21；每轮合并总权相加，WPL=3+10+21=34。"
+      ],
+      "keyPoint": "多叉哈夫曼先检查虚叶数量，再累加各轮合并权。",
+      "pitfall": "把根权当作WPL，或对三叉问题仍每轮只合并两个结点。",
+      "optionAnalysis": {
+        "A": "只算根的总权，漏掉深层叶经过的额外边。",
+        "B": "补0后合并3、10、21，合并权之和为34。",
+        "C": "这是另一组权值的结果，不是本题六个权。",
+        "D": "未先补零，先合并1+2+3=6、再合并4+5+6=15，最后二路合并6+15=21可得到42，但不是三叉最优值。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第9页第54题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第9页，第54题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "三叉哈夫曼补零与WPL"
+    ]
+  },
+  {
+    "id": "paper-review-trees-04",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "trees"
+    ],
+    "type": "single",
+    "stem": "采用后序线索二叉树，空右孩子域保存后序后继。X 是某父结点的右孩子且为叶子，并有左兄弟 Y。X 的右线索指向哪里？",
+    "options": [
+      {
+        "id": "A",
+        "text": "X 的父结点"
+      },
+      {
+        "id": "B",
+        "text": "左兄弟 Y"
+      },
+      {
+        "id": "C",
+        "text": "以 Y 为根子树的最左下结点"
+      },
+      {
+        "id": "D",
+        "text": "整树根结点，且永远如此"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "先把当前父结点范围的后序写出来，就能确定后继。",
+      "steps": [
+        "后序访问规则为左子树、右子树、根。",
+        "X是右孩子叶，访问X时左兄弟Y的整棵子树已经结束。",
+        "X没有自身子树需要继续，下一项正是其父结点；空右域据约定保存这个后继。"
+      ],
+      "keyPoint": "线索前驱后继由所选遍历次序决定。",
+      "pitfall": "把刚访问过的左兄弟误当成接下来要访问的后继。",
+      "optionAnalysis": {
+        "A": "后序先完成左子树、再右子树，右叶X之后即父结点。",
+        "B": "Y子树已在X之前访问，不是X的后继。",
+        "C": "这是此前左子树中的结点，不能作为X之后的访问者。",
+        "D": "只有父结点恰为整树根时才重合，不能概括所有情况。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第9页第55题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第9页，第55题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "后序线索的后继"
+    ]
+  },
+  {
+    "id": "paper-review-trees-05",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "trees"
+    ],
+    "type": "single",
+    "stem": "AVL初始根20，左孩子10，右孩子50，50的左孩子30、右孩子70。插入40后恢复平衡。新根及其直接左右孩子依次是什么？",
+    "options": [
+      {
+        "id": "A",
+        "text": "20、10、50"
+      },
+      {
+        "id": "B",
+        "text": "50、20、70"
+      },
+      {
+        "id": "C",
+        "text": "30、20、50"
+      },
+      {
+        "id": "D",
+        "text": "40、30、50"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "需要看最低失衡祖先到新增位置的两段方向。",
+      "steps": [
+        "40按BST规则插入为30的右孩子，最低失衡祖先是20。",
+        "从20走向新增结点，先向右到50，再向左到30，是RL型。",
+        "先以50右旋使30上提，再以20左旋，最终根30、左20、右50，中序不变。"
+      ],
+      "keyPoint": "RL是先旋孩子、再旋祖先的双旋。",
+      "pitfall": "只按整树偏右就机械执行一次左旋。",
+      "optionAnalysis": {
+        "A": "没有修复根20右侧过高的问题。",
+        "B": "只在20左旋，不能修复这个右左型失衡。",
+        "C": "先对50右旋，再对20左旋，得到该结构。",
+        "D": "40只是新插入结点，不能不按旋转结构直接提升为根。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第2页第4题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第2页，第4题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "AVL的RL双旋"
+    ]
+  },
+  {
+    "id": "paper-review-graphs-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "graphs"
+    ],
+    "type": "single",
+    "stem": "对6个顶点的简单无向图，“可以安排成连通图所需最少边数”与“不论怎样安排都保证连通的最少边数”依次是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "5、5"
+      },
+      {
+        "id": "B",
+        "text": "6、10"
+      },
+      {
+        "id": "C",
+        "text": "10、15"
+      },
+      {
+        "id": "D",
+        "text": "5、11"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "题目特意限定简单图，以排除多重边造成的不同结论。",
+      "steps": [
+        "6顶点连通至少5条，且任意6顶点树能达到，故存在性阈值为5。",
+        "不连通最多可把5顶点连成完全图，再留一个孤点，得到5×4/2=10条。",
+        "任何不连通划分内部边数都不超过10，所以11条即可保证连通。"
+      ],
+      "keyPoint": "保证型问题先求坏情况能有多少边，再加1。",
+      "pitfall": "把“能找到一个连通构造”的n−1误当成任意图保证。",
+      "optionAnalysis": {
+        "A": "5条能构成树，但也可能集中在少数顶点，不能保证任意安排连通。",
+        "B": "树只需5条；10条还可为5顶点完全图加孤立点。",
+        "C": "混淆不连通图最大边数、完全图边数与题目所问两个阈值。",
+        "D": "最少连通是树的5条；不连通最多10条，再多一条才保证。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第2页第7题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第2页，第7题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "存在连通与必然连通的边数"
+    ]
+  },
+  {
+    "id": "paper-review-graphs-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "graphs"
+    ],
+    "type": "multiple",
+    "stem": "G 是非空简单无向连通图，顶点数 n、边数 e。下列哪些结论正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "各顶点度数之和等于2e，必为偶数"
+      },
+      {
+        "id": "B",
+        "text": "总有 e>n−1"
+      },
+      {
+        "id": "C",
+        "text": "e=n−1有可能成立"
+      },
+      {
+        "id": "D",
+        "text": "总存在度为1的顶点"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "连通并不意味着无环，也不意味着一定有叶子。",
+      "steps": [
+        "按边数度，每条无向边贡献两个端点，总度数为2e，所以A成立。",
+        "用树检查严格不等式，树有e=n−1，说明B错误、C正确。",
+        "用三角形检查叶结点断言，三个顶点度都为2，D错误。"
+      ],
+      "keyPoint": "存在性或全称性质可用最小清晰反例检验。",
+      "pitfall": "把树的特性推广到所有无向连通图。",
+      "optionAnalysis": {
+        "A": "每条边在两个端点各贡献1。",
+        "B": "树连通且e=n−1，是反例。",
+        "C": "任意非空树满足这一等式。",
+        "D": "三角形连通且各顶点度都为2，否定该断言。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第10页第47题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第10页，第47题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "连通图性质的反例"
+    ]
+  },
+  {
+    "id": "paper-review-searching-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "searching"
+    ],
+    "type": "single",
+    "stem": "36个记录平均分为6块，每块6条，块间有序、块内无序。先顺序查6项索引，再顺序查目标块；每条记录成功查询等概率，每比较一个索引或记录关键字计1次。成功ASL是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "3.5"
+      },
+      {
+        "id": "B",
+        "text": "6"
+      },
+      {
+        "id": "C",
+        "text": "7"
+      },
+      {
+        "id": "D",
+        "text": "12"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "所有概率与比较口径均已明确，可以逐段加权。",
+      "steps": [
+        "每块6条且每记录等概率，各块也等概率，顺序索引平均比较(6+1)/2=3.5次。",
+        "选中块内6条等概率，平均再比较3.5次。",
+        "总成本相加，ASL=3.5+3.5=7；如果索引改为二分，需要另算。"
+      ],
+      "keyPoint": "分块成功ASL包含定位块和块内查找两段。",
+      "pitfall": "漏计索引成本，或把最坏次数直接当作平均。",
+      "optionAnalysis": {
+        "A": "只计块内或只计索引其中一段。",
+        "B": "把两次长度6的顺序查找都错当成平均3次。",
+        "C": "平均索引3.5次加块内3.5次。",
+        "D": "这是两段均走到最后的最大比较数，不是等概率平均。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第23页第153题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第23页，第153题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "分块查找的两段ASL"
+    ]
+  },
+  {
+    "id": "paper-review-searching-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "searching"
+    ],
+    "type": "multiple",
+    "stem": "关于静态查找表和动态查找表，下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "静态查找讨论的操作集合主要是查询，动态查找还需考虑插入、删除等更新"
+      },
+      {
+        "id": "B",
+        "text": "数组只能用于静态查找，链表只能用于动态查找"
+      },
+      {
+        "id": "C",
+        "text": "动态查找表示所有元素的值必须每秒发生变化"
+      },
+      {
+        "id": "D",
+        "text": "选择动态查找结构时，要同时考虑查找和更新的代价"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "同一结构可服务不同操作需求，核心是维护成本。",
+      "steps": [
+        "先看操作要求：若只讨论已有表上查询，可按静态模型；若还要维护集合增删，需要动态模型。",
+        "数组、链表、树等是实现方式，并不由“静态/动态”名称唯一指定。",
+        "因此A、D正确，B混淆存储与操作，C把支持更新误读成持续变化。"
+      ],
+      "keyPoint": "静态、动态首先区分操作集合，而非语言声明或物理结构。",
+      "pitfall": "把静态理解为编译时固定大小，把动态理解为每个值不断变化。",
+      "optionAnalysis": {
+        "A": "区别首先在允许的操作，更新成本影响结构选择。",
+        "B": "存储结构与操作集合不是一一对应。",
+        "C": "动态指支持更新，不要求所有值不断变化。",
+        "D": "不能只比较一次查询，而忽略维护成本。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案.docx》Word段落220 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-fb20ded1a61c",
+        "locator": "Word 第220段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "静态与动态查找表"
+    ]
+  },
+  {
+    "id": "paper-review-insertion-sort-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "insertion-sort"
+    ],
+    "type": "single",
+    "stem": "对305、117、201、412、109做升序LSD基数排序，每轮稳定，依次处理个位、十位、百位。完成十位这一轮后的序列是什么？",
+    "options": [
+      {
+        "id": "A",
+        "text": "201、305、109、412、117"
+      },
+      {
+        "id": "B",
+        "text": "109、117、201、305、412"
+      },
+      {
+        "id": "C",
+        "text": "201、412、305、117、109"
+      },
+      {
+        "id": "D",
+        "text": "109、305、201、117、412"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "严格按每轮的稳定分组推演，不能只看最终排序结果。",
+      "steps": [
+        "按个位稳定收集，次序为201、412、305、117、109。",
+        "十位为0的组按原次序取201、305、109；十位为1的组取412、117。",
+        "按桶0再桶1收集，得到201、305、109、412、117，百位尚未处理。"
+      ],
+      "keyPoint": "每轮稳定性保留已经处理的较低位次序。",
+      "pitfall": "认为处理第二位后已经整体有序，或在同桶中随意重排。",
+      "optionAnalysis": {
+        "A": "十位相同组保留个位轮的次序，得到该结果。",
+        "B": "这是全局数值升序，不是仅完成低两位。",
+        "C": "这是个位轮结束的结果，尚未处理十位。",
+        "D": "把十位相同组倒置，破坏了稳定性。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第10页第61题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第10页，第61题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "LSD两轮稳定分配"
+    ]
+  },
+  {
+    "id": "paper-review-insertion-sort-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "insertion-sort"
+    ],
+    "type": "single",
+    "stem": "初始序列为[9,8,7,6,5,4,3]。某标准升序排序在两轮后成为[7,8,9,6,5,4,3]。下列哪种算法符合？约定直接插入每轮插入下一元素，冒泡从左向右把最大值送末端，堆排序每轮取最大值归位。",
+    "options": [
+      {
+        "id": "A",
+        "text": "简单选择排序"
+      },
+      {
+        "id": "B",
+        "text": "上述冒泡排序"
+      },
+      {
+        "id": "C",
+        "text": "上述堆排序"
+      },
+      {
+        "id": "D",
+        "text": "直接插入排序"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "给出轮次约定和初始数据后，可以直接复演而不靠猜测。",
+      "steps": [
+        "第一轮把8插入前缀[9]，得到[8,9,7,6,5,4,3]。",
+        "第二轮把7插入有序前缀，得到[7,8,9,6,5,4,3]。",
+        "选择排序应固定最小前缀，冒泡和指定堆排序应固定最大后缀，均与题面不同。"
+      ],
+      "keyPoint": "用算法每轮保证的有序区或归位区识别中间状态。",
+      "pitfall": "看到局部递增就直接判断，而不与全局极值位置对照。",
+      "optionAnalysis": {
+        "A": "前两轮应已把最小的3、4固定在开头，与结果不符。",
+        "B": "前两轮应在末尾固定8、9，结果末尾却是4、3。",
+        "C": "取两次最大值后末尾也应有8、9，与结果不符。",
+        "D": "插入8得到[8,9,7,...]，再插入7得到题给结果。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第14页第100题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第14页，第100题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "排序中间状态识别"
+    ]
+  },
+  {
+    "id": "paper-review-insertion-sort-03",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "insertion-sort"
+    ],
+    "type": "single",
+    "stem": "对[2,3,4,1]执行升序直接插入排序，在最后一轮插入1之前，数组仍为[2,3,4,1]。以下哪项解释正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "前三个数已递增，所以至少三个已在全局最终位置"
+      },
+      {
+        "id": "B",
+        "text": "有序前缀只保证内部顺序；此时四项都可能不在最终位置"
+      },
+      {
+        "id": "C",
+        "text": "这种状态不可能由直接插入产生"
+      },
+      {
+        "id": "D",
+        "text": "说明直接插入不支持包含最小值的输入"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "一个四元素例子足以检验“每轮必须有元素归位”的误解。",
+      "steps": [
+        "前两轮处理2、3、4，它们局部有序，数组不变。",
+        "最终正确结果为[1,2,3,4]，与当前四个位置逐个比较都不同。",
+        "所以前缀有序不能推出元素已全局归位，最后一轮仍可整体右移前三项。"
+      ],
+      "keyPoint": "直接插入保证有序前缀，通常不保证前缀元素已最终归位。",
+      "pitfall": "把选择或冒泡的归位性质误加到直接插入。",
+      "optionAnalysis": {
+        "A": "最终为[1,2,3,4]，原前三项都还会移动。",
+        "B": "逐位置与最终结果比较，2/3/4/1均不同。",
+        "C": "前三个数本来有序，前两轮无需移动即可得到。",
+        "D": "最后一轮恰可把最小值1插入前端，正常完成。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机题库与答案.docx》Word段落3 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-c0e0166ea582",
+        "locator": "Word 第3段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "局部有序不等于最终归位"
+    ]
+  },
+  {
+    "id": "paper-review-os-overview-01",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "os-overview"
+    ],
+    "type": "multiple",
+    "stem": "按经典三级调度划分，下列哪些描述正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "从后备作业中选择可进入内存参加执行者，属于高级调度"
+      },
+      {
+        "id": "B",
+        "text": "线程等待I/O就必然已经被中级调度交换到磁盘"
+      },
+      {
+        "id": "C",
+        "text": "在就绪队列中选下一CPU使用者，属于低级调度"
+      },
+      {
+        "id": "D",
+        "text": "根据需要挂起调出或重新调入活动，属于中级调度"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "级别名称背后是不同资源和状态的管理对象。",
+      "steps": [
+        "先识别队列：后备作业进入内存属于高级。",
+        "就绪活动争用CPU属于低级；挂起活动的调出调入属于中级。",
+        "等设备只说明等待条件，可能仍驻留内存，不能从阻塞直接推出已交换。"
+      ],
+      "keyPoint": "区分进入系统、驻留内存与获得CPU三个决定。",
+      "pitfall": "把所有队列选择都称为CPU调度，或把阻塞等同于调出。",
+      "optionAnalysis": {
+        "A": "高级或作业调度控制作业进入系统。",
+        "B": "阻塞等待与是否驻留内存是两个维度，不必发生交换。",
+        "C": "低级调度安排已具备运行条件的活动。",
+        "D": "中级调度调节内存中的活动规模。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2015年国家电网考试真题（计算机类）.pdf》PDF第12页第98题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-f91567e90b49",
+        "locator": "PDF 第12页，第98题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "高级中级低级调度"
+    ]
+  },
+  {
+    "id": "paper-review-os-overview-02",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "os-overview"
+    ],
+    "type": "single",
+    "stem": "在一颗普通单核CPU与独立I/O设备控制器构成的系统中，下列哪项最准确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "CPU算数据时，所有设备都必须停工"
+      },
+      {
+        "id": "B",
+        "text": "两个进程可交替并发，CPU计算也可与设备I/O在时间上重叠"
+      },
+      {
+        "id": "C",
+        "text": "两个进程启动后，同一核必然同时执行它们的两条指令流"
+      },
+      {
+        "id": "D",
+        "text": "DMA传输的全过程都必须由CPU逐字节执行"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "并发与部件并行可以同时成立。",
+      "steps": [
+        "同一时刻一颗普通核不能仅因有两个进程就执行两个普通指令流，二者可交替并发。",
+        "设备控制器可在CPU执行其他工作时推进I/O，属于不同部件工作的重叠。",
+        "因此单核限制不能推广成所有硬件串行，B同时说明两个层次。"
+      ],
+      "keyPoint": "判断并行先明确比较的对象是指令流还是不同硬件部件。",
+      "pitfall": "把“单核”解释为CPU与全部外设都不能并行。",
+      "optionAnalysis": {
+        "A": "独立设备可在CPU计算时执行自己的操作。",
+        "B": "区分单核指令流与不同硬件部件上的工作。",
+        "C": "启动只提供活动，不证明同核同刻并行。",
+        "D": "DMA减少CPU直接搬运，仍有设置和完成处理。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第14页第63题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第14页，第63题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "单核与设备并行"
+    ]
+  },
+  {
+    "id": "paper-review-sjf-scheduling-01",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "single",
+    "stem": "时刻10采用非抢占高响应比优先选择下一作业。甲到达0、服务5；乙到达4、服务2；丙到达8、服务1，三者此前均未运行。应选择谁？",
+    "options": [
+      {
+        "id": "A",
+        "text": "甲，因为它最早到达"
+      },
+      {
+        "id": "B",
+        "text": "乙，因为它的响应比为4，另两者为3"
+      },
+      {
+        "id": "C",
+        "text": "丙，因为服务时间最短"
+      },
+      {
+        "id": "D",
+        "text": "三者响应比相同，无法比较"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "按选择时刻重算等待时间，才能比较。",
+      "steps": [
+        "甲等待10，响应比(10+5)/5=3。",
+        "乙等待6，比值(6+2)/2=4；丙等待2，比值(2+1)/1=3。",
+        "选择最大比值4的乙，不能只按到达先后或最短服务时间判断。"
+      ],
+      "keyPoint": "HRRN=1+等待/服务，与首次响应时间不是同一指标。",
+      "pitfall": "把“响应比优先”看成简单最短作业优先。",
+      "optionAnalysis": {
+        "A": "只使用等待先后，未计算等待与服务的比值。",
+        "B": "等待6、服务2，响应比(6+2)/2=4。",
+        "C": "这是SJF的线索，HRRN还考虑等待。",
+        "D": "实际比值分别3、4、3，不同。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第14页第64题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第14页，第64题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "HRRN响应比计算"
+    ]
+  },
+  {
+    "id": "paper-review-sjf-scheduling-02",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "single",
+    "stem": "系统有10个完全相同、不可剥夺的资源，每进程最多需3个，逐个申请；获得所需资源后能完成并释放。保证不会因这类资源死锁的最大进程数、可能死锁的最小进程数依次为多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4、5"
+      },
+      {
+        "id": "B",
+        "text": "3、4"
+      },
+      {
+        "id": "C",
+        "text": "5、6"
+      },
+      {
+        "id": "D",
+        "text": "10、11"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "用每人差最后一个资源的构造验证边界。",
+      "steps": [
+        "最危险的未完成状态是每进程先保留3−1=2个，还各需1个。",
+        "若k个进程满足10≥2k+1，至少可推进一个并归还，所以k最大为4。",
+        "k=5时可每人持2个耗尽10个，再各等1个，构成可能的死锁；不表示所有运行顺序都死锁。"
+      ],
+      "keyPoint": "同类资源保证条件R≥k(m−1)+1要连同模型假设使用。",
+      "pitfall": "把“可能死锁”写成“一定死锁”，或混淆最大安全数与最小可能数。",
+      "optionAnalysis": {
+        "A": "4进程即使各占2个仍余2可推进；5进程可各占2个后相互等待。",
+        "B": "过于保守，4进程仍满足保证条件。",
+        "C": "5进程已可各持2个用尽资源，再各等1个。",
+        "D": "忽略每进程可能同时保留多个资源。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第14页第65题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第14页，第65题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "同类资源死锁界限"
+    ]
+  },
+  {
+    "id": "paper-review-sjf-scheduling-03",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "multiple",
+    "stem": "某读者优先方案设readers=0，mutex=1保护读者计数，wrt=1保护文件：首位读者P(wrt)，末位读者V(wrt)，写者P(wrt)后写、再V(wrt)。下列哪些判断正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "判断首位或末位读者时，计数更新与相应判断应受mutex保护"
+      },
+      {
+        "id": "B",
+        "text": "多个读者可以共同持有一个读访问期，而写者等待wrt"
+      },
+      {
+        "id": "C",
+        "text": "应让每个读者从读文件开始到结束一直持有mutex，以保证多个读者并发"
+      },
+      {
+        "id": "D",
+        "text": "该读者优先方案自动保证写者绝不会饥饿"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先看每个信号量保护什么，再看它是否提供公平性。",
+      "steps": [
+        "mutex保护readers增减以及是否为首末读者的判断，避免竞态。",
+        "第一个读者获取wrt，后续读者共享读访问期，最后一个才释放，写者与整个读者群互斥。",
+        "读文件本身不应一直占mutex；读者不断加入时仍可能推迟写者，所以C、D不成立。"
+      ],
+      "keyPoint": "读者计数互斥、文件访问互斥与公平性是不同约束。",
+      "pitfall": "把一把锁包住所有读取就误认为同时满足并发与无饥饿。",
+      "optionAnalysis": {
+        "A": "否则并发进入退出可使首末判断丢失或重复。",
+        "B": "首读者获取、末读者释放，使中间读者可并发。",
+        "C": "这样会把读者串行化，违背该并发目标。",
+        "D": "持续到来的读者可能延长读访问期，写者仍可能久等。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第20页第125题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第20页，第125题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "读者写者PV与饥饿"
+    ]
+  },
+  {
+    "id": "paper-review-fifo-pages-01",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "fifo-pages"
+    ],
+    "type": "single",
+    "stem": "60 MiB初始全空，从低地址依次分配20、分配25，释放第一个20，再用最佳适应申请12 MiB。无其他开销，分割保留剩余空间。最终最大空闲分区多大？",
+    "options": [
+      {
+        "id": "A",
+        "text": "3 MiB"
+      },
+      {
+        "id": "B",
+        "text": "15 MiB"
+      },
+      {
+        "id": "C",
+        "text": "20 MiB"
+      },
+      {
+        "id": "D",
+        "text": "23 MiB"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "这组重新定义的参数用于独立复算，不沿用资料选项标记。",
+      "steps": [
+        "分配20与25后，布局是[占20][占25][空15]。",
+        "释放第一块后是[空20][占25][空15]；申请12时最佳适应选较小且足够的15。",
+        "切分后尾部剩3，另一空闲20不变，所以最大空闲分区为20，总空闲为23但不连续。"
+      ],
+      "keyPoint": "分区题按地址保存布局，按算法选择可容纳的空闲块。",
+      "pitfall": "只算剩余总量，或把释放区与不相邻尾部合并。",
+      "optionAnalysis": {
+        "A": "这是被选中尾部15切去12后的剩余，但还有另一块20。",
+        "B": "15那块已被最佳适应选中并切分，不能保持原大小。",
+        "C": "释放形成20与尾部15，最佳适应选15，20仍完整。",
+        "D": "把两个不相邻空闲区相加，所得是总空闲量而非最大连续区。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第6页第28题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第6页，第28题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "最佳适应连续操作"
+    ]
+  },
+  {
+    "id": "paper-review-fifo-pages-02",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "fifo-pages"
+    ],
+    "type": "single",
+    "stem": "本题重新明确全部参数：字节编址，页面4 KiB，每页表项4 B，每个下级页表恰占一页且充满时覆盖相应虚拟页；整个逻辑空间有2^20个虚拟页。若目录一项指向一个下级表，覆盖整个逻辑空间需多少目录项？",
+    "options": [
+      {
+        "id": "A",
+        "text": "256"
+      },
+      {
+        "id": "B",
+        "text": "512"
+      },
+      {
+        "id": "C",
+        "text": "1024"
+      },
+      {
+        "id": "D",
+        "text": "2^20"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "原资料题的指数排版不清，改编题已重新明确定义，答案只依赖本题条件。",
+      "steps": [
+        "每下级表容量4096÷4=1024=2^10项。",
+        "每个页表项映射一个虚拟页，因此一张下级表覆盖2^10页。",
+        "整个空间2^20页，需2^20/2^10=2^10=1024张下级表，对应1024个目录项。"
+      ],
+      "keyPoint": "先算一张下级表的扇出，再用总虚拟页数除以它。",
+      "pitfall": "把目录项、下级项和物理页框总数混为同一计数。",
+      "optionAnalysis": {
+        "A": "将页表项容量计算少了，或把字节位数误用。",
+        "B": "没有按每页4096 B、每项4 B计算覆盖量。",
+        "C": "每下级表有1024项，2^20/1024=1024个目录项。",
+        "D": "这是虚拟页总数，不是每项覆盖1024页后的目录项数。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第6页第29题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第6页，第29题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "二级页表目录项计数"
+    ]
+  },
+  {
+    "id": "paper-review-fifo-pages-03",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "fifo-pages"
+    ],
+    "type": "single",
+    "stem": "采用一层段表和一层页表的传统段页式模型，二者均在主存；无快表、无相关缓存命中，不缺页，权限合法。CPU已得到逻辑地址，读取一次目标数据需要几次主存访问？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "1"
+      },
+      {
+        "id": "C",
+        "text": "2"
+      },
+      {
+        "id": "D",
+        "text": "3"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "本题明确排除了快表、缓存和缺页，便于按三段路径计数。",
+      "steps": [
+        "由段号访问段表，取得该段页表的基址，第一次主存访问。",
+        "由页号访问页表，取得页框号，第二次。",
+        "页框号与偏移构成物理地址，再读目标数据，第三次；有TLB等条件时需另算。"
+      ],
+      "keyPoint": "访存次数由实际翻译路径及缓存条件决定。",
+      "pitfall": "把普通单级分页的两次访存无条件套给段页式。",
+      "optionAnalysis": {
+        "A": "多算了一层题目未给的表结构。",
+        "B": "只算目标数据，漏掉地址翻译。",
+        "C": "漏算段表或页表其中一层。",
+        "D": "段表一次、页表一次、目标数据一次。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第8页第42题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第8页，第42题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "段页式访存路径"
+    ]
+  },
+  {
+    "id": "paper-review-fifo-pages-04",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "fifo-pages"
+    ],
+    "type": "single",
+    "stem": "CLOCK环的顺序为A、B、C，当前访问位依次为1、0、1，指针指向A。缺页D时，规则是遇1清0并前移，遇0淘汰，新页置1，之后指针前移一格。哪项结果正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "淘汰A，指针移B"
+      },
+      {
+        "id": "B",
+        "text": "淘汰B，A变0，D变1，指针移C"
+      },
+      {
+        "id": "C",
+        "text": "淘汰C，指针移A"
+      },
+      {
+        "id": "D",
+        "text": "没有0位，所以必须清完一整圈"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "算法主题来自资料，具体环状态与位规则在本题全部给出，不对某个系统的实现作普遍断言。",
+      "steps": [
+        "指针在A，A位为1，所以将A清0，指针前移到B。",
+        "B位为0，选择B作为牺牲页，装入D并把其访问位置1。",
+        "完成后前移到C；A保持0，C保持原来的1。"
+      ],
+      "keyPoint": "CLOCK按环指针扫描访问位，不是精确LRU，也不只看框的显示位置。",
+      "pitfall": "未按题设处理清位或忘记替换后移动指针。",
+      "optionAnalysis": {
+        "A": "A为1应先清0并继续，不应立即淘汰。",
+        "B": "严格执行扫描、替换和前移规则。",
+        "C": "B已经为0，应在到C之前就被选择。",
+        "D": "初始B为0，扫描到它即可置换。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2015年国家电网考试真题（计算机类）.pdf》PDF第12页第101题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-f91567e90b49",
+        "locator": "PDF 第12页，第101题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "CLOCK扫描与访问位"
+    ]
+  },
+  {
+    "id": "paper-review-file-management-01",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "file-management"
+    ],
+    "type": "single",
+    "stem": "块大小512 B，地址项4 B。inode含3个直接项、2个一级间接项、1个二级间接项。忽略其他限制，最多可索引多少个用户数据块？索引块自身不作为数据块计入。",
+    "options": [
+      {
+        "id": "A",
+        "text": "16643"
+      },
+      {
+        "id": "B",
+        "text": "16515"
+      },
+      {
+        "id": "C",
+        "text": "512"
+      },
+      {
+        "id": "D",
+        "text": "3+2×512+512²"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "按题给项数和索引层数分别计数据块。",
+      "steps": [
+        "一个索引块可容纳512÷4=128个指针。",
+        "直接项覆盖3块，两个一级间接项共覆盖2×128块，二级间接项覆盖128²块。",
+        "相加得到3+256+16384=16643个数据块；若问字节容量还需乘512。"
+      ],
+      "keyPoint": "多个同级间接项分别贡献一棵索引子树。",
+      "pitfall": "只背“直接+一级+二级”而漏掉每类项的数量系数。",
+      "optionAnalysis": {
+        "A": "每索引块128指针，3+2×128+128²=16643。",
+        "B": "只算了1个一级间接项，漏掉另一项覆盖的128块。",
+        "C": "块的字节数不等于可索引数据块总数。",
+        "D": "把每块字节数当成每块指针数，漏除地址项大小。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第7页第30题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第7页，第30题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "多个间接地址项的扇出"
+    ]
+  },
+  {
+    "id": "paper-review-file-management-02",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "file-management"
+    ],
+    "type": "multiple",
+    "stem": "普通文件F1的inode硬链接数为1。建立保存F1路径的符号链接F2，再建立F1的硬链接F3，然后删除F1名字；没有其他名字或额外操作。下列哪些正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "建立F2不会使原文件inode的硬链接数增加"
+      },
+      {
+        "id": "B",
+        "text": "删除F1后F2自己的inode硬链接数变为0"
+      },
+      {
+        "id": "C",
+        "text": "F3仍可访问原文件内容，其所指inode硬链接数为1"
+      },
+      {
+        "id": "D",
+        "text": "F2可能因目标路径F1已不存在而悬空，但F2本身仍存在"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "分别追踪目标inode和符号链接inode，不能用一个引用数代替全部对象。",
+      "steps": [
+        "先建立F2，原inode仍是1个硬链接，F2自己的inode也有一个名字。",
+        "建立F3后，原inode从1变2；删除F1后从2回1，F3保留内容入口。",
+        "F2仍有自己的名字与计数1，但保存的F1路径已不存在，所以悬空。"
+      ],
+      "keyPoint": "inode硬链接数不统计指向它的符号链接路径。",
+      "pitfall": "把符号链接悬空当成符号链接文件自身被删除。",
+      "optionAnalysis": {
+        "A": "F2有自己的inode，目标路径引用不算目标的硬链接。",
+        "B": "F2名字仍存在，自己的硬链接数仍为1；失效的是其目标路径。",
+        "C": "目标计数从1到2再回1，F3仍是有效名字。",
+        "D": "符号链接对象与目标可达性是两件事。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2014年国家电网考试真题（计算机类）.pdf》PDF第15页第71题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0ea3c90c01d6",
+        "locator": "PDF 第15页，第71题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "软硬链接计数分对象"
+    ]
+  },
+  {
+    "id": "paper-review-io-management-01",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "io-management"
+    ],
+    "type": "single",
+    "stem": "系统缓冲和用户工作区均各1块。读入系统缓冲每块80个时间单位，复制到用户区10，分析用户区60。分析可与下一块设备读取重叠；复制时相关缓冲不可复用。读并分析2块的最短总时间是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "160"
+      },
+      {
+        "id": "B",
+        "text": "230"
+      },
+      {
+        "id": "C",
+        "text": "240"
+      },
+      {
+        "id": "D",
+        "text": "300"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "本题明确复制和分析的资源条件，可以逐段安排最早开始时刻。",
+      "steps": [
+        "第一块读取[0,80)，复制[80,90)，随后分析第一块[90,150)。",
+        "第二块可在[90,170)读取，与前一分析重叠；到170既已读完且用户区空闲。",
+        "复制第二块[170,180)，分析[180,240)，最早全部完成为240。"
+      ],
+      "keyPoint": "缓冲流水线按依赖与资源占用画区间，再重叠允许的部分。",
+      "pitfall": "假定全部串行或全部并行，均会忽略缓冲约束。",
+      "optionAnalysis": {
+        "A": "只算两次设备读取，漏掉复制与最后分析。",
+        "B": "忽略第二次复制占用的10个单位。",
+        "C": "读1至80，复制至90；读2至170并与分析1重叠；复制至180，分析至240。",
+        "D": "把两块的80+10+60全部串行相加，遗漏允许的重叠。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第12页第77题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第12页，第77题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "单缓冲流水线"
+    ]
+  },
+  {
+    "id": "paper-review-io-management-02",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "io-management"
+    ],
+    "type": "single",
+    "stem": "单核CPU每接收1个数据，中断处理占10 μs；每累计8个，主程序另花120 μs处理一批。忽略其他开销与等待，按CPU时间预算求稳定平均处理率上限，为多少个/秒？",
+    "options": [
+      {
+        "id": "A",
+        "text": "8000"
+      },
+      {
+        "id": "B",
+        "text": "10000"
+      },
+      {
+        "id": "C",
+        "text": "100000"
+      },
+      {
+        "id": "D",
+        "text": "40000"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "频率由总CPU工作预算限制，缓冲与实时响应还需另外检查。",
+      "steps": [
+        "一批8个数据，中断总CPU时间为8×10=80 μs。",
+        "加上主程序每批120 μs，总预算为200 μs。",
+        "处理率上限为8/(200×10⁻⁶)=40000个/秒；这是平均预算，不保证任意突发都无丢失。"
+      ],
+      "keyPoint": "每次中断成本与每批主程序成本应统一到一批后相加。",
+      "pitfall": "只计中断，或把每批Y误当成每个数据都付Y。",
+      "optionAnalysis": {
+        "A": "没有按一批200μs与8个数据正确换算。",
+        "B": "把每批主程序时间不当分摊，结果过低。",
+        "C": "只用1/10μs，漏掉每批120μs的主程序成本。",
+        "D": "一批占8×10+120=200μs，8/200μs=40000/s。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).pdf》PDF第5页第15题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bca354628009",
+        "locator": "PDF 第5页，第15题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "中断与批处理CPU预算"
+    ]
+  },
+  {
+    "id": "paper-review-io-management-03",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "io-management"
+    ],
+    "type": "single",
+    "stem": "机械磁盘6000转/分，平均寻道3 ms，控制器延迟0.5 ms；读取5000 B，传输速率10^7 B/s。假设平均旋转等待为半圈，忽略排队等其他成本，平均总时间是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "9 ms"
+      },
+      {
+        "id": "B",
+        "text": "8.5 ms"
+      },
+      {
+        "id": "C",
+        "text": "14 ms"
+      },
+      {
+        "id": "D",
+        "text": "3.5 ms"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "将不同单位的成本分别计算后再统一相加。",
+      "steps": [
+        "6000转/分=100转/秒，一圈10 ms，平均半圈为5 ms。",
+        "数据传输5000/10^7=0.0005秒，即0.5 ms。",
+        "加上寻道和控制器，3+5+0.5+0.5=9 ms；本题未包含排队。"
+      ],
+      "keyPoint": "转速先换秒，旋转取平均半圈，传输按字节/字节速率计算。",
+      "pitfall": "忘记分钟换算，或漏掉题目明确给出的控制器延迟。",
+      "optionAnalysis": {
+        "A": "寻道3+半圈5+控制器0.5+传输0.5=9。",
+        "B": "漏掉控制器或数据传输其中一项0.5 ms。",
+        "C": "把一整圈10 ms都作为平均等待，而非半圈。",
+        "D": "漏掉旋转等待，还可能把其他成本混在一起。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2016年国家电网考试真题（计算机类）.pdf》PDF第11页第71题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-57c7cb323437",
+        "locator": "PDF 第11页，第71题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "用户资料改编",
+      "磁盘旋转传输与控制器延迟"
+    ]
+  }
+]

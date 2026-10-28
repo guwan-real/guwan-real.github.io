@@ -13,7 +13,8 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const originalRendered = await render(entry);
 const { Content } = originalRendered;
-const { knowledge, questions, explanations } = await getReviewContent();
+const { knowledge, questions, explanations, paperReview } = await getReviewContent();
+const paperAdditions = paperReview.gaps.filter((gap) => gap.knowledgeId === entry.data.knowledgeId);
 const explanation = explanations.find((lesson) => lesson.data.knowledgeId === entry.data.knowledgeId);
 const renderedLesson = explanation ? await render(explanation) : undefined;
 const Lesson = renderedLesson?.Content;
@@ -32,6 +33,7 @@ const next = knowledge[position + 1];
   {entry.data.status === 'example' && <ContentNotice compact />}
   {item && <div class="review-chapter-source"><p class="review-caption">对应国网 2027 专业知识第 {item.number} 项：{item.title}{item.scope ? `（${item.scope}）` : ''}</p><div class="review-actions"><a class="review-text-link" href={reviewUrl(`handbook/${original ? `#${original.slug}` : ''}`)}>查看原稿本节 ↗</a><a class="review-text-link" href={reviewUrl(`resources/sgcc-2027-computer-syllabus.pdf#page=${item.page}`)} target="_blank" rel="noopener noreferrer">对照大纲第 {item.page} 页 ↗</a></div></div>}
   {explanation && <div class="review-lesson-note"><p>在手册提纲上补充基础讲解、例子与解题过程。图示可左右滑动，也可点开大图。</p><div class="review-actions"><a class="review-text-link" href="#handbook-original">查看保留的手册原文 ↓</a><a class="review-text-link" href="#related-practice">做本节自测 ↓</a></div></div>}
+  {paperAdditions.length > 0 && <p class="review-caption">已按本地资料补充 {paperAdditions.length} 项题型与解法。<a class="review-text-link" href={reviewUrl(`materials/#${paperAdditions[0].id}`)}>查看对照出处 ↗</a></p>}
   <div class="review-article-layout">
     <article class:list={['review-prose', { 'review-lesson': Boolean(explanation) }]} data-knowledge-id={entry.data.knowledgeId}>
       {Lesson ? <><Lesson /><section class="review-lesson-sources" id="lesson-sources"><h2>参考资料</h2><p>讲义与图例为自编学习说明，参考以下资料核对概念；不代表官方命题范围或权重。更新于 {explanation!.data.updatedAt}。</p><ul>{explanation!.data.sources.map((source) => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul></section><details class="review-original" id="handbook-original"><summary>手册原文 · 完整保留</summary><Content /></details></> : <Content />}

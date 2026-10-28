@@ -1,0 +1,1590 @@
+{
+  "reviewedAt": "2026-10-28",
+  "gaps": [
+    {
+      "id": "paper-gap-linear-lists-71096902",
+      "knowledgeId": "linear-lists",
+      "topic": "只给结点指针的删除边界",
+      "summary": "说明复制后继数据的删除技巧，并检查尾结点和必须保留结点身份时为何不能套用。",
+      "evidence": [
+        {
+          "documentId": "local-f91567e90b49",
+          "locator": "PDF 第9页，第71题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-linear-lists-02"
+      ]
+    },
+    {
+      "id": "paper-gap-linear-lists-3dc45e3e",
+      "knowledgeId": "linear-lists",
+      "topic": "链表定位与连接成本",
+      "summary": "把寻找链表尾结点的时间与修改链接的时间分开计算，说明尾指针条件怎样改变成本。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第15页，第87题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-linear-lists-01"
+      ]
+    },
+    {
+      "id": "paper-gap-stacks-queues-fe03914c",
+      "knowledgeId": "stacks-queues",
+      "topic": "最小栈容量",
+      "summary": "沿目标出栈顺序画操作时间线，记录同时驻栈的峰值，并用完整过程证明最小容量。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第9页，第42题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-stacks-queues-01"
+      ]
+    },
+    {
+      "id": "paper-gap-stacks-queues-2541a86c",
+      "knowledgeId": "stacks-queues",
+      "topic": "禁止连续弹出的受限栈",
+      "summary": "在普通出栈合法性之外，继续检查连续弹出次数及能否插入入栈操作打断。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第1页，第1题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-stacks-queues-02"
+      ]
+    },
+    {
+      "id": "paper-gap-stacks-queues-7cb4fb93",
+      "knowledgeId": "stacks-queues",
+      "topic": "输出受限双端队列",
+      "summary": "逐步画出双端入队、固定左端出队的位置，用尚未输出元素的次序判断可行性。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第1页，第2题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-stacks-queues-03"
+      ]
+    },
+    {
+      "id": "paper-gap-arrays-strings-af556f6b",
+      "knowledgeId": "arrays-strings",
+      "topic": "反求二维数组列数",
+      "summary": "先把字节地址差换成元素个数，反求每行列数，再计算目标元素的偏移。",
+      "evidence": [
+        {
+          "documentId": "local-f91567e90b49",
+          "locator": "PDF 第7页，第54题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-arrays-strings-01"
+      ]
+    },
+    {
+      "id": "paper-gap-arrays-strings-ee0d89c3",
+      "knowledgeId": "arrays-strings",
+      "topic": "数组指针与指针数组",
+      "summary": "按声明的结合关系区分数组指针与指针数组，分别计算指针步长和完整数组大小。",
+      "evidence": [
+        {
+          "documentId": "local-c2a0b6166a76",
+          "locator": "Word 第243段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-arrays-strings-02"
+      ]
+    },
+    {
+      "id": "paper-gap-trees-a924a2e4",
+      "knowledgeId": "trees",
+      "topic": "AVL的RL双旋",
+      "summary": "从新增结点向上找到最低失衡祖先，辨认右左两步方向并逐步完成双旋。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第2页，第4题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-trees-05"
+      ]
+    },
+    {
+      "id": "paper-gap-trees-59c8f9e6",
+      "knowledgeId": "trees",
+      "topic": "一般树的度数与叶数",
+      "summary": "用边数等于总结点数减一、也等于孩子数总和，推导一般树的叶结点数。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第2页，第5题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-trees-01"
+      ]
+    },
+    {
+      "id": "paper-gap-trees-fec7b540",
+      "knowledgeId": "trees",
+      "topic": "三叉哈夫曼补零与WPL",
+      "summary": "先检查三叉哈夫曼是否需要补零权虚叶，再逐轮合并最小权并累加带权路径成本。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第9页，第54题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-trees-03"
+      ]
+    },
+    {
+      "id": "paper-gap-trees-198d2640",
+      "knowledgeId": "trees",
+      "topic": "后序线索的后继",
+      "summary": "先写后序遍历的局部访问次序，再判断叶结点空右域应保存哪个后继。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第9页，第55题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-trees-04"
+      ]
+    },
+    {
+      "id": "paper-gap-trees-2c69cc32",
+      "knowledgeId": "trees",
+      "topic": "完全二叉树的末两层",
+      "summary": "从完全二叉树的末两层分类讨论，利用指定层的叶数推导总结点数上界。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第9页，第45题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-trees-02"
+      ]
+    },
+    {
+      "id": "paper-gap-graphs-9f66b7e8",
+      "knowledgeId": "graphs",
+      "topic": "存在连通与必然连通的边数",
+      "summary": "区分存在连通构造与任意布局保证连通，先构造边数最多的不连通图再推阈值。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第2页，第7题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-graphs-01"
+      ]
+    },
+    {
+      "id": "paper-gap-graphs-1fce3b9d",
+      "knowledgeId": "graphs",
+      "topic": "连通图性质的反例",
+      "summary": "用度数和、树与三角形的简单例子，检查连通图性质中的全称断言。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第10页，第47题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-graphs-02"
+      ]
+    },
+    {
+      "id": "paper-gap-searching-d368555d",
+      "knowledgeId": "searching",
+      "topic": "分块查找的两段ASL",
+      "summary": "分别计算定位索引块和块内顺序查找的平均比较次数，再合并两段成本。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第23页，第153题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-searching-01"
+      ]
+    },
+    {
+      "id": "paper-gap-searching-1bfd8937",
+      "knowledgeId": "searching",
+      "topic": "静态与动态查找表",
+      "summary": "按是否需要插入、删除等更新区分静态与动态查找，避免把它们绑定为某种存储结构。",
+      "evidence": [
+        {
+          "documentId": "local-fb20ded1a61c",
+          "locator": "Word 第220段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-searching-02"
+      ]
+    },
+    {
+      "id": "paper-gap-insertion-sort-69cae0b4",
+      "knowledgeId": "insertion-sort",
+      "topic": "LSD两轮稳定分配",
+      "summary": "逐轮稳定分桶并保留同桶次序，观察LSD怎样把已处理的低位顺序组合起来。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第10页，第61题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-insertion-sort-01"
+      ]
+    },
+    {
+      "id": "paper-gap-insertion-sort-3e7bc984",
+      "knowledgeId": "insertion-sort",
+      "topic": "局部有序不等于最终归位",
+      "summary": "把当前有序前缀与最终排序结果逐位置对照，说明局部有序不等于全局归位。",
+      "evidence": [
+        {
+          "documentId": "local-c0e0166ea582",
+          "locator": "Word 第3段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-insertion-sort-03"
+      ]
+    },
+    {
+      "id": "paper-gap-insertion-sort-3ed878e9",
+      "knowledgeId": "insertion-sort",
+      "topic": "排序中间状态识别",
+      "summary": "根据每轮保证的有序前缀或最终归位后缀，复演并识别排序中间状态。",
+      "evidence": [
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第14页，第100题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-insertion-sort-02"
+      ]
+    },
+    {
+      "id": "paper-gap-relational-theory-ae9ba279",
+      "knowledgeId": "relational-theory",
+      "topic": "基本关系运算能导出交运算",
+      "summary": "分清五种基本运算和教材“专门运算”分类，以R−(R−S)逐元组证明交运算可导出。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第10页，第56题"
+        },
+        {
+          "documentId": "local-df416ef59d82",
+          "locator": "PDF 第6页，第19题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-relational-theory-03"
+      ]
+    },
+    {
+      "id": "paper-gap-relational-theory-4ffc044b",
+      "knowledgeId": "relational-theory",
+      "topic": "并、交、差的基数约束",
+      "summary": "补讲12、8、15个元组的并交差计数，区分R−S与S−R，并以改数值题检验计数约束。",
+      "evidence": [
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第6页，第38题"
+        },
+        {
+          "documentId": "local-843fb88c43f9",
+          "locator": "PDF 第4页，第38题解析"
+        }
+      ],
+      "questionIds": [
+        "paper-review-relational-theory-01"
+      ]
+    },
+    {
+      "id": "paper-gap-relational-theory-a0b560c6",
+      "knowledgeId": "relational-theory",
+      "topic": "自然连接同时匹配全部公共属性",
+      "summary": "补R(A,B,C)与S(B,C,D)的逐行匹配，说明全部同名列同时相等、公共列合并及一对多产生多行。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第10页，第55题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-relational-theory-02"
+      ]
+    },
+    {
+      "id": "paper-gap-sql-e3e683a9",
+      "knowledgeId": "sql",
+      "topic": "NOT NULL UNIQUE 与显式 PRIMARY KEY 声明",
+      "summary": "以INTEGER NOT NULL UNIQUE逐一解释类型、非空、唯一、候选键与显式PRIMARY KEY声明。",
+      "evidence": [
+        {
+          "documentId": "local-bca354628009",
+          "locator": "PDF 第11页，多选第5题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sql-06"
+      ]
+    },
+    {
+      "id": "paper-gap-sql-079d61df",
+      "knowledgeId": "sql",
+      "topic": "WITH CHECK OPTION 检查更新后的视图可见性",
+      "summary": "以EastStaff简单视图逐项推演插入W、E改W及删除可见E行，区分新行可见性检查与DELETE。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第10页，第52题"
+        },
+        {
+          "documentId": "local-53dc9db83f1b",
+          "locator": "PDF 第6页，第52题解析"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sql-02"
+      ]
+    },
+    {
+      "id": "paper-gap-sql-f5e9e714",
+      "knowledgeId": "sql",
+      "topic": "嵌入式 SQL 与宿主语言分工",
+      "summary": "补C宿主程序中的EXEC SQL、冒号宿主变量及ECPG预处理到编译流程，区分交互与嵌入使用。",
+      "evidence": [
+        {
+          "documentId": "local-c0e0166ea582",
+          "locator": "Word 第59段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sql-05"
+      ]
+    },
+    {
+      "id": "paper-gap-sql-15fe3067",
+      "knowledgeId": "sql",
+      "topic": "标量函数与聚合函数的结果形状",
+      "summary": "用−4、3、8对比ABS逐行与SUM/MAX全表聚合，同时区分表达式组合和输出行数。",
+      "evidence": [
+        {
+          "documentId": "local-20e0dbeaef8c",
+          "locator": "Word 第52段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sql-04"
+      ]
+    },
+    {
+      "id": "paper-gap-sql-033569ec",
+      "knowledgeId": "sql",
+      "topic": "标量子查询的零行、一行和多行",
+      "summary": "补标量子查询零行NULL、一行值、多行错误，明确名称唯一必须有约束或题设保证。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第11页，第59题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sql-03"
+      ]
+    },
+    {
+      "id": "paper-gap-sql-dd800fb8",
+      "knowledgeId": "sql",
+      "topic": "选择与投影下推必须保留查询语义",
+      "summary": "在内连接前提下说明单表选择下推和保留连接键的投影下推，补外连接与实际性能的条件边界。",
+      "evidence": [
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第7页，第41题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sql-01"
+      ]
+    },
+    {
+      "id": "paper-gap-acid-transactions-5f43721f",
+      "knowledgeId": "acid-transactions",
+      "topic": "二级封锁防脏读但可不可重复读",
+      "summary": "增加T1读100后解S锁、T2改120提交、T1重读120的完整时序，区分脏读与不可重复读。",
+      "evidence": [
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第19页，第137题"
+        },
+        {
+          "documentId": "local-843fb88c43f9",
+          "locator": "PDF 第12页，第137题解析"
+        }
+      ],
+      "questionIds": [
+        "paper-review-acid-transactions-01"
+      ]
+    },
+    {
+      "id": "paper-gap-acid-transactions-2df0b5b4",
+      "knowledgeId": "acid-transactions",
+      "topic": "封锁级别与两阶段锁不是同一分类",
+      "summary": "增加一级/二级/三级封锁表，与2PL取得和释放阶段比较，并指出行锁不自动保护查询范围。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第22页，第142题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-acid-transactions-02"
+      ]
+    },
+    {
+      "id": "paper-gap-backup-recovery-7a31bc82",
+      "knowledgeId": "backup-recovery",
+      "topic": "基础备份与连续日志参与介质恢复",
+      "summary": "用02:00基础备份、连续日志和09:00盘损坏时间线解释介质恢复，并推演08:30误删除前的时间点目标。",
+      "evidence": [
+        {
+          "documentId": "local-d91ce57b3763",
+          "locator": "PDF 第9页，第83题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-backup-recovery-01"
+      ]
+    },
+    {
+      "id": "paper-gap-db-design-21e25249",
+      "knowledgeId": "db-design",
+      "topic": "1:N 联系独立映射时的候选键",
+      "summary": "用三条当前员工归属记录证明部门码可重复、员工码可标识联系，并比较保存历史后的键变化。",
+      "evidence": [
+        {
+          "documentId": "local-f729c25aac93",
+          "locator": "PDF 第13页，多选第11题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-db-design-02"
+      ]
+    },
+    {
+      "id": "paper-gap-db-design-aee96d4d",
+      "knowledgeId": "db-design",
+      "topic": "受控冗余的查询收益与更新责任",
+      "summary": "以部门名称副本和200条记录更名说明可能节省连接与更新不一致成本，不把重复外键值判为范式违规。",
+      "evidence": [
+        {
+          "documentId": "local-d91ce57b3763",
+          "locator": "PDF 第7页，第66题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-db-design-03"
+      ]
+    },
+    {
+      "id": "paper-gap-db-design-a6e083f2",
+      "knowledgeId": "db-design",
+      "topic": "局部 E-R 图的命名、属性与结构冲突",
+      "summary": "以重量克/千克、客户/用户、供应商实体/属性说明属性、命名、结构三类局部模型冲突。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第10页，第51题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-db-design-01"
+      ]
+    },
+    {
+      "id": "paper-gap-db-design-a2ea591e",
+      "knowledgeId": "db-design",
+      "topic": "水平与垂直拆分怎样重组原数据",
+      "summary": "按年份分行与按备注分列对照水平/垂直拆分，说明覆盖、互斥、重组键和匹配基数。",
+      "evidence": [
+        {
+          "documentId": "local-f729c25aac93",
+          "locator": "PDF 第12页，多选第8题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-db-design-04"
+      ]
+    },
+    {
+      "id": "paper-gap-db-design-edc2030a",
+      "knowledgeId": "db-design",
+      "topic": "物理数据整理与逻辑模式演进",
+      "summary": "区分物理数据页整理、业务表逻辑演进和DBMS版本变化，并说明物理顺序不替代ORDER BY。",
+      "evidence": [
+        {
+          "documentId": "local-d91ce57b3763",
+          "locator": "PDF 第7页，第59题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-db-design-05"
+      ]
+    },
+    {
+      "id": "paper-gap-db-security-967bec87",
+      "knowledgeId": "db-security",
+      "topic": "REVOKE 的列、对象与主体",
+      "summary": "补列级UPDATE授权与REVOKE语法的对象、列、主体对应，强调撤回直接路径不自动消除其他来源权限。",
+      "evidence": [
+        {
+          "documentId": "local-bf39e40d87a7",
+          "locator": "PDF 第6页，第56题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-db-security-01"
+      ]
+    },
+    {
+      "id": "paper-gap-db-security-1a865982",
+      "knowledgeId": "db-security",
+      "topic": "SQL Server 实例登录与数据库内权限",
+      "summary": "补SQL Server实例登录、库内用户、角色与对象权限层次，明确普通映射前提及无登录用户等例外。",
+      "evidence": [
+        {
+          "documentId": "local-d91ce57b3763",
+          "locator": "PDF 第10页，第96题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-db-security-02"
+      ]
+    },
+    {
+      "id": "paper-gap-db-security-6246a7a2",
+      "knowledgeId": "db-security",
+      "topic": "普通视图的抽象作用与性能边界",
+      "summary": "补普通视图保存定义而非结果缓存、执行计划决定成本，以及基表直接授权可能绕过视图裁剪。",
+      "evidence": [
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第19页，第138题"
+        },
+        {
+          "documentId": "local-843fb88c43f9",
+          "locator": "PDF 第12页，第138题解析"
+        }
+      ],
+      "questionIds": [
+        "paper-review-db-security-03"
+      ]
+    },
+    {
+      "id": "paper-gap-network-architecture-6a99fcac",
+      "knowledgeId": "network-architecture",
+      "topic": "分组存储转发流水与中间设备的协议职责",
+      "summary": "追加报头有效载荷、链路数和尾包时间模型；澄清普通IP转发与TCP端点及广播域。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第7页，第34题"
+        },
+        {
+          "documentId": "local-c0e0166ea582",
+          "locator": "Word 第383段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-network-architecture-01",
+        "paper-review-network-architecture-02"
+      ]
+    },
+    {
+      "id": "paper-gap-physical-layer-e7e32db1",
+      "knowledgeId": "physical-layer",
+      "topic": "曼彻斯特约定与有效调制状态数",
+      "summary": "追加起始电平逐位编码和QAM全部组合条件，明确矛盾条件不能迁就标答。",
+      "evidence": [
+        {
+          "documentId": "local-bca354628009",
+          "locator": "PDF 第1页，第3题"
+        },
+        {
+          "documentId": "local-c2a0b6166a76",
+          "locator": "Word 第158段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-physical-layer-01",
+        "paper-review-physical-layer-02"
+      ]
+    },
+    {
+      "id": "paper-gap-data-link-84760564",
+      "knowledgeId": "data-link",
+      "topic": "海明位数、检纠错边界、PPP与LLC、碰撞和GBN",
+      "summary": "追加状态数推导、奇偶与SECDED边界、PPP/HDLC式封装、历史802模型及碰撞往返与累计确认算例。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第10页，第65题"
+        },
+        {
+          "documentId": "local-20e0dbeaef8c",
+          "locator": "Word 第136段"
+        },
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第5页，第28题"
+        },
+        {
+          "documentId": "local-bca354628009",
+          "locator": "PDF 第9页，第30题"
+        },
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第16页，第77题"
+        },
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第15页，第75题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-data-link-01",
+        "paper-review-data-link-02",
+        "paper-review-data-link-03",
+        "paper-review-data-link-04",
+        "paper-review-data-link-05",
+        "paper-review-data-link-06"
+      ]
+    },
+    {
+      "id": "paper-gap-network-layer-4d71b7cc",
+      "knowledgeId": "network-layer",
+      "topic": "等长子网分组、RIP不可达和IPv6邻居发现",
+      "summary": "追加借位与地址分组、特殊地址、RIP16语义、源抑制弃用、IPv6展开和邻居发现子功能。",
+      "evidence": [
+        {
+          "documentId": "local-20e0dbeaef8c",
+          "locator": "Word 第157段"
+        },
+        {
+          "documentId": "local-fb20ded1a61c",
+          "locator": "Word 第171段"
+        },
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第7页，第35题"
+        },
+        {
+          "documentId": "local-bca354628009",
+          "locator": "PDF 第2页，第5题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-network-layer-01",
+        "paper-review-network-layer-02",
+        "paper-review-network-layer-03",
+        "paper-review-network-layer-04"
+      ]
+    },
+    {
+      "id": "paper-gap-tcp-stream-2056802e",
+      "knowledgeId": "tcp-stream",
+      "topic": "零接收窗口探测与半关闭",
+      "summary": "追加窗口更新丢失的闭环例子和双向独立序号/FIN，限定普通数据与探测报文边界。",
+      "evidence": [
+        {
+          "documentId": "local-d91ce57b3763",
+          "locator": "PDF 第12页，第124题"
+        },
+        {
+          "documentId": "local-c2a0b6166a76",
+          "locator": "Word 第172段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-tcp-stream-01",
+        "paper-review-tcp-stream-02"
+      ]
+    },
+    {
+      "id": "paper-gap-application-layer-17f8e60a",
+      "knowledgeId": "application-layer",
+      "topic": "DNS正反向独立记录与FTP数据连接模式",
+      "summary": "追加PTR完整查询名、被动端口完整场景，明确上传方向不能决定固定数据端口。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第17页，第105题"
+        },
+        {
+          "documentId": "local-fb20ded1a61c",
+          "locator": "Word 第59段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-application-layer-01",
+        "paper-review-application-layer-02"
+      ]
+    },
+    {
+      "id": "paper-gap-network-security-13f371ea",
+      "knowledgeId": "network-security",
+      "topic": "签名算法能力与公开证书的密钥主体",
+      "summary": "追加RSA/AES/历史DSA能力辨认以及公钥证书公开与私钥保密、信任验证边界。",
+      "evidence": [
+        {
+          "documentId": "local-c0e0166ea582",
+          "locator": "Word 第234段"
+        },
+        {
+          "documentId": "local-811b4f73077b",
+          "locator": "PDF 第5页，第65题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-network-security-01",
+        "paper-review-network-security-02"
+      ]
+    },
+    {
+      "id": "paper-gap-wireless-mobile-72891e49",
+      "knowledgeId": "wireless-mobile",
+      "topic": "基础设施、自组组织与移动IP",
+      "summary": "追加AP组织、直接本地通信、多跳和网络层连续性各自职责，避免概念同名混淆。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第7页，第33题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-wireless-mobile-01"
+      ]
+    },
+    {
+      "id": "paper-gap-os-overview-8725a8fa",
+      "knowledgeId": "os-overview",
+      "topic": "单核与设备并行",
+      "summary": "区分同一核上进程交替执行与CPU、设备各自工作的重叠，明确并发和并行的比较对象。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第14页，第63题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-os-overview-02"
+      ]
+    },
+    {
+      "id": "paper-gap-os-overview-17d5a80a",
+      "knowledgeId": "os-overview",
+      "topic": "高级中级低级调度",
+      "summary": "用后备作业入内存、挂起调出调入、就绪活动获CPU三个场景区分三级调度。",
+      "evidence": [
+        {
+          "documentId": "local-f91567e90b49",
+          "locator": "PDF 第12页，第98题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-os-overview-01"
+      ]
+    },
+    {
+      "id": "paper-gap-sjf-scheduling-699f5fa6",
+      "knowledgeId": "sjf-scheduling",
+      "topic": "HRRN响应比计算",
+      "summary": "在选择时刻重算各作业等待时间和服务时间的响应比，避免只按到达先后或作业长短选择。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第14页，第64题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sjf-scheduling-01"
+      ]
+    },
+    {
+      "id": "paper-gap-sjf-scheduling-6ca37254",
+      "knowledgeId": "sjf-scheduling",
+      "topic": "同类资源死锁界限",
+      "summary": "构造每个进程都差最后一个资源的占有状态，区分保证无死锁与可能死锁的边界。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第14页，第65题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sjf-scheduling-02"
+      ]
+    },
+    {
+      "id": "paper-gap-sjf-scheduling-995aa9c5",
+      "knowledgeId": "sjf-scheduling",
+      "topic": "读者写者PV与饥饿",
+      "summary": "用首读者获取、末读者释放和受保护的读者计数解释PV协作，并检查写者饥饿风险。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第20页，第125题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-sjf-scheduling-03"
+      ]
+    },
+    {
+      "id": "paper-gap-fifo-pages-00184884",
+      "knowledgeId": "fifo-pages",
+      "topic": "CLOCK扫描与访问位",
+      "summary": "跟随CLOCK环指针逐框检查访问位，记录清位、替换和指针前移的全过程。",
+      "evidence": [
+        {
+          "documentId": "local-f91567e90b49",
+          "locator": "PDF 第12页，第101题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-fifo-pages-04"
+      ]
+    },
+    {
+      "id": "paper-gap-fifo-pages-9749d099",
+      "knowledgeId": "fifo-pages",
+      "topic": "二级页表目录项计数",
+      "summary": "先计算一张下级页表能容纳多少表项，再用总虚拟页数推导覆盖所需的目录项数。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第6页，第29题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-fifo-pages-02"
+      ]
+    },
+    {
+      "id": "paper-gap-fifo-pages-1c155cd5",
+      "knowledgeId": "fifo-pages",
+      "topic": "最佳适应连续操作",
+      "summary": "按物理地址追踪分配和释放后的空闲区，再按最佳适应选块，区分最大连续区与总空闲量。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第6页，第28题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-fifo-pages-01"
+      ]
+    },
+    {
+      "id": "paper-gap-fifo-pages-990c45ac",
+      "knowledgeId": "fifo-pages",
+      "topic": "段页式访存路径",
+      "summary": "沿段表、页表和目标数据的访问路径逐次计数，并检查快表、缓存和缺页条件。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第8页，第42题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-fifo-pages-03"
+      ]
+    },
+    {
+      "id": "paper-gap-file-management-699d3438",
+      "knowledgeId": "file-management",
+      "topic": "多个间接地址项的扇出",
+      "summary": "先算每个索引块的指针数，再按直接项和各级间接项的数量分别累加数据块。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第7页，第30题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-file-management-01"
+      ]
+    },
+    {
+      "id": "paper-gap-file-management-8ed8fe8c",
+      "knowledgeId": "file-management",
+      "topic": "软硬链接计数分对象",
+      "summary": "分别追踪原文件与符号链接的inode硬链接数，区分名字删除、目标悬空和内容仍可访问。",
+      "evidence": [
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第15页，第71题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-file-management-02"
+      ]
+    },
+    {
+      "id": "paper-gap-io-management-4d9e2050",
+      "knowledgeId": "io-management",
+      "topic": "中断与批处理CPU预算",
+      "summary": "把逐样本中断成本和每批主程序成本统一到一批后相加，再换算平均处理率上限。",
+      "evidence": [
+        {
+          "documentId": "local-bca354628009",
+          "locator": "PDF 第5页，第15题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-io-management-02"
+      ]
+    },
+    {
+      "id": "paper-gap-io-management-120821f2",
+      "knowledgeId": "io-management",
+      "topic": "单缓冲流水线",
+      "summary": "画出读取、复制和分析的资源占用区间，只让条件允许的阶段重叠，求最早完成时间。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第12页，第77题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-io-management-01"
+      ]
+    },
+    {
+      "id": "paper-gap-io-management-6872c6e3",
+      "knowledgeId": "io-management",
+      "topic": "磁盘旋转传输与控制器延迟",
+      "summary": "统一时间与数据单位，分别计算寻道、平均半圈等待、控制器延迟和传输时间后相加。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第11页，第71题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-io-management-03"
+      ]
+    },
+    {
+      "id": "paper-gap-system-overview-ee1b715c",
+      "knowledgeId": "system-overview",
+      "topic": "从动态比例求CPI与MIPS",
+      "summary": "追加MIPS推导和有明确数量比例的完整算例，缺表资料不倒猜答案。",
+      "evidence": [
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第10页，第62题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-system-overview-01"
+      ]
+    },
+    {
+      "id": "paper-gap-twos-complement-cb5ca788",
+      "knowledgeId": "twos-complement",
+      "topic": "定点小数、移码、浮点反解与结果位宽",
+      "summary": "追加小数点约定、偏置、binary32反解、乘法宽度及双符号位检测；给出独立复算。",
+      "evidence": [
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第12页，第79题"
+        },
+        {
+          "documentId": "local-f91567e90b49",
+          "locator": "PDF 第24页，第203题"
+        },
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第10页，第63题"
+        },
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第3页，第13题"
+        },
+        {
+          "documentId": "local-bca354628009",
+          "locator": "PDF 第5页，第16题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-twos-complement-01",
+        "paper-review-twos-complement-02",
+        "paper-review-twos-complement-03",
+        "paper-review-twos-complement-04",
+        "paper-review-twos-complement-05"
+      ]
+    },
+    {
+      "id": "paper-gap-cache-mapping-d9914be2",
+      "knowledgeId": "cache-mapping",
+      "topic": "芯片字位扩展、闭地址区间与块组定位",
+      "summary": "追加芯片数量双向推导、首尾地址含端点计算与字节地址到块组偏移的完整例子。",
+      "evidence": [
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第12页，第83题"
+        },
+        {
+          "documentId": "local-fb20ded1a61c",
+          "locator": "Word 第178段"
+        },
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第14页，第78题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-cache-mapping-01",
+        "paper-review-cache-mapping-02",
+        "paper-review-cache-mapping-03"
+      ]
+    },
+    {
+      "id": "paper-gap-instruction-set-bdd70de2",
+      "knowledgeId": "instruction-set",
+      "topic": "操作码前缀容量与PC相对寻址单位",
+      "summary": "追加保留前缀树的逐层容量、概率加权平均码长及带符号字节位移计算。",
+      "evidence": [
+        {
+          "documentId": "local-e420041ad210",
+          "locator": "PDF 第7页，第61题"
+        },
+        {
+          "documentId": "local-0ea3c90c01d6",
+          "locator": "PDF 第12页，第56题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-instruction-set-01",
+        "paper-review-instruction-set-02",
+        "paper-review-instruction-set-03"
+      ]
+    },
+    {
+      "id": "paper-gap-cpu-b49a7fac",
+      "knowledgeId": "cpu",
+      "topic": "不等长流水节拍、批次吞吐与中断控制信息",
+      "summary": "追加最慢段约束、填充排空、返回断点与入口区分及串行采样处理预算。",
+      "evidence": [
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第12页，第85题"
+        },
+        {
+          "documentId": "local-57c7cb323437",
+          "locator": "PDF 第11页，第68题"
+        },
+        {
+          "documentId": "local-fb20ded1a61c",
+          "locator": "Word 第45段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-cpu-01",
+        "paper-review-cpu-02",
+        "paper-review-cpu-03"
+      ]
+    },
+    {
+      "id": "paper-gap-system-buses-b43dd8b0",
+      "knowledgeId": "system-buses",
+      "topic": "按字与字节编址以及逻辑信号线数量",
+      "summary": "追加同容量不同编址的地址范围、芯片地址数据线计数和逻辑线与物理引脚边界。",
+      "evidence": [
+        {
+          "documentId": "local-f91567e90b49",
+          "locator": "PDF 第21页，第178题"
+        },
+        {
+          "documentId": "local-0c92787034a0",
+          "locator": "PDF 第12页，第78题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-system-buses-01",
+        "paper-review-system-buses-02"
+      ]
+    },
+    {
+      "id": "paper-gap-parallel-computing-8baf9548",
+      "knowledgeId": "parallel-computing",
+      "topic": "超流水、超标量与VLIW的并行环节",
+      "summary": "追加发射、执行、完成区分，以独立指令的发射周期说明能力和限制。",
+      "evidence": [
+        {
+          "documentId": "local-fb20ded1a61c",
+          "locator": "Word 第227段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-parallel-computing-01"
+      ]
+    },
+    {
+      "id": "paper-gap-implementation-608a6fac",
+      "knowledgeId": "implementation",
+      "topic": "结构化基本控制与循环过程跟踪",
+      "summary": "增加[2,−1,4]正数累加的代码与逐轮变量表，辨认顺序、选择、循环嵌套，排除GOTO为第四必需结构。",
+      "evidence": [
+        {
+          "documentId": "local-ad6c63717cc5",
+          "locator": "PDF 第19页，多选第20题"
+        },
+        {
+          "documentId": "local-fb20ded1a61c",
+          "locator": "Word 第421段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-implementation-01"
+      ]
+    },
+    {
+      "id": "paper-gap-supervised-learning-06f84b52",
+      "knowledgeId": "supervised-learning",
+      "topic": "前馈结构、反向传播与监督信号的分类维度",
+      "summary": "区分连接结构、学习信号、求梯度和epoch四个维度，补简递推状态例说明循环结构为何保留顺序影响。",
+      "evidence": [
+        {
+          "documentId": "local-bb60eb608dc8",
+          "locator": "PDF 第22页，第143题"
+        },
+        {
+          "documentId": "local-d91ce57b3763",
+          "locator": "PDF 第13页，第133题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-supervised-learning-01"
+      ]
+    },
+    {
+      "id": "paper-gap-iot-328aaa54",
+      "knowledgeId": "iot",
+      "topic": "被识别物品、标签与联网节点的能力边界",
+      "summary": "以备件—无源标签—读写器—网关—后台分工解释间接接入，不把系统能力强加给每件物品。",
+      "evidence": [
+        {
+          "documentId": "local-ad6c63717cc5",
+          "locator": "PDF 第18页，多选第19题"
+        },
+        {
+          "documentId": "local-fb20ded1a61c",
+          "locator": "Word 第414段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-iot-01"
+      ]
+    },
+    {
+      "id": "paper-gap-cloud-service-models-29da5ecd",
+      "knowledgeId": "cloud-service-models",
+      "topic": "服务模式与部署模式是不同分类轴",
+      "summary": "补服务交付层与部署使用范围的二维分类表，纠正SaaS含义，说明计费与浏览器访问不是单独充分条件。",
+      "evidence": [
+        {
+          "documentId": "local-d91ce57b3763",
+          "locator": "PDF 第4页，第31题"
+        },
+        {
+          "documentId": "local-df416ef59d82",
+          "locator": "PDF 第1页，第1题"
+        }
+      ],
+      "questionIds": [
+        "paper-review-cloud-service-models-01"
+      ]
+    },
+    {
+      "id": "paper-gap-big-data-04f99606",
+      "knowledgeId": "big-data",
+      "topic": "元数据与加工后的业务汇总不同",
+      "summary": "区分具体用电明细、地区均值与字段单位/公式/血缘说明，用1500Wh转1.5kWh演示元数据的作用。",
+      "evidence": [
+        {
+          "documentId": "local-20e0dbeaef8c",
+          "locator": "Word 第350段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-big-data-02"
+      ]
+    },
+    {
+      "id": "paper-gap-big-data-e3b286a4",
+      "knowledgeId": "big-data",
+      "topic": "数据仓库的集成、历史与非易失",
+      "summary": "用编码与Wh/kWh统一、分日历史记录、定期装载和受控纠错解释集成、时间变化与非易失。",
+      "evidence": [
+        {
+          "documentId": "local-bca354628009",
+          "locator": "PDF 第11页，多选第6题"
+        },
+        {
+          "documentId": "local-bca354628009",
+          "locator": "PDF 第12页，多选第6题答案续页"
+        },
+        {
+          "documentId": "local-20e0dbeaef8c",
+          "locator": "Word 第350段"
+        }
+      ],
+      "questionIds": [
+        "paper-review-big-data-01"
+      ]
+    }
+  ],
+  "sourceIssues": [
+    {
+      "id": "paper-issue-2ee2c0e8ade9",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第2页，第6题",
+      "issue": "资料把“错误的是”标为B，但B“无度1结点”是二叉Huffman构造性质；A“必为完全二叉树”也不成立，D文字另有歧义。",
+      "resolution": "不录入该题，不认证原答案；Huffman改编取可独立复算的《2016年国家电网考试真题（计算机类）.pdf》三叉合并题型。"
+    },
+    {
+      "id": "paper-issue-84c7d49d63a1",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第2页，第7题",
+      "issue": "原页标A=6；在简单无向图7顶点且不论布局都连通的条件下，应为C=16，而6仅是存在连通构造的最少边。",
+      "resolution": "保留独立极值证明，改编题明确简单图及两个量词，不沿用原答案。"
+    },
+    {
+      "id": "paper-issue-516ac7083299",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第2页，第8题",
+      "issue": "原PDF页面也没有实际拓扑图，仅留“对下图”与选项。",
+      "resolution": "不录入，不臆造原图或原答案。"
+    },
+    {
+      "id": "paper-issue-7b34304b5b12",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第2页，第9题",
+      "issue": "原页标A=4；闭区间向下取整二分16项，查右端之外失败需5次关键字比较。",
+      "resolution": "现有第7节二分查找自测已有完整条件及正确答案5；只登记来源错误，不新增同义数字题。"
+    },
+    {
+      "id": "paper-issue-c5bfa43d7a79",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第3页，第13题",
+      "issue": "原页标C，但四个8位补码乘积独立计算为28、1568、16、112，只有B超出8位补码范围。",
+      "resolution": "改编自测按真值与目标位宽独立计算，答案为B；不沿用原标答。"
+    },
+    {
+      "id": "paper-issue-33e830b05508",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第6页，第27题",
+      "issue": "原页伪代码存在TURE/ture等错误，两个进程的turn赋值及循环结构不可靠。",
+      "resolution": "不把这段代码作为正确Peterson实现录入，不根据印刷答案反推语义。"
+    },
+    {
+      "id": "paper-issue-69d5dd13925c",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第6页，第28题",
+      "issue": "原页55、15、30、释放15、再分8的最佳适应结果应最大空闲15，原标B=9不符布局。",
+      "resolution": "原页已核验；讲义按地址独立复算，改编题另设60/20/25/12并给出完整过程。"
+    },
+    {
+      "id": "paper-issue-144d88a244c5",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第6页，第29题",
+      "issue": "原页的页面大小和逻辑空间指数已排成216等不可靠形式，字面与选项不能一致核对。",
+      "resolution": "不记录原题数值结论；只提取目录扇出的题型，改编完整重设4KiB/4B/2^20虚拟页等明确参数。"
+    },
+    {
+      "id": "paper-issue-e9e6366013c6",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第7–8页，第35题",
+      "issue": "原页标A，将RIP度量16当成可继续使用的17跳路径，违反16表示不可达的语义。",
+      "resolution": "依据RFC2453改为不可经该邻居到达；不因此排除其他邻居的有效路径。"
+    },
+    {
+      "id": "paper-issue-7fa67fc3ef1c",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第7页，第34题",
+      "issue": "原页标80ms。已核拓扑最短3链路，980000B文件按980B有效载荷分1000包；含首部与流水尾部应为80.16ms。",
+      "resolution": "记录资料错答，改编用不同文件大小并完整给出链路数与首部，结果16.16ms。"
+    },
+    {
+      "id": "paper-issue-9d3c47844b5d",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第8页，第36题",
+      "issue": "把ICMP源抑制用作拥塞通知；该机制已被RFC6633正式废弃。",
+      "resolution": "只在讲义标注历史背景与弃用，不编成现代推荐行为。"
+    },
+    {
+      "id": "paper-issue-dc4376254d77",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第8页，第38题",
+      "issue": "题目泛称抑制网络风暴并标网桥和路由器，未说明额外抑制功能；普通二层网桥不天然隔离广播域。",
+      "resolution": "补讲明确普通二层、同VLAN、环路控制等适用条件，不把某设备名当所有风暴情形的万能保证。"
+    },
+    {
+      "id": "paper-issue-0b44a703d701",
+      "documentId": "local-0ea3c90c01d6",
+      "locator": "PDF 第14页，第65题",
+      "issue": "资料解释把“4个以上可能死锁”写成“4个以上就死锁”，并混用严格不等式。",
+      "resolution": "补充同类资源模型的保证界限和可能性构造，不推广为所有运行顺序一定死锁。"
+    },
+    {
+      "id": "paper-issue-b0d6e60a2a95",
+      "documentId": "local-f91567e90b49",
+      "locator": "PDF 第8页，第58题",
+      "issue": "快速排序辅助空间O(log n)没有说明平均/平衡划分与实现条件，普通递归最坏可Θ(n)。",
+      "resolution": "讲义增加条件边界；不把未限定O(log n)当作无条件最坏结论。"
+    },
+    {
+      "id": "paper-issue-9560dd3407b4",
+      "documentId": "local-f91567e90b49",
+      "locator": "PDF 第12页，第101题",
+      "issue": "“UNIX系统采用CLOCK”未限定系统或版本，不能作为所有Unix系统统一实现事实。",
+      "resolution": "仅以其算法主题为证据补充CLOCK规则和自定义状态题，不作平台通用断言。"
+    },
+    {
+      "id": "paper-issue-935e0f5b278d",
+      "documentId": "local-57c7cb323437",
+      "locator": "PDF 第9页，第57—59题",
+      "issue": "核看原页，矩阵挤成一串，BFS与AOE题缺失所指图，无法恢复唯一结构。",
+      "resolution": "不录入这些图题，不从答案猜边和矩阵。"
+    },
+    {
+      "id": "paper-issue-8fced7289170",
+      "documentId": "local-57c7cb323437",
+      "locator": "PDF 第10页，第62题",
+      "issue": "文字说CPI及比例如下表，但渲染原页也未见该表，原数值条件不完整。",
+      "resolution": "不复原或倒猜原题答案；改编明确提供新三类指令表，独立计算600MIPS。"
+    },
+    {
+      "id": "paper-issue-2300be550afa",
+      "documentId": "local-57c7cb323437",
+      "locator": "PDF 第13页，第84题",
+      "issue": "题干要求读取10BaseT信号波形，但渲染原页波形为空白。",
+      "resolution": "不使用缺图原题判答案；另据有明确规则的差分编码资料编写完整初始电平自测。"
+    },
+    {
+      "id": "paper-issue-fc9a0e5e8621",
+      "documentId": "local-811b4f73077b",
+      "locator": "PDF 第3页第26题；第13页第26题解析",
+      "issue": "原图题干要求选不正确项，参考选A并解释“SQL只是一种结构化查询语言”；但A称SQL为关系数据的标准语言，不能用这个解释否定。C还把发布及备份概括为SQL通用功能，题目本身应区分标准与产品扩展。",
+      "resolution": "已核原页，不照录参考答案，不以此题设计单一可靠答案。只在讲义与另有清楚证据的题中区分SQL职责和使用方式。"
+    },
+    {
+      "id": "paper-issue-90c07cbfd330",
+      "documentId": "local-811b4f73077b",
+      "locator": "PDF 第6页，第85题",
+      "issue": "原页单项选择题写“不是数据模型三要素”，A/C/D均不是标准三要素，B才是数据结构、数据操作、完整性约束；否定题干与可唯一作答条件冲突。",
+      "resolution": "核原图确认非OCR漏否定；不采用该题为判分题，既有讲义已有正确三要素。"
+    },
+    {
+      "id": "paper-issue-b0957f9e118c",
+      "documentId": "local-bf39e40d87a7",
+      "locator": "PDF 第5页，第54题",
+      "issue": "题干引用职工表与部门表的具体数据，当前原页和续页没有展示所需表数据；仅知道主键列无法确定所有备选SQL能否执行。",
+      "resolution": "已核第5、6页原图，排除，不补造表格或猜参考答案；以《2023年国家电网招聘之电网计算机真题精选附答案(1).pdf》第11页多选5的完整列约束情境另作自测。"
+    },
+    {
+      "id": "paper-issue-3d59b923d17b",
+      "documentId": "local-bf39e40d87a7",
+      "locator": "PDF 第6页第64题；第17页第64题解析",
+      "issue": "参考答案D及解析称数据库记录必须按主关键字排列。原页B“前后顺序可以任意颠倒，不影响库中的数据关系”才符合关系无行序含义；主键不保证查询输出排序。",
+      "resolution": "原图核实题干与参考答案；不照录D。既有关系与SQL讲义已解释无序和ORDER BY，本批不再为同一已覆盖基础机械增题。"
+    },
+    {
+      "id": "paper-issue-d922030fc1f8",
+      "documentId": "local-d91ce57b3763",
+      "locator": "PDF 第7页第59题；第19页第59题解析",
+      "issue": "参考答案B可由“升级DBMS软件并不等于业务重构”成立；但解析先说重组调整存储空间与安排，又概括为不修改原有物理结构，术语表达容易把物理安排与模式混在一起。",
+      "resolution": "不把整题答案判错。补讲并改编为实际动作的物理/逻辑层次判断，避免要求学生背含混术语。"
+    },
+    {
+      "id": "paper-issue-e8515d1ceff6",
+      "documentId": "local-d91ce57b3763",
+      "locator": "PDF 第9页第83题；第19页第83题解析",
+      "issue": "解析绝对声称日志备份不能还原数据库物理损坏，并将首次备份和日志链规则概括为所有数据库通则。基础备份加连续日志可用于介质恢复，具体前置条件还依产品与方案。",
+      "resolution": "按PostgreSQL官方持续归档机制独立核对。新题明确基础备份、日志连续且可用等条件，不复制绝对断言或通用化产品限制。"
+    },
+    {
+      "id": "paper-issue-9e9325ba3057",
+      "documentId": "local-d91ce57b3763",
+      "locator": "PDF 第9页第85题；第19页第85题解析",
+      "issue": "题干为两个串相等的条件，但参考解析谈双向链表插入并标D，与该题题干不对应。",
+      "resolution": "已确认属于跨题答案错位；本批不录入。"
+    },
+    {
+      "id": "paper-issue-3bdca13f3c9e",
+      "documentId": "local-d91ce57b3763",
+      "locator": "PDF 第10页，第96题",
+      "issue": "参考正确项D概括“除了guest外每个数据库用户都必须有对应登录账户”，未限定产品版本与用户类别；现代SQL Server支持包含数据库用户、WITHOUT LOGIN等情形。",
+      "resolution": "参考Microsoft官方用户分类，不沿用无版本限制断言；改编题明确普通服务器登录的常见映射场景，并区分各层权限。"
+    },
+    {
+      "id": "paper-issue-d1d61e245729",
+      "documentId": "local-843fb88c43f9",
+      "locator": "PDF 第12页，第138题解析",
+      "issue": "判断普通视图为虚表本身可以成立，但解析把“提高查找效率”概括为主要作用，容易被读为普通视图自动保存结果并保证加速。",
+      "resolution": "保留虚表概念，补充普通视图不等于物化结果缓存、性能由实际计划决定，改编题同时检查基表授权绕过。"
+    },
+    {
+      "id": "paper-issue-1b9a1f2fdfcd",
+      "documentId": "local-53dc9db83f1b",
+      "locator": "PDF 第6页，第52题解析",
+      "issue": "将WITH CHECK OPTION描述为INSERT、UPDATE、DELETE都检查“更新后的行仍满足视图谓词”，把删除也归入新行可见性检查，表述不准确。",
+      "resolution": "用PostgreSQL官方CREATE VIEW规则核验；新题限定简单自动更新视图和无其他阻止条件，分别说明插入、改动与删除。"
+    },
+    {
+      "id": "paper-issue-000b0aed14b3",
+      "documentId": "local-bb60eb608dc8",
+      "locator": "PDF 第11页，第59题",
+      "issue": "参考D的标量子查询需要至多一行，题干没有保证产品名称唯一；若同名产品多行会报标量基数错误，零行则为NULL。",
+      "resolution": "不照抄为无条件可执行答案；改编自测明确讨论零行、一行、多行三种情况，不自行添加唯一性假设。"
+    },
+    {
+      "id": "paper-issue-187c569513c4",
+      "documentId": "local-bca354628009",
+      "locator": "PDF 第5页，第16题",
+      "issue": "原页标B“符号位进位和最高数值位进位同时产生”；正确检测不能用同时产生替代进位异或，选项C双符号位不同才是明确溢出判据。",
+      "resolution": "补讲双符号位00/11、01/10，改编题按双符号位与真值范围独立解释。"
+    },
+    {
+      "id": "paper-issue-c29a7f06929d",
+      "documentId": "local-bca354628009",
+      "locator": "PDF 第11—12页，多选第6题",
+      "issue": "原图答案ACD；C“都是独立系统的静态数据”不符合集成历史分析，B“可以从原有数据库系统中抽取而来”应成立。在给定选项通常含义下应为ABD。《2023年国家电网招聘之电网计算机真题精选附答案(1).docx》第350—356段也含此题及相同误答。",
+      "resolution": "已核原题和答案续页。按Oracle官方仓库概念，补集成、历史、非易失与元数据；两道自测分别检查特征与元数据，不把重复文本计为独立年度证据。"
+    },
+    {
+      "id": "paper-issue-370320ada6b8",
+      "documentId": "local-c2a0b6166a76",
+      "locator": "Word 第10—15段，第2题",
+      "issue": "单选参考A，但A数据库系统包含DB和DBMS、B核心为DBMS、D包含软硬件数据库和人员均可成立，无法维持唯一正确项。",
+      "resolution": "不采用该单选判分；既有数据库系统组成讲义和基础题已经覆盖，不以改题数量代替缺口分析。"
+    },
+    {
+      "id": "paper-issue-f50b961d09b5",
+      "documentId": "local-c2a0b6166a76",
+      "locator": "Word 第158段，第23题",
+      "issue": "4种幅度、8种相位与“形成16种码元”并列，未给筛选星座条件，题干条件相互冲突。",
+      "resolution": "不强行决定原题数据率；改编明确全部32组合互异有效，计算3000bit/s。"
+    },
+    {
+      "id": "paper-issue-fc1d4d97edb5",
+      "documentId": "local-c2a0b6166a76",
+      "locator": "Word 第186–191段，第27题",
+      "issue": "标答A把166MHz写成每秒166万次；166MHz实际为每秒166百万次。",
+      "resolution": "记录单位错误，讲义按Hz、MHz、GHz严格换算；不采硬件型号与主频绝对性能结论。"
+    },
+    {
+      "id": "paper-issue-f39758f357e8",
+      "documentId": "local-f729c25aac93",
+      "locator": "PDF 第12页，多选第8题",
+      "issue": "选项C把参与连接的关系数与开销作单调绝对比较，未给选择性、连接条件、访问路径和中间结果等条件；“关系越多开销越大”不应作为通用保证。",
+      "resolution": "不沿用绝对性能比较；改编为水平/垂直拆分和可还原条件，补实际工作负载与测量前提。"
+    },
+    {
+      "id": "paper-issue-e90464caeab6",
+      "documentId": "local-f729c25aac93",
+      "locator": "PDF 第13页，多选第11题",
+      "issue": "原图参考BCD，C把1:N联系独立映射关系的码说成1方实体码；1方码可重复，应由N方码标识该单次联系，且A实体映射关系并保留实体码在常规前提下成立。通常映射题预期应为ABD。",
+      "resolution": "已核原图。新题明确仅保存当前归属、员工全局编号唯一和每人一个部门，以具体记录证明候选键来自多方；不盲从BCD。"
+    },
+    {
+      "id": "paper-issue-3adf53a6fb0f",
+      "documentId": "local-fb20ded1a61c",
+      "locator": "Word 第59段，第9题",
+      "issue": "控制端口可按默认21回答，但“上传文件时端口”没有说明主动或被动数据连接模式，不能唯一给出固定数据端口。",
+      "resolution": "改编明确被动模式与服务端51000端口，区分控制和数据连接。"
+    },
+    {
+      "id": "paper-issue-820870704e1a",
+      "documentId": "local-df416ef59d82",
+      "locator": "PDF 第1页，第1题",
+      "issue": "题问SaaS，四项分别为基础设施、硬件、中间件管理、平台，没有“软件即服务”，却标C。",
+      "resolution": "原页确认题面缺正确选项。补正确含义与服务/部署两维，采用《2020年国家电网-计算机类真题.pdf》第4页31题为可定位改编起点，不把C当正确。"
+    },
+    {
+      "id": "paper-issue-d1bc2e9c7408",
+      "documentId": "local-df416ef59d82",
+      "locator": "PDF 第6页，第19题",
+      "issue": "题问“专门的关系运算”，按通常教材分类应为选择、投影、连接、除（C），原参考A混入笛卡儿积。还容易把此分类与五种基本运算混淆。",
+      "resolution": "不沿用A，讲义区分基本运算、可导出运算及分类语境；新题从《2022真题一批-计算机类.pdf》明确的五种基本运算出发，用等价表达式自测。"
+    },
+    {
+      "id": "paper-issue-793d7e7386f2",
+      "documentId": "local-ad6c63717cc5",
+      "locator": "PDF 第18页，多选第19题",
+      "issue": "原图答案ABCD，把每个“物”具备CPU、操作系统、发送器概括为物联网必要条件，忽略被读写器识别的无源标签等系统分工。《2023年国家电网招聘之电网计算机真题精选附答案.docx》第414段为同题。",
+      "resolution": "已核原页，以GS1官方无源RFID工作流程独立核验；新题用备件—标签—读写器—网关—后台情境区分对象能力，不沿用全选。"
+    },
+    {
+      "id": "paper-issue-5b4eb15a9b18",
+      "documentId": "local-c0e0166ea582",
+      "locator": "Word 第192段，第28题",
+      "issue": "所谓4个路由表项只给地址，没有前缀长度或掩码，不能据此做唯一最长前缀匹配。",
+      "resolution": "不采用该不完整原题的标答，保留现有完整掩码的最长前缀自测。"
+    },
+    {
+      "id": "paper-issue-5954246211d2",
+      "documentId": "local-c0e0166ea582",
+      "locator": "Word 第234段，第34题",
+      "issue": "把DSA列作非对称密钥加密算法，功能表述不准确；DSA是数字签名算法，不能单独用于文件内容加密。",
+      "resolution": "改成算法能力与签名/加密目标辨析，不沿用“有公私钥就能加密”的措辞。"
+    },
+    {
+      "id": "paper-issue-2b26fdf678e2",
+      "documentId": "local-c0e0166ea582",
+      "locator": "Word 第347—352段，多选第10题",
+      "issue": "题问完成“查询与更新”的语言，原答CD；在将DQL单独分类的口径下，DQL只负责查询，不能因名字含Query就认为也承担更新；DML是否含SELECT需说明分类约定。",
+      "resolution": "不录入含混的CD判分；既有SQL讲义已说明功能分类，避免把不同口径混为一个绝对多选。"
+    },
+    {
+      "id": "paper-issue-af7e428d438f",
+      "documentId": "local-d28f2f371cd8",
+      "locator": "PDF 第5—12页",
+      "issue": "与《2015年国家电网考试真题（计算机类）.pdf》约93.6%文本重合，属于大量重合材料；不能据此认证同一年度试卷。",
+      "resolution": "只核对覆盖，不当作新的独立年度，不重复录入。"
+    }
+  ],
+  "exclusions": [
+    "不纳入综合能力、时政、行业常识和混入的非计算机题。",
+    "旧版Office菜单及无当前大纲依据的专门通信内容不扩为独立复习模块。",
+    "缺图、公式损坏或条件不足且不能独立确定答案的题不进入可判分题库。"
+  ]
+}
