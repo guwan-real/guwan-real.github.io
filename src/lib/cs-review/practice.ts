@@ -20,6 +20,7 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
   if (knowledgeId) moduleId = ctx.knowledge.find((k) => k.knowledgeId === knowledgeId)!.moduleId;
   let fixedQuestionId = ctx.questions.some((q) => q.id === params.get('question')) ? params.get('question')! : '';
   let reviewScope = params.get('scope') ?? '';
+  let recordFilter = ['unseen', 'done'].includes(params.get('record') ?? '') ? params.get('record')! : '';
   let count = '10';
   let setup = !(params.has('resume') || (!params.size && ctx.store.snapshot().session));
   let busy = false;
@@ -35,7 +36,8 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
     return ctx.questions.filter((q) => (!moduleId || q.moduleId === moduleId) && (!knowledgeId || q.knowledgeIds.includes(knowledgeId))
       && (!fixedQuestionId || q.id === fixedQuestionId)
       && (mode !== 'mistakes' || (reviewScope === 'history' ? stats(q.id).wrongCount > 0 : reviewScope === 'uncertain' ? stats(q.id).uncertain : stats(q.id).needsReview))
-      && (mode !== 'favorites' || stats(q.id).favorite));
+      && (mode !== 'favorites' || stats(q.id).favorite)
+      && (recordFilter === 'unseen' ? stats(q.id).answeredCount === 0 : recordFilter === 'done' ? stats(q.id).answeredCount > 0 : true));
   }
   const chosenCount = () => Math.min(filteredQuestions().length, count === 'all' ? 2000 : Number(count));
   function renderSetup() {
@@ -48,6 +50,7 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
       <form class="review-config" id="practice-config"><div class="review-fields">
         <label class="review-field">练习方式<select name="mode" data-focus="config-mode">${Object.entries(modeLabels).map(([key, label]) => `<option value="${key}"${selectedOption(key, mode)}>${label}</option>`).join('')}</select></label>
         <label class="review-field">题目数量<select name="count" data-focus="config-count">${['5', '10', '20', '50', 'all'].map((n) => `<option value="${n}"${selectedOption(n, count)}>${n === 'all' ? '全部（最多 2,000）' : `${n} 题`}</option>`).join('')}</select></label>
+        <label class="review-field">做题记录<select name="record" data-focus="config-record"><option value="">全部题目</option><option value="unseen"${selectedOption('unseen', recordFilter)}>未做过</option><option value="done"${selectedOption('done', recordFilter)}>已做过</option></select></label>
         <label class="review-field">所属章节<select name="module" data-focus="config-module"><option value="">全部章节</option>${MODULES.map((m) => `<option value="${m.id}"${selectedOption(m.id, moduleId)}>${m.title}</option>`).join('')}</select></label>
         <label class="review-field">关联知识点<select name="knowledge" data-focus="config-knowledge"><option value="">全部知识点</option>${topics.map((k) => `<option value="${e(k.knowledgeId)}"${selectedOption(k.knowledgeId, knowledgeId)}>${e(k.title)}</option>`).join('')}</select></label>
       </div><p class="review-caption">${mode === 'exam' ? '模拟考试不计时，每题 1 分，多选需全部选对。交卷前不显示正误与解析；未答题在交卷时计为错误。' : '练习可随时切题；提交后即时查看解析。多选题需全部选对，漏选或多选均记为错误。'}${mode === 'mistakes' ? reviewScope === 'history' ? ' 当前包含全部历史错题，已掌握的题也可以回看。' : reviewScope === 'uncertain' ? ' 当前仅练习标记不确定的题目。' : ' 本模式仅包含尚未手动标记掌握的历史错题。' : ''}</p>
@@ -64,7 +67,7 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
     const optionLabel = (ids: string[]) => ids.length ? ids.map((id) => q.type === 'boolean' ? (id === 'T' ? '正确' : '错误') : id).join('、') : '未作答';
     const stats = questionStats(ctx.store.snapshot(), q.id);
     return `<section class="review-answer ${attempt.correct ? '' : 'is-incorrect'}" aria-labelledby="answer-title"><div class="review-answer-result"><h2 id="answer-title" tabindex="-1">${attempt.correct ? '回答正确' : attempt.selectedOptionIds.length ? '这道题，再想一遍。' : '本题未作答'}</h2><span>正确答案：${e(optionLabel(answer.correctOptionIds))} · 你的答案：${e(optionLabel(attempt.selectedOptionIds))}</span></div>
-      <div class="review-prose"><h3>解题过程</h3>${answer.analysisHtml}${answer.stepsHtml.length ? `<ol>${answer.stepsHtml.map((step) => `<li>${step}</li>`).join('')}</ol>` : ''}<h3>核心考点</h3>${answer.keyPointHtml}<h3>易错原因</h3>${answer.pitfallHtml}</div>
+      <div class="review-prose"><h3>解题过程</h3>${answer.analysisHtml}${answer.stepsHtml.length ? `<ol>${answer.stepsHtml.map((step) => `<li>${step}</li>`).join('')}</ol>` : ''}${answer.optionAnalysisHtml?.length ? `<h3>逐项辨析</h3><dl class="review-option-analysis">${answer.optionAnalysisHtml.map((option) => `<div><dt>${q.type === 'boolean' ? option.id === 'T' ? '正确' : '错误' : e(option.id)}</dt><dd>${option.html}</dd></div>`).join('')}</dl>` : ''}<h3>核心考点</h3>${answer.keyPointHtml}<h3>易错原因</h3>${answer.pitfallHtml}</div>
       <div class="review-answer-links">${q.knowledgeIds.map((id) => `<a class="review-text-link" href="${ctx.url(`knowledge/${id}/`)}">复习：${e(ctx.knowledge.find((k) => k.knowledgeId === id)?.title ?? id)} ↗</a>`).join('')}</div>
       ${stats.wrongCount ? `<div class="review-question-tools"><button class="review-button is-small" data-flag="mastered" data-focus="mastered" aria-pressed="${stats.mastered}">${stats.mastered ? '已掌握 · 移回待复习' : '我已理解，标记掌握'}</button><span class="review-caption">累计错 ${stats.wrongCount} 次，历史保留。</span></div>` : ''}</section>`;
   }
@@ -95,11 +98,13 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
     const completed = isExam ? session.questionIds.filter((id) => selection(session, id).length).length : session.committed.length;
     const selected = selection(session, q.id);
     const flag = data.flags[q.id];
+    const stats = questionStats(data, q.id);
     const totalCorrect = data.attempts.filter((a) => a.sessionId === session.id && a.correct).length;
     app.innerHTML = `<div class="review-session-header"><div><h1>${modeLabels[session.mode]}</h1><p>${isExam && !isFinished ? '交卷后统一判分 · 选择自动保存' : '理解每一步，比记住答案更重要'}</p></div><div class="review-actions"><button class="review-button is-small" data-action="configure" data-focus="configure">练习设置</button>${isExam && !isFinished ? '<button class="review-button is-primary is-small" data-action="finish-exam" data-focus="finish-exam">交卷</button>' : ''}</div></div>
       ${isFinished ? `<section class="review-exam-result"><p class="review-eyebrow">${isExam ? 'EXAM RESULT' : 'SESSION COMPLETE'}</p><h2>${isExam ? '已交卷，可以逐题回看。' : '本组练习已完成。'}</h2><div class="review-exam-score">${totalCorrect}<small> / ${session.questionIds.length} ${isExam ? '分' : '题正确'}</small></div><p>每题 1 分，多选全对才得分；${isExam ? '未答题计错。' : '重复查看不会重复计入历史。'}题目${session.questionIds.every((id) => findQuestion(id)?.source.isExample) ? '均为自编练习，结果仅用于复习。' : '来源见各题。'}</p></section>` : ''}
       <div class="review-session-progress"><div><strong aria-live="polite">${String(session.index + 1).padStart(2, '0')} <span>/ ${String(session.questionIds.length).padStart(2, '0')}</span></strong><span>${completed} 题已${isExam ? '作答' : '提交'}</span></div><progress value="${completed}" max="${session.questionIds.length}" aria-label="练习完成进度"></progress></div>
       <div class="review-question-meta"><span class="review-tag">${TYPE_LABELS[q.type]}</span><span class="review-tag">${e(moduleTitle(q.moduleId))}</span><span class="review-tag">${DIFFICULTY_LABELS[q.difficulty]}</span>${q.source.isExample ? '<span class="review-tag is-example">自编自测 · 非官方真题</span>' : ''}</div>
+      ${!isExam || isFinished ? `<p class="review-question-history">${stats.answeredCount ? `已做 ${stats.answeredCount} 次` : '未做过'}${stats.latest ? ` · 最近${stats.latest.correct ? '答对' : stats.latest.selectedOptionIds.length ? '答错' : '交卷未答'}` : ''}${stats.wrongCount ? ` · 历史错 ${stats.wrongCount} 次 · ${stats.mastered ? '已手动掌握' : '仍需复习'}` : ''}</p>` : ''}
       <div class="review-prose review-question-stem" id="question-stem" tabindex="-1">${q.stemHtml}</div>
       <fieldset class="review-options" aria-labelledby="question-stem"><legend class="review-sr-only">${q.type === 'multiple' ? '请选择所有正确选项' : '请选择一个答案'}</legend>${q.options.map((option, index) => {
         const isCorrect = Boolean(answer?.correctOptionIds.includes(option.id));
@@ -183,6 +188,7 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
       const form = app.querySelector<HTMLFormElement>('#practice-config')!;
       const fields = new FormData(form);
       mode = fields.get('mode') as PracticeMode; moduleId = fields.get('module') as string; knowledgeId = fields.get('knowledge') as string; count = fields.get('count') as string;
+      recordFilter = fields.get('record') as string;
       if (mode === 'chapter' && !moduleId) moduleId = MODULES[0].id;
       if (knowledgeId && ctx.knowledge.find((k) => k.knowledgeId === knowledgeId)?.moduleId !== moduleId && moduleId) knowledgeId = '';
       if (mode === 'knowledge' && !knowledgeId) knowledgeId = ctx.knowledge.find((k) => !moduleId || k.moduleId === moduleId)?.knowledgeId ?? '';

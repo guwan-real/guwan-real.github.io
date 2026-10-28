@@ -1,0 +1,4040 @@
+[
+  {
+    "id": "review-extra-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "ds-foundations"
+    ],
+    "type": "single",
+    "stem": "下面代码中 `work()` 共执行多少次？设 $n$ 为正整数，每次 `work()` 为常数时间。\n```c\nfor (int i = 1; i <= n; i++)\n  for (int j = 1; j <= i; j++)\n    work();\n```",
+    "options": [
+      {
+        "id": "A",
+        "text": "$n$"
+      },
+      {
+        "id": "B",
+        "text": "$n(n+1)/2$，时间复杂度 $O(n^2)$"
+      },
+      {
+        "id": "C",
+        "text": "$n\\log_2n$"
+      },
+      {
+        "id": "D",
+        "text": "$2^n$"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "内层次数随 i 增长，应求和而不是把两层循环机械地相加。",
+      "steps": [
+        "当 i=1、2、…、n 时，内层分别执行 1、2、…、n 次。",
+        "总次数为等差数列和 $1+2+\\cdots+n=n(n+1)/2$。",
+        "忽略低阶项与常数，渐进时间复杂度为 $O(n^2)$，额外空间为 $O(1)$。"
+      ],
+      "keyPoint": "循环计数先写每一层的实际范围；三角形迭代空间仍是平方阶。",
+      "pitfall": "看到内层上界不是 n 就误认为线性；大 O 也不是精确执行次数。",
+      "optionAnalysis": {
+        "A": "只计了外层次数。",
+        "B": "精确次数和复杂度均正确。",
+        "C": "本程序没有每次减半或翻倍的循环变量。",
+        "D": "不存在指数分支或指数递归。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 1 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据结构基本概念",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "linear-lists"
+    ],
+    "type": "single",
+    "stem": "在单链表中，已知非空结点 p 的地址，要在 p 后插入新结点 s。哪一组操作正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "`p->next=s; s->next=p->next;`"
+      },
+      {
+        "id": "B",
+        "text": "`s->next=p->next; p->next=s;`"
+      },
+      {
+        "id": "C",
+        "text": "`s=p->next; p->next=s;`"
+      },
+      {
+        "id": "D",
+        "text": "必须先从头结点遍历到表尾"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先保存原后继，再让 p 指向 s，才能保持原有链条。已知 p 时不需要查找插入位置。",
+      "steps": [
+        "设原来 p→q，先执行 s->next=p->next，使 s→q。",
+        "再执行 p->next=s，得到 p→s→q。",
+        "只修改两条指针，插入本身为 $O(1)$；若只给位置编号，查找 p 通常为 $O(n)$。"
+      ],
+      "keyPoint": "区分定位成本与修改链接成本。",
+      "pitfall": "先改 p->next 会丢失原后继，并可能让 s 指向自身。",
+      "optionAnalysis": {
+        "A": "第二句读到的已经是 s，产生自环且丢失原后继。",
+        "B": "先接后继再接前驱，链接完整。",
+        "C": "只是改变局部变量 s，没有插入新结点。",
+        "D": "已持有 p，不需要遍历表尾。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 2 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "线性表",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-03",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "stacks-queues"
+    ],
+    "type": "single",
+    "stem": "元素按 1、2、3、4 的顺序入栈，入栈与出栈可交替。以下哪一个是合法出栈序列？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2、1、4、3"
+      },
+      {
+        "id": "B",
+        "text": "3、1、2、4"
+      },
+      {
+        "id": "C",
+        "text": "4、2、3、1"
+      },
+      {
+        "id": "D",
+        "text": "1、4、2、3"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "按目标序列模拟栈顶；需要输出的元素若在栈内但不在栈顶，序列即不合法。",
+      "steps": [
+        "依次压入 1、2，弹出 2、1。",
+        "再压入 3、4，弹出 4、3，得到 A。",
+        "B 弹出 3 后栈顶是 2；C 弹出 4 后栈顶是 3；D 弹出 1、4 后栈顶也是 3，均不能输出下一目标。"
+      ],
+      "keyPoint": "栈是后进先出，可用一个辅助栈线性验证序列。",
+      "pitfall": "误把“入栈顺序固定”理解为所有元素必须全部入栈后才能出栈。",
+      "optionAnalysis": {
+        "A": "逐步模拟可实现。",
+        "B": "3 之后不能越过栈顶 2 直接弹出 1。",
+        "C": "4 之后必须先处理栈顶 3。",
+        "D": "1、4 之后不能越过 3 弹出 2。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 3 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "栈和队列",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-04",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "arrays-strings"
+    ],
+    "type": "multiple",
+    "stem": "关于 KMP 字符串匹配算法，下列哪些说法正确？设主串长 n，模式串长 m。",
+    "options": [
+      {
+        "id": "A",
+        "text": "失配时可保持主串扫描位置不回退"
+      },
+      {
+        "id": "B",
+        "text": "包含模式预处理在内，时间复杂度为 $O(n+m)$"
+      },
+      {
+        "id": "C",
+        "text": "利用模式串前后缀信息确定下一次比较位置"
+      },
+      {
+        "id": "D",
+        "text": "每次失配都必须把模式串退回第一个字符"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "KMP 复用已经得到的匹配信息，把模式中可复用的相等前后缀对齐。",
+      "steps": [
+        "预处理模式串，建立前缀函数或相应 next 表。",
+        "失配时沿前缀信息缩短已匹配长度，主串指针不反复回扫。",
+        "预处理 $O(m)$，匹配 $O(n)$；不同教材的 next 下标约定可能不同。"
+      ],
+      "keyPoint": "关键是复用匹配信息，而不是记某一种 next 数组写法。",
+      "pitfall": "把 KMP 的模式跳转与朴素匹配的主串回退混淆。",
+      "optionAnalysis": {
+        "A": "保持主串扫描方向单调是其特点。",
+        "B": "要把预处理模式的成本也计入。",
+        "C": "最长可复用前后缀提供跳转依据。",
+        "D": "应按前缀表跳转，不总是回到开头。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 4 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数组、数组的压缩存储与字符串",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-05",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "trees"
+    ],
+    "type": "single",
+    "stem": "某二叉树的先序遍历为 ABDECFG，中序遍历为 DBEAFCG。其后序遍历为？（结点值互异）",
+    "options": [
+      {
+        "id": "A",
+        "text": "DBEAFCG"
+      },
+      {
+        "id": "B",
+        "text": "DEBFGCA"
+      },
+      {
+        "id": "C",
+        "text": "ABCDEFG"
+      },
+      {
+        "id": "D",
+        "text": "DEBFCGA"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先序确定根，中序划分左右子树，后序按左、右、根输出。",
+      "steps": [
+        "根为 A；中序中 A 左边 DBE 对应左子树，右边 FCG 对应右子树。",
+        "左子树根 B，左右孩子 D、E，后序为 DEB。右子树根 C，左右孩子 F、G，后序为 FGC。",
+        "合并左、右、根得到 DEBFGCA。"
+      ],
+      "keyPoint": "两种遍历确定树时，先用先序或后序找根，再用中序分段。",
+      "pitfall": "直接交换字符串，或把后序误写成左、根、右。",
+      "optionAnalysis": {
+        "A": "这是原中序序列。",
+        "B": "DEB + FGC + A 正确。",
+        "C": "这是原先序序列。",
+        "D": "右子树的根 C 应在 F、G 之后。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 5 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "树和二叉树",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-06",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "graphs"
+    ],
+    "type": "single",
+    "stem": "无向连通图有 4 个顶点 A、B、C、D，边权为 AB=1、BC=2、AC=3、CD=4、BD=5。最小生成树的权值总和为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "6"
+      },
+      {
+        "id": "B",
+        "text": "7"
+      },
+      {
+        "id": "C",
+        "text": "8"
+      },
+      {
+        "id": "D",
+        "text": "9"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "用 Kruskal 按边权从小到大选边，避免成环，选满 V−1 条。",
+      "steps": [
+        "选 AB=1，再选 BC=2，此时 A、B、C 已连通。",
+        "AC=3 的两端已连通，加入会构成环，跳过。",
+        "选 CD=4 连上 D，共 3 条边，总权重 1+2+4=7。"
+      ],
+      "keyPoint": "最小生成树覆盖全部顶点且无环；它与单源最短路径树目标不同。",
+      "pitfall": "只取最小的三条边 1、2、3，会成环且遗漏 D。",
+      "optionAnalysis": {
+        "A": "1+2+3 虽小，但不构成生成树。",
+        "B": "AB、BC、CD 无环且连接全部顶点。",
+        "C": "例如选 AB、BC、BD 得 8，仍可更小。",
+        "D": "存在权重 7 的生成树，9 不是最小。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 6 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "图",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-07",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "searching"
+    ],
+    "type": "single",
+    "stem": "散列表长度为 7，地址为 0～6，散列函数 H(k)=k mod 7，采用线性探测。依次插入 10、17、24 后，成功查找这三个关键字的平均探测次数为？（每次检查一个槽位计 1 次）",
+    "options": [
+      {
+        "id": "A",
+        "text": "1"
+      },
+      {
+        "id": "B",
+        "text": "2"
+      },
+      {
+        "id": "C",
+        "text": "3"
+      },
+      {
+        "id": "D",
+        "text": "7/3"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "三个关键字初始地址都为 3，线性探测依次占据 3、4、5。",
+      "steps": [
+        "查找 10：检查槽 3，一次命中。",
+        "查找 17：检查槽 3、4，两次；查找 24：检查槽 3、4、5，三次。",
+        "等概率成功查找的平均探测次数为 (1+2+3)/3=2。"
+      ],
+      "keyPoint": "散列地址冲突不等于关键字相等；查找必须复现探测序列。",
+      "pitfall": "只统计冲突次数，漏掉最后命中的那一次检查。",
+      "optionAnalysis": {
+        "A": "只适用于每个键都直接命中的情况。",
+        "B": "平均 (1+2+3)/3=2。",
+        "C": "这是最深的单个键的探测次数。",
+        "D": "三个键总探测数是 6，不是 7。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 7 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "查找",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-08",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "insertion-sort"
+    ],
+    "type": "multiple",
+    "stem": "关于比较排序，下列哪些结论正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "归并排序的最坏时间复杂度可达 $O(n\\log n)$"
+      },
+      {
+        "id": "B",
+        "text": "普通快速排序在划分极不均衡时可退化为 $O(n^2)$"
+      },
+      {
+        "id": "C",
+        "text": "堆排序的最坏时间复杂度为 $O(n\\log n)$"
+      },
+      {
+        "id": "D",
+        "text": "希尔排序在通常实现下是稳定排序"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "时间复杂度、辅助空间和稳定性是三个不同维度，需分别判断。",
+      "steps": [
+        "归并每层合并 $O(n)$，共有 $O(\\log n)$ 层。",
+        "快速排序若每次只排定一个端点，形成 n 层、总工作量为平方阶。",
+        "堆排序反复调整堆，高度为对数；希尔排序的跨距移动可能交换相等键的先后。"
+      ],
+      "keyPoint": "稳定性指相等关键字的相对次序是否保持。",
+      "pitfall": "把“移动次数少”“原地排序”或“平均很快”当作稳定性的依据。",
+      "optionAnalysis": {
+        "A": "标准归并排序最坏仍为对数线性阶。",
+        "B": "选到极端枢轴可能导致该退化。",
+        "C": "建堆线性，之后 n 次对数调整。",
+        "D": "希尔排序一般不稳定。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 8 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "内部排序",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-09",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "algorithm-design"
+    ],
+    "type": "single",
+    "stem": "分治算法的递推式为 $T(n)=2T(n/2)+n$，$T(1)=1$，n 为 2 的幂。其渐进时间复杂度为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "$O(\\log n)$"
+      },
+      {
+        "id": "B",
+        "text": "$O(n)$"
+      },
+      {
+        "id": "C",
+        "text": "$O(n\\log n)$"
+      },
+      {
+        "id": "D",
+        "text": "$O(n^2)$"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "画递归树：每层子问题数量翻倍、规模减半，所以每层总合并工作量仍为 n。",
+      "steps": [
+        "第 0 层工作量 n，第 1 层为 2×n/2=n，第 2 层也是 n。",
+        "一直划分至规模 1，共有 $\\log_2n$ 层合并工作。",
+        "合并总成本 $n\\log_2n$，叶子成本 n，合起来为 $O(n\\log n)$。"
+      ],
+      "keyPoint": "递归树的总成本 = 每层成本之和，不是单条递归路径成本。",
+      "pitfall": "仅看到深度是 log n 就忽略每层还有 n 的工作量。",
+      "optionAnalysis": {
+        "A": "只计递归深度。",
+        "B": "只计某一层的工作量。",
+        "C": "对数层，每层线性成本。",
+        "D": "各层成本没有按 n、n−1 这样形成平方和。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 9 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "算法设计与分析基础",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-10",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-foundations"
+    ],
+    "type": "single",
+    "stem": "在数据库三级模式中，“全体学生与选课关系的逻辑结构定义”最对应哪一层？",
+    "options": [
+      {
+        "id": "A",
+        "text": "某教师看到的课程成绩视图（外模式）"
+      },
+      {
+        "id": "B",
+        "text": "整个数据库的模式（概念模式）"
+      },
+      {
+        "id": "C",
+        "text": "磁盘页、索引文件等存储结构（内模式）"
+      },
+      {
+        "id": "D",
+        "text": "某一时刻表中保存的全部具体行（实例）"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "模式描述结构，实例描述当前数据；三级模式还区分用户视图、全局逻辑结构与物理存储。",
+      "steps": [
+        "先判断题干说的是结构定义，而不是某一时刻的数据内容。",
+        "再判断其范围是整个数据库，不是单个用户的局部视图。",
+        "所以对应模式（概念模式）；磁盘组织与访问路径归内模式。"
+      ],
+      "keyPoint": "外模式—模式—内模式对应用户视图—全局逻辑—物理存储。",
+      "pitfall": "把“数据库中现在有什么数据”与“允许保存什么结构的数据”混为一谈。",
+      "optionAnalysis": {
+        "A": "只描述某类用户的局部视图。",
+        "B": "全局逻辑结构是模式的职责。",
+        "C": "这描述物理层。",
+        "D": "具体数据集合是实例，可能经常变化。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 10 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据库基本概念",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-11",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "relational-theory"
+    ],
+    "type": "single",
+    "stem": "关系 R(A,B,C,D) 的函数依赖为 A→BC、C→D，没有其他非平凡依赖。以下哪个是候选码？",
+    "options": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "BC"
+      },
+      {
+        "id": "C",
+        "text": "CD"
+      },
+      {
+        "id": "D",
+        "text": "AB"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "候选码必须既能决定全部属性，又不能再删去属性。用闭包而不是凭属性个数猜。",
+      "steps": [
+        "A⁺ 初始为 {A}，用 A→BC 得到 B、C，再用 C→D 得到 D。",
+        "所以 A 决定全部属性，且单属性不能再缩小，是候选码。",
+        "BC⁺ 缺少 A；CD⁺ 缺少 A、B；AB 是超码，但删去 B 后 A 仍是码，故不是候选码。"
+      ],
+      "keyPoint": "候选码 = 最小超码。闭包中必须覆盖关系的全部属性。",
+      "pitfall": "认为能决定“很多属性”就是码，或把非最小超码也列为候选码。",
+      "optionAnalysis": {
+        "A": "A⁺=ABCD，且最小。",
+        "B": "BC 不能反推出 A。",
+        "C": "CD 不能反推出 A、B。",
+        "D": "AB 有冗余属性 B，不是最小。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 11 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "关系数据库基本理论",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-12",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "single",
+    "stem": "Student 有学号 1、2、3；Enroll 有 (1,OS)、(1,DB)、(2,OS)，course 均非 NULL。执行下列查询，学号 3 的两个计数分别为？\n```sql\nSELECT s.id, COUNT(*), COUNT(e.course)\nFROM Student s LEFT JOIN Enroll e ON s.id=e.sid\nGROUP BY s.id;\n```",
+    "options": [
+      {
+        "id": "A",
+        "text": "1，0"
+      },
+      {
+        "id": "B",
+        "text": "0，0"
+      },
+      {
+        "id": "C",
+        "text": "1，1"
+      },
+      {
+        "id": "D",
+        "text": "2，0"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "LEFT JOIN 为没有匹配记录的左表行保留一行，右表各列填 NULL。COUNT(*) 统计行，COUNT(列) 统计非 NULL 值。",
+      "steps": [
+        "学号 3 没有选课记录，但左连接仍保留一行 (3,NULL)。",
+        "COUNT(*) 把这行计入，因此为 1。",
+        "e.course 为 NULL，COUNT(e.course) 不计，因此为 0。"
+      ],
+      "keyPoint": "外连接补出的 NULL 行会影响聚合，计课程数通常应数右侧非空键或课程列。",
+      "pitfall": "把外连接当内连接，或把 COUNT(*) 与 COUNT(列) 认为完全等价。",
+      "optionAnalysis": {
+        "A": "一条保留行，零个非空课程。",
+        "B": "只有内连接遗漏该学生时才不会产生此组；这里明确是左连接。",
+        "C": "COUNT(列) 不计 NULL。",
+        "D": "该学生没有两条匹配记录。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 12 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "关系数据库标准语言 SQL",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-13",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "acid-transactions"
+    ],
+    "type": "multiple",
+    "stem": "按 SQL 标准的隔离级别定义（不采用某个数据库的额外实现保证），哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "READ COMMITTED 不允许脏读"
+      },
+      {
+        "id": "B",
+        "text": "READ COMMITTED 仍可能发生不可重复读"
+      },
+      {
+        "id": "C",
+        "text": "REPEATABLE READ 在标准定义下必然消除幻读"
+      },
+      {
+        "id": "D",
+        "text": "SERIALIZABLE 要求并发执行的效果等价于某种串行执行"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "先区分异常，再按标准最低保证匹配隔离级别。产品的快照或间隙锁可能给出更强行为，不能倒推为标准统一要求。",
+      "steps": [
+        "脏读是读取未提交修改；READ COMMITTED 阻止它。",
+        "不可重复读是同一行再次读取值变化；READ COMMITTED 仍允许。",
+        "标准 REPEATABLE READ 不要求消除所有幻读；SERIALIZABLE 提供可串行化效果。"
+      ],
+      "keyPoint": "脏读看未提交值，不可重复读看行值变化，幻读看满足谓词的行集合变化。",
+      "pitfall": "把特定数据库、特定查询下的锁行为当作所有数据库都具有的标准保证。",
+      "optionAnalysis": {
+        "A": "这是该级别的最低保证之一。",
+        "B": "两次语句间其他事务可能提交修改。",
+        "C": "标准层面仍可能幻读；具体实现可更强。",
+        "D": "不要求物理上毫无并行，只要求等价结果。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 13 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "事务处理和并发控制",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-14",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "backup-recovery"
+    ],
+    "type": "single",
+    "stem": "周日做完整备份；周一至周四每天做差异备份，每次都保存自周日完整备份以来的全部变化。周四备份后故障，恢复至周四备份点最少需要哪些备份？",
+    "options": [
+      {
+        "id": "A",
+        "text": "只有周四差异备份"
+      },
+      {
+        "id": "B",
+        "text": "周日完整备份 + 周四差异备份"
+      },
+      {
+        "id": "C",
+        "text": "周日完整备份 + 周一至周四全部差异备份"
+      },
+      {
+        "id": "D",
+        "text": "周三差异备份 + 周四差异备份"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "差异备份依赖最近一次完整备份，最新一份差异已经覆盖此前所有变化。题目限定恢复到备份点，不涉及后续日志重放。",
+      "steps": [
+        "先还原周日完整数据，建立基线。",
+        "周四差异包含周一到周四相对基线的全部变化，应用它即可。",
+        "若每天采用增量备份，则通常需要完整备份加连续的每份增量，不能混淆。"
+      ],
+      "keyPoint": "差异相对完整备份，增量通常相对上次备份。",
+      "pitfall": "把差异误认为只包含当天变化，导致不必要或错误的恢复链。",
+      "optionAnalysis": {
+        "A": "差异不能替代基线中的未变数据。",
+        "B": "基线 + 最新差异即可。",
+        "C": "这些差异前缀并非必需。",
+        "D": "缺少完整基线。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 14 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "备份和恢复",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-15",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-design"
+    ],
+    "type": "single",
+    "stem": "学生与课程为多对多关系，每名学生每门课最多有一条当前成绩。转换为关系模式时，哪个设计最合适？",
+    "options": [
+      {
+        "id": "A",
+        "text": "在 Student 表添加不定数量的 course1、course2、… 列"
+      },
+      {
+        "id": "B",
+        "text": "建立 Enroll(sid,cid,score)，以 (sid,cid) 为主键，分别关联学生和课程"
+      },
+      {
+        "id": "C",
+        "text": "把所有课程号拼成一个逗号分隔字符串"
+      },
+      {
+        "id": "D",
+        "text": "只把 sid 设为 Enroll 的主键"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "多对多联系通常单独建表；联系属性 score 依赖于学生与课程的组合。",
+      "steps": [
+        "Student 与 Course 分别保存各自实体属性。",
+        "Enroll 的 sid、cid 分别作为外键，组合标识一条选课关系。",
+        "题设限定每学生每课程最多一条，因此组合键足够；若允许重修还需学期或次数参与标识。"
+      ],
+      "keyPoint": "先明确业务唯一性，再决定联系表的键。",
+      "pitfall": "用固定重复列或拼接字符串代替关系建模，或忽略重修等约束条件。",
+      "optionAnalysis": {
+        "A": "列数不固定，难以约束和查询。",
+        "B": "符合多对多联系及题设唯一性。",
+        "C": "破坏字段的原子表达，也难以保证引用完整性。",
+        "D": "同一学生只能出现一次，无法选多门课程。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 15 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据库应用系统设计与开发",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-16",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-security"
+    ],
+    "type": "single",
+    "stem": "某分析员只需读取脱敏视图 V 的数据。按最小权限原则，最合适的授权是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "授予数据库管理员角色以免影响工作"
+      },
+      {
+        "id": "B",
+        "text": "授予 V 的 SELECT，且不授予转授权能力"
+      },
+      {
+        "id": "C",
+        "text": "授予所有原始表的 SELECT、UPDATE、DELETE"
+      },
+      {
+        "id": "D",
+        "text": "只开启审计，不设置访问权限"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "授权范围应覆盖工作所必需的操作和数据对象，避免让脱敏视图被底层原始表读取绕过。",
+      "steps": [
+        "任务仅要求读取，所以无需修改、删除或管理权限。",
+        "对象仅为脱敏视图 V，不应同时开放原始敏感表。",
+        "不给转授权能力，并结合审计复核访问；审计是追踪手段，不能替代授权限制。"
+      ],
+      "keyPoint": "最小权限同时限制主体、对象、操作和可传播范围。",
+      "pitfall": "把“可信用户”与“无限权限”等同；或把审计日志当成阻止越权的机制。",
+      "optionAnalysis": {
+        "A": "管理员权限远超任务需要。",
+        "B": "对象和操作均与任务匹配。",
+        "C": "既绕过脱敏，又增加不必要的写权限。",
+        "D": "审计记录行为，但单独不能阻止未授权访问。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 16 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据库安全",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-17",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-architecture"
+    ],
+    "type": "multiple",
+    "stem": "关于 TCP/IP 封装与转发，下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "TCP 在应用数据前加入 TCP 首部形成报文段"
+      },
+      {
+        "id": "B",
+        "text": "IP 路由器通常必须先还原并修改应用层正文才能转发"
+      },
+      {
+        "id": "C",
+        "text": "IP 数据报可被封装到以太网帧中传输"
+      },
+      {
+        "id": "D",
+        "text": "经过路由器进入另一条以太网链路时，链路层首部通常需要重新封装"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "封装按层添加控制信息；路由转发通常处理网络层与本地链路层，而不依赖应用正文。",
+      "steps": [
+        "应用数据交给 TCP，形成 TCP 报文段，再交给 IP。",
+        "当前链路的帧承载 IP 数据报；路由器取出数据报、处理转发并更新 TTL 等。",
+        "出接口使用下一条链路的 MAC 地址与帧格式重新封装；不能据此推断端到端应用数据被修改。"
+      ],
+      "keyPoint": "链路层服务于逐跳，网络层负责跨网转发，传输层服务于端到端。",
+      "pitfall": "认为一帧从源主机原封不动走到目标，或认为所有中间设备都要解析应用内容。",
+      "optionAnalysis": {
+        "A": "描述传输层封装。",
+        "B": "普通 IP 转发不要求理解应用正文。",
+        "C": "这是常见的链路层承载方式。",
+        "D": "每条链路的下一跳和 MAC 首部可能不同。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 17 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "计算机网络体系结构",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-18",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "physical-layer"
+    ],
+    "type": "single",
+    "stem": "理想无噪声低通信道带宽为 3 kHz，每个码元携带 4 种可区分状态。按奈奎斯特公式，其最高理论比特率为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "6 kbit/s"
+      },
+      {
+        "id": "B",
+        "text": "12 kbit/s"
+      },
+      {
+        "id": "C",
+        "text": "24 kbit/s"
+      },
+      {
+        "id": "D",
+        "text": "3 kbit/s"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "无噪声条件下先算最高码元速率，再乘每码元的信息位数。",
+      "steps": [
+        "最高码元速率为 2B=6000 Baud。",
+        "4 种状态每码元携带 log₂4=2 bit。",
+        "比特率为 6000×2=12000 bit/s=12 kbit/s。实际信道还会受噪声等条件限制。"
+      ],
+      "keyPoint": "奈奎斯特 $R=2B\\log_2M$；波特率与比特率只有二进制调制时数值相同。",
+      "pitfall": "直接把状态数 4 当作每码元 4 bit，或把带宽单位 kHz 直接当 bit/s。",
+      "optionAnalysis": {
+        "A": "只算了最高码元速率。",
+        "B": "6000 码元/s × 2 bit/码元。",
+        "C": "误把 4 个状态当成 4 bit。",
+        "D": "没有使用每秒 2B 个码元及状态数。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 18 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "物理层",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-19",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "single",
+    "stem": "停止等待协议中，数据帧长 1000 B，链路速率 1 Mbit/s，单程传播时延 10 ms。忽略 ACK 发送与处理时延、帧首部及差错。链路用于发送数据帧的时间利用率约为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "80%"
+      },
+      {
+        "id": "B",
+        "text": "44.4%"
+      },
+      {
+        "id": "C",
+        "text": "28.6%"
+      },
+      {
+        "id": "D",
+        "text": "8%"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "每发送一帧都要等待往返传播后才能发下一帧。一个周期是数据发送时间加两倍单程传播时间。",
+      "steps": [
+        "数据发送时间为 1000×8/10⁶ s=8 ms。",
+        "周期为 8+10+10=28 ms。",
+        "利用率 U=8/28≈28.6%；提高带宽会缩短发送时间，但不会缩短传播等待。"
+      ],
+      "keyPoint": "停止等待利用率 $U=T_f/(T_f+2T_p)$，题设忽略 ACK 发送时间。",
+      "pitfall": "把单程传播当往返，或漏掉字节到比特的 8 倍换算。",
+      "optionAnalysis": {
+        "A": "不是按 8/10 计算。",
+        "B": "8/(8+10) 漏算 ACK 返回传播。",
+        "C": "8/(8+20) 正确。",
+        "D": "8 ms 是时间，不是百分比。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 19 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据链路层",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-20",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-layer"
+    ],
+    "type": "single",
+    "stem": "路由表中有 10.0.0.0/8→A、10.1.0.0/16→B、10.1.2.0/24→C、0.0.0.0/0→D。目的 IP 为 10.1.2.200，应选哪个下一跳？（均为可用条目）",
+    "options": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "B"
+      },
+      {
+        "id": "C",
+        "text": "C"
+      },
+      {
+        "id": "D",
+        "text": "D"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "多个前缀都匹配时选前缀最长者，代表范围最具体；不是按表中先后顺序。",
+      "steps": [
+        "目的地址匹配 /8、/16 和 /24，也匹配默认路由。",
+        "比较匹配前缀长度：24>16>8>0。",
+        "选择 /24 的下一跳 C；只有没有更具体匹配时才用默认路由。"
+      ],
+      "keyPoint": "路由转发采用最长前缀匹配。",
+      "pitfall": "把“第一个匹配”或“覆盖范围最大”误当作选择规则。",
+      "optionAnalysis": {
+        "A": "/8 匹配但不够具体。",
+        "B": "/16 匹配但还有更长匹配。",
+        "C": "/24 是最长匹配。",
+        "D": "有明确匹配时不选默认路由。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 20 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "网络层",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-21",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "tcp-stream"
+    ],
+    "type": "single",
+    "stem": "采用简化的经典 TCP 拥塞控制模型：cwnd 初值 1 MSS，ssthresh=8 MSS；每个 RTT 内收到完整窗口的确认，无丢包、无延迟 ACK。慢开始每 RTT 翻倍，到阈值后进入拥塞避免，每 RTT 增加 1 MSS。4 个 RTT 后 cwnd 为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "8 MSS"
+      },
+      {
+        "id": "B",
+        "text": "9 MSS"
+      },
+      {
+        "id": "C",
+        "text": "16 MSS"
+      },
+      {
+        "id": "D",
+        "text": "4 MSS"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "到达阈值后不能继续无限翻倍。按题设每个 RTT 的完整确认依次更新。",
+      "steps": [
+        "第 1 个 RTT 后：1→2；第 2 个后：2→4。",
+        "第 3 个后：4→8，达到慢开始阈值。",
+        "第 4 个 RTT 按拥塞避免：8→9 MSS。真实 TCP 的细节可能因算法与 ACK 策略不同而变化。"
+      ],
+      "keyPoint": "慢开始指数增长，拥塞避免在该简化模型下线性增长。",
+      "pitfall": "只记“慢开始翻倍”，忽略阈值；或把初始窗口当成已经经历第 1 个 RTT。",
+      "optionAnalysis": {
+        "A": "这是 3 个 RTT 后的值。",
+        "B": "翻倍三次到 8，再线性加 1。",
+        "C": "越过阈值仍翻倍。",
+        "D": "这是 2 个 RTT 后的值。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 21 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "传输层",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-22",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "application-layer"
+    ],
+    "type": "multiple",
+    "stem": "关于 DNS，下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "A 记录通常映射到 IPv4 地址"
+      },
+      {
+        "id": "B",
+        "text": "AAAA 记录通常映射到 IPv6 地址"
+      },
+      {
+        "id": "C",
+        "text": "CNAME 表示别名指向另一个域名"
+      },
+      {
+        "id": "D",
+        "text": "所有 DNS 交互都只能使用 UDP，不能使用 TCP"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "区分记录类型与承载协议，DNS 不只是“域名换 IP”的单一表。",
+      "steps": [
+        "A 与 AAAA 分别用于 IPv4 与 IPv6 地址记录。",
+        "CNAME 的记录值是规范域名，不是直接填 IP 的地址记录。",
+        "传统 DNS 常用 UDP，也支持 TCP，例如区域传送及部分需要 TCP 的查询场景。"
+      ],
+      "keyPoint": "DNS 的记录语义和传输方式属于不同维度。",
+      "pitfall": "由“普通小查询常用 UDP”推出“DNS 永远不用 TCP”。",
+      "optionAnalysis": {
+        "A": "A 用于 IPv4 地址。",
+        "B": "AAAA 用于 IPv6 地址。",
+        "C": "别名可继续解析到目标域名的记录。",
+        "D": "TCP 是 DNS 支持的传输方式。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 22 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "应用层",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-23",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-security"
+    ],
+    "type": "single",
+    "stem": "要对下载文件验证发布者身份和内容完整性，下列哪种方案最恰当？假设已可靠获取发布者的可信公钥。",
+    "options": [
+      {
+        "id": "A",
+        "text": "只在同一下载页同时提供文件和一个可被同样篡改的哈希值"
+      },
+      {
+        "id": "B",
+        "text": "发布者用私钥签名文件摘要，接收者用可信公钥验签"
+      },
+      {
+        "id": "C",
+        "text": "发布者用公开的公钥生成任何人都能生成的“签名”"
+      },
+      {
+        "id": "D",
+        "text": "只把文件压缩成 ZIP"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "哈希检测内容变化，数字签名再把摘要与私钥持有者绑定。可信公钥是身份验证的重要前提。",
+      "steps": [
+        "发布者对文件计算安全哈希，并使用签名算法和私钥生成签名。",
+        "接收者计算下载文件摘要，用已信任的发布者公钥验证签名。",
+        "内容被改或签名不属于对应私钥时验证失败；签名本身不提供文件保密性。"
+      ],
+      "keyPoint": "签名用私钥生成、公钥验证；加密与签名的目的和操作不能混用。",
+      "pitfall": "把“有一个哈希值”当成发布者认证，忽视攻击者可能同时替换文件和摘要。",
+      "optionAnalysis": {
+        "A": "缺少可信来源绑定，不能独立认证发布者。",
+        "B": "在可信公钥和安全算法前提下可验证完整性与签名者。",
+        "C": "公开可生成的数据不能证明私钥持有者身份。",
+        "D": "压缩既不是签名，也不能认证来源。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 23 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "网络管理与网络安全",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-24",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "wireless-mobile"
+    ],
+    "type": "single",
+    "stem": "某无线局域网中，A 和 C 都能与接入点 B 通信，但 A、C 彼此听不到。两者可能同时向 B 发数据而冲突。这主要属于什么问题？",
+    "options": [
+      {
+        "id": "A",
+        "text": "隐藏终端问题"
+      },
+      {
+        "id": "B",
+        "text": "暴露终端问题"
+      },
+      {
+        "id": "C",
+        "text": "IP 地址耗尽"
+      },
+      {
+        "id": "D",
+        "text": "DNS 缓存失效"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "判断“谁听不到谁”以及“冲突发生在哪里”。发送方彼此隐藏，却共享同一个接收方。",
+      "steps": [
+        "A 侦听不到 C，C 也侦听不到 A，双方都可能以为信道空闲。",
+        "两份信号同时到达 B，导致接收冲突。",
+        "RTS/CTS 可在适用条件下缓解，但有额外开销且不是消除所有碰撞的保证。"
+      ],
+      "keyPoint": "隐藏终端是侦听不到的发送方干扰同一接收方；暴露终端则可能过度退让。",
+      "pitfall": "只要出现无线冲突就笼统归因于信号弱，或把隐藏与暴露的通信拓扑颠倒。",
+      "optionAnalysis": {
+        "A": "两个发送方互相不可见且争用 B。",
+        "B": "暴露终端强调本可并行却误以为不能发送。",
+        "C": "题干没有地址分配问题。",
+        "D": "域名缓存与此链路层碰撞无关。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 24 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "无线网络与移动网络",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-25",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "os-overview"
+    ],
+    "type": "multiple",
+    "stem": "在同一进程内的内核级线程模型中，下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "多个线程通常共享进程的虚拟地址空间"
+      },
+      {
+        "id": "B",
+        "text": "每个线程需要独立的程序计数器、寄存器现场和栈"
+      },
+      {
+        "id": "C",
+        "text": "线程共享进程资源，所以不需要任何同步"
+      },
+      {
+        "id": "D",
+        "text": "某线程阻塞时，操作系统仍可调度同进程中其他就绪线程"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "资源共享不代表执行现场共享。内核级线程可以由内核分别调度，也仍会竞争共享数据。",
+      "steps": [
+        "代码、堆和打开文件等资源通常按进程共享。",
+        "线程的执行位置、寄存器和栈要独立，才能支持不同调用路径。",
+        "内核可区分每个线程的阻塞状态；共享变量的并发读写仍需锁或其他同步机制。"
+      ],
+      "keyPoint": "进程偏重资源与隔离，线程偏重执行与调度。",
+      "pitfall": "把所有用户线程映射到单一内核调度实体的模型，与内核级线程模型混为一谈。",
+      "optionAnalysis": {
+        "A": "同进程线程通常可访问同一堆中的对象。",
+        "B": "否则无法保存不同线程的独立执行状态。",
+        "C": "共享数据正是需要同步的主要原因。",
+        "D": "题设为内核级线程，并非单一内核实体的用户线程模型。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 25 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "操作系统概述",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-26",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "single",
+    "stem": "某计数信号量初值为 2，采用“P 先减 1，若结果小于 0 则阻塞；V 加 1，若结果不大于 0 则唤醒一个等待者”的约定。三个进程依次各执行一次 P，期间没有 V。此时信号量值和阻塞进程数为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "0，0"
+      },
+      {
+        "id": "B",
+        "text": "−1，1"
+      },
+      {
+        "id": "C",
+        "text": "−1，3"
+      },
+      {
+        "id": "D",
+        "text": "1，1"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "前两个 P 分别占用两个可用资源，第三个 P 没有资源可用，进入等待队列。这里明确使用允许负值的教材记法。",
+      "steps": [
+        "初始 S=2，第一次 P 后 S=1，通过。",
+        "第二次后 S=0，仍通过；0 表示可用资源恰好用完。",
+        "第三次后 S=−1，该进程阻塞。负值的绝对值表示等待者数。"
+      ],
+      "keyPoint": "信号量的数值含义依赖约定；某些 API 不暴露负值，不能混算。",
+      "pitfall": "误认为 S 变成 0 时执行 P 的那个进程也必须阻塞。",
+      "optionAnalysis": {
+        "A": "第三个进程已经请求资源，不能忽略它。",
+        "B": "两次占用，一次等待。",
+        "C": "只有第三个等待，前两个已经通过。",
+        "D": "不符合连续三次减 1 的计算。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 26 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "进程与线程管理",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-27",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "fifo-pages"
+    ],
+    "type": "single",
+    "stem": "单级页表，TLB 命中率 95%；每次查 TLB 为 10 ns，每次访存 100 ns。TLB 查询与访存串行；命中后访问数据一次，未命中先访存查页表再访存取数据。无缺页。平均访问时间为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "105 ns"
+      },
+      {
+        "id": "B",
+        "text": "110 ns"
+      },
+      {
+        "id": "C",
+        "text": "115 ns"
+      },
+      {
+        "id": "D",
+        "text": "200 ns"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "分别写命中路径和未命中路径，再按概率加权。题目已排除并行查询与缺页处理。",
+      "steps": [
+        "命中：10+100=110 ns。",
+        "未命中：10+100+100=210 ns。",
+        "平均 0.95×110+0.05×210=115 ns。"
+      ],
+      "keyPoint": "TLB 未命中不等于缺页；页仍可在内存中，只是地址映射不在 TLB。",
+      "pitfall": "命中时漏算 TLB 查询，或把未命中都算成磁盘缺页时延。",
+      "optionAnalysis": {
+        "A": "漏算了某些路径成本。",
+        "B": "只算全部命中的情况。",
+        "C": "两条路径加权后为 115 ns。",
+        "D": "漏掉概率差异，也漏计 TLB 开销。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 27 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "内存管理",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-28",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "file-management"
+    ],
+    "type": "multiple",
+    "stem": "在典型 Unix 文件系统中，关于硬链接、符号链接和删除文件，下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "同一文件的多个硬链接指向同一 inode"
+      },
+      {
+        "id": "B",
+        "text": "删除其中一个硬链接，其他硬链接仍可访问该文件"
+      },
+      {
+        "id": "C",
+        "text": "符号链接保存目标路径，目标被删除后可能成为悬空链接"
+      },
+      {
+        "id": "D",
+        "text": "只要删除一个文件名，文件数据块必然立即释放"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "目录项、inode、打开的文件描述和数据块是不同层次。删名字并不总是立即销毁文件对象。",
+      "steps": [
+        "硬链接让多个目录项关联同一 inode，链接数记录命名引用。",
+        "符号链接是保存路径的独立对象，目标消失并不自动删除它。",
+        "典型实现中，链接数降为 0 且没有打开引用后才回收数据；打开的文件仍可能继续被读写。"
+      ],
+      "keyPoint": "理解 unlink 移除的是命名链接，而不是立即抹除所有数据引用。",
+      "pitfall": "把文件名与文件对象等同；或认为符号链接会复制目标文件内容。",
+      "optionAnalysis": {
+        "A": "这是硬链接的基本语义。",
+        "B": "仍有命名引用时文件继续存在。",
+        "C": "路径解析失败时形成悬空链接。",
+        "D": "还要考虑其他硬链接与打开引用。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 28 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "文件管理",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-29",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "io-management"
+    ],
+    "type": "single",
+    "stem": "关于程序查询、中断与 DMA，下列哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "DMA 传输的每个字节都必须由 CPU 执行一次搬运指令"
+      },
+      {
+        "id": "B",
+        "text": "DMA 可由控制器在设备与内存间传输一块数据，CPU 通常负责设置并处理完成通知"
+      },
+      {
+        "id": "C",
+        "text": "采用中断后，CPU 永远不再执行任何设备相关代码"
+      },
+      {
+        "id": "D",
+        "text": "轮询一定比中断快且总是更省 CPU"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "区分数据搬运与控制管理：DMA 减少 CPU 逐字节参与，但不意味着 CPU 完全退出 I/O。",
+      "steps": [
+        "CPU 设置缓冲区地址、方向和长度等传输信息。",
+        "DMA 控制器进行块传输，仍需协调总线、内存和缓存一致性等机制。",
+        "完成或异常时通过中断等方式通知 CPU，驱动处理后续。"
+      ],
+      "keyPoint": "DMA 卸载主要数据搬运；中断减少忙等；具体效率取决于负载和开销。",
+      "pitfall": "从“直接存储器访问”推导出无需 CPU 设置、无需驱动、也无需任何资源竞争。",
+      "optionAnalysis": {
+        "A": "这是逐字节程序搬运，不是 DMA 的优势。",
+        "B": "把控制阶段和传输阶段区分清楚。",
+        "C": "驱动设置和中断处理仍需要 CPU。",
+        "D": "轮询在特定短等待下可有优势，但不具备该绝对保证。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 29 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "输入输出管理",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-30",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "os-security"
+    ],
+    "type": "single",
+    "stem": "为每个账号生成不同的随机盐，并用合适的慢密码哈希算法保存口令。盐可以与哈希一起保存。关于这一设计，哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "盐必须保密，否则完全无效"
+      },
+      {
+        "id": "B",
+        "text": "不同盐使相同口令通常得到不同哈希，并削弱通用预计算表的复用"
+      },
+      {
+        "id": "C",
+        "text": "只要加盐，就能保证任何弱口令都无法被猜中"
+      },
+      {
+        "id": "D",
+        "text": "可以用可逆 Base64 编码代替密码哈希"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "盐用于打破跨用户、跨记录的重复模式；慢哈希提高每次猜测成本。盐并不是口令的秘密替身。",
+      "steps": [
+        "每条记录使用独立盐，验证时取该盐重新计算。",
+        "攻击者不能简单复用一张无盐彩虹表批量匹配所有账号。",
+        "若口令太弱，仍可能被逐条猜测；还需合理算法参数与认证侧限速等措施。"
+      ],
+      "keyPoint": "盐防复用，慢哈希增成本；二者都不能创造弱口令本来没有的熵。",
+      "pitfall": "把盐当作必须隐藏的密钥，或声称加盐后绝对安全。",
+      "optionAnalysis": {
+        "A": "盐可以公开，安全性不依赖它保密。",
+        "B": "描述了盐的主要用途。",
+        "C": "弱口令仍可被字典猜测。",
+        "D": "Base64 可逆，不能作为安全口令存储。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 30 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "操作系统安全与保护",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-31",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-overview"
+    ],
+    "type": "single",
+    "stem": "某程序执行 $10^8$ 条指令，80% 的指令 CPI=1，20% 的 CPI=4；主频 2 GHz。不计其他等待，CPU 执行时间为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "50 ms"
+      },
+      {
+        "id": "B",
+        "text": "80 ms"
+      },
+      {
+        "id": "C",
+        "text": "100 ms"
+      },
+      {
+        "id": "D",
+        "text": "160 ms"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先按指令数比例求平均 CPI，再代入 CPU 时间公式，不能把 CPI 直接取算术平均。",
+      "steps": [
+        "平均 CPI=0.8×1+0.2×4=1.6。",
+        "总时钟周期数为 10⁸×1.6=1.6×10⁸。",
+        "时间 = 周期数/频率 = 1.6×10⁸/(2×10⁹)=0.08 s=80 ms。"
+      ],
+      "keyPoint": "$T=IC\\times CPI/f$；指令比例是平均 CPI 的权重。",
+      "pitfall": "把 1 和 4 简单平均为 2.5，或混淆 GHz、秒和毫秒的换算。",
+      "optionAnalysis": {
+        "A": "假设所有指令 CPI=1 才是 50 ms。",
+        "B": "使用加权 CPI 计算正确。",
+        "C": "对应 CPI=2，不符合题设。",
+        "D": "可能漏除了 2 GHz 的系数 2。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 31 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "计算机系统概述",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-32",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "8 位补码 11111011 扩展为表示相同真值的 16 位补码，应为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "1111111111111011"
+      },
+      {
+        "id": "B",
+        "text": "0000000011111011"
+      },
+      {
+        "id": "C",
+        "text": "1000000011111011"
+      },
+      {
+        "id": "D",
+        "text": "1111111100000101"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "补码有符号数扩展位宽时复制符号位。原数最高位是 1，说明是负数。",
+      "steps": [
+        "8 位无符号值为 251，按 8 位补码解释是 251−256=−5。",
+        "扩展到 16 位需要在高位补 8 个 1，得到 0xFFFB。",
+        "16 位无符号值 65531，减 65536 仍为 −5，验证真值不变。"
+      ],
+      "keyPoint": "符号扩展复制最高位；无符号扩展才补 0。",
+      "pitfall": "把补码扩展当作无符号扩展，导致 −5 变为 +251。",
+      "optionAnalysis": {
+        "A": "高位全 1，保留 −5。",
+        "B": "高位补 0 后成为正数 251。",
+        "C": "只设置一个最高符号位，不能保值。",
+        "D": "低字节已变成 00000101，真值也变化。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 32 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据的机器级表示和运算",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-33",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "某一级 Cache 的命中访问时间为 2 ns，缺失率 5%，每次缺失额外付出 80 ns 的处理代价（80 ns 不含已经花费的 2 ns）。平均访存时间为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4 ns"
+      },
+      {
+        "id": "B",
+        "text": "6 ns"
+      },
+      {
+        "id": "C",
+        "text": "80 ns"
+      },
+      {
+        "id": "D",
+        "text": "82 ns"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "命中访问成本每次都要付，额外缺失代价只在缺失时付。",
+      "steps": [
+        "所有访问先支付 2 ns。",
+        "5% 的访问再支付 80 ns，平均额外时间 0.05×80=4 ns。",
+        "AMAT=2+4=6 ns；等价写法为 0.95×2+0.05×82。"
+      ],
+      "keyPoint": "$AMAT=T_{hit}+miss\\ rate\\times miss\\ penalty$，先确认缺失代价是否已经包含查 Cache。",
+      "pitfall": "直接用 80 ns 作为缺失总时长加权，与题设“额外”语义不一致。",
+      "optionAnalysis": {
+        "A": "只计平均额外缺失成本。",
+        "B": "基本成本加期望额外成本。",
+        "C": "忽略了 95% 命中和基本成本。",
+        "D": "这是单次缺失的时长，不是平均值。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 33 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "多级层次的存储系统",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-34",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "instruction-set"
+    ],
+    "type": "single",
+    "stem": "某指令使用基址寻址，有效地址 EA=(R)+d。R=500，位移 d=−12，主存 M[488]=37。若指令从该地址读取操作数，读到的值为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "−12"
+      },
+      {
+        "id": "B",
+        "text": "37"
+      },
+      {
+        "id": "C",
+        "text": "488"
+      },
+      {
+        "id": "D",
+        "text": "500"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先算地址，再从地址取得值。基址、位移、有效地址与操作数四者不能混用。",
+      "steps": [
+        "基址寄存器内容是 500，位移为 −12。",
+        "有效地址 EA=500−12=488。",
+        "读取 M[488]，得到操作数 37；若是只计算地址的指令，结果含义才会不同。"
+      ],
+      "keyPoint": "寻址方式决定怎样找到操作数，内存操作数通常还需一次解引用。",
+      "pitfall": "把算出的 EA 直接作为操作数，忽略题干明确要求读取主存。",
+      "optionAnalysis": {
+        "A": "这是位移。",
+        "B": "主存有效地址处保存的值。",
+        "C": "这是有效地址，尚未读取该位置内容。",
+        "D": "这是基址寄存器值。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 34 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "指令系统",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-35",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cpu"
+    ],
+    "type": "multiple",
+    "stem": "关于流水线冒险，下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "后一条指令读取前一条尚未写回的结果，可能产生 RAW 数据冒险"
+      },
+      {
+        "id": "B",
+        "text": "分支方向或目标未确定，可能造成控制冒险"
+      },
+      {
+        "id": "C",
+        "text": "两条指令争用同一不可同时使用的硬件资源，属于结构冒险"
+      },
+      {
+        "id": "D",
+        "text": "只要存在转发，就一定无需任何流水线停顿"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "冒险按原因分为数据依赖、控制流不确定、资源冲突；转发主要缓解部分数据冒险。",
+      "steps": [
+        "RAW 是写后读依赖，消费者可能早于结果可用时刻需要数据。",
+        "分支影响下一条取指地址；单端口存储器等资源竞争则是结构问题。",
+        "典型五级流水线中，紧邻 load-use 即使转发仍可能需要停顿；具体以阶段时序为准。"
+      ],
+      "keyPoint": "先画“何时产生、何时需要”的时序，再决定转发能否解决。",
+      "pitfall": "把所有停顿都归为数据冒险，或把转发理解为消除一切延迟。",
+      "optionAnalysis": {
+        "A": "读取旧值会破坏顺序语义。",
+        "B": "属于控制流的不确定性。",
+        "C": "属于硬件资源的同时需求冲突。",
+        "D": "结果尚未产生时不能凭转发提前得到。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 35 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "中央处理器",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-36",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-buses"
+    ],
+    "type": "single",
+    "stem": "设备用 DMA 传输 1 MiB 数据，每完成 4 KiB 数据块产生一次完成中断。不考虑错误与额外通知，共产生多少次完成中断？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "256"
+      },
+      {
+        "id": "C",
+        "text": "1024"
+      },
+      {
+        "id": "D",
+        "text": "1048576"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "DMA 的块传输可以显著减少 CPU 完成通知次数，按题设块大小直接相除。",
+      "steps": [
+        "1 MiB=2²⁰ B，4 KiB=2¹² B。",
+        "数据块数量为 2²⁰/2¹²=2⁸=256。",
+        "每块一次完成中断，所以 256 次；并非每字节或每条总线拍一次中断。"
+      ],
+      "keyPoint": "区分总线传输粒度、DMA 块长度与中断触发粒度。",
+      "pitfall": "把 MiB 与 MB 混用，或把每字节搬运误认为都要中断一次。",
+      "optionAnalysis": {
+        "A": "4 是块大小的 KiB 数值，不是块数。",
+        "B": "256 块，对应 256 次通知。",
+        "C": "相当于误用 1 KiB 的块。",
+        "D": "这是字节总数，DMA 不逐字节中断。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 36 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "总线与输入输出系统",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-37",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "parallel-computing"
+    ],
+    "type": "single",
+    "stem": "两台机器执行相同的动态指令序列，指令总数相同。甲主频 2 GHz、平均 CPI=1；乙主频 3 GHz、平均 CPI=2。不计其他开销，哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "乙更快，因为主频更高"
+      },
+      {
+        "id": "B",
+        "text": "甲更快，执行速度为乙的 4/3 倍"
+      },
+      {
+        "id": "C",
+        "text": "两者一样快"
+      },
+      {
+        "id": "D",
+        "text": "乙的执行速度为甲的 3 倍"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "同样的指令数下，比较每条指令的平均时间 CPI/f，不能只看主频。",
+      "steps": [
+        "甲每条平均时间 1/(2 GHz)=0.5 ns。",
+        "乙为 2/(3 GHz)≈0.667 ns。",
+        "速度比甲/乙=乙时间/甲时间=(2/3)/(1/2)=4/3；甲的执行时间为乙的 3/4。"
+      ],
+      "keyPoint": "性能与时间成反比；CPI 和频率需要同时比较。",
+      "pitfall": "只比较 GHz，忽略高 CPI 可能抵消频率优势。",
+      "optionAnalysis": {
+        "A": "乙虽然频率高，单指令平均耗时仍更长。",
+        "B": "甲每条 0.5 ns，乙每条 2/3 ns，速度比为 4/3。",
+        "C": "0.5 ns 与 0.667 ns 不相等。",
+        "D": "不符合两台机器的指令吞吐率。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 37 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "并行计算与异构计算",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-38",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "software-foundations"
+    ],
+    "type": "single",
+    "stem": "系统可以在断网恢复后自动重试未完成任务，并避免重复扣费。下列哪项是最直接的质量关注点？",
+    "options": [
+      {
+        "id": "A",
+        "text": "界面主色是否流行"
+      },
+      {
+        "id": "B",
+        "text": "故障恢复与可靠性，同时要保证重试的幂等性"
+      },
+      {
+        "id": "C",
+        "text": "只要平均响应快就足够"
+      },
+      {
+        "id": "D",
+        "text": "只能靠增加注释实现"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "题干关注故障后的行为是否正确、能否恢复，而不是单次正常路径的界面或速度。",
+      "steps": [
+        "断网使任务可能处于“服务端已执行、客户端未知”的状态。",
+        "重试需要使用请求标识、幂等约束等，避免同一业务重复生效。",
+        "恢复能力属于可靠性相关关注点，还需明确失败处理、补偿及验证方式。"
+      ],
+      "keyPoint": "从具体场景识别质量属性，尤其关注异常路径与业务一致性。",
+      "pitfall": "把非功能质量理解为只含性能，忽略可靠性、可恢复性和安全性。",
+      "optionAnalysis": {
+        "A": "与题干的故障恢复目标不直接对应。",
+        "B": "恢复与重试正确性正是关键。",
+        "C": "速度快不能保证故障后数据正确。",
+        "D": "注释有帮助，但不能代替正确机制和测试。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 38 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件工程基本概念",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-39",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "software-process"
+    ],
+    "type": "single",
+    "stem": "项目需求不稳定、需要不断获得用户反馈，团队选择迭代增量开发。哪项做法最合理？",
+    "options": [
+      {
+        "id": "A",
+        "text": "每次迭代交付可验证的小范围能力，并据反馈调整后续计划"
+      },
+      {
+        "id": "B",
+        "text": "一开始完全不记录需求或验收标准"
+      },
+      {
+        "id": "C",
+        "text": "每次都推翻全部已有代码，不做回归"
+      },
+      {
+        "id": "D",
+        "text": "迭代开发意味着可以不考虑架构和风险"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "迭代强调反复学习，增量强调逐步提供可用能力；反馈需要有可验证的交付物作为依据。",
+      "steps": [
+        "将高价值或高风险需求拆成可评估的小增量。",
+        "为本次增量确定清晰验收标准，开发、测试并获取反馈。",
+        "据证据调整后续范围，并维护必要架构、记录和回归测试。"
+      ],
+      "keyPoint": "适应变化需要短反馈环与质量保障，而不是省略工程纪律。",
+      "pitfall": "把迭代误解为随意改动、无计划和无文档。",
+      "optionAnalysis": {
+        "A": "使反馈能指导下一步，并控制变更范围。",
+        "B": "缺少可验证目标，反馈也难以判断。",
+        "C": "不回归会让增量破坏既有能力。",
+        "D": "变化多时更需要管理风险和架构边界。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 39 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件开发方法和过程",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-40",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "requirements"
+    ],
+    "type": "single",
+    "stem": "需求中同时写有“用户会话闲置 15 分钟后退出”和“任何用户会话永久有效”。需求评审首先应做什么？",
+    "options": [
+      {
+        "id": "A",
+        "text": "各开发者自行选择一句实现"
+      },
+      {
+        "id": "B",
+        "text": "指出冲突，澄清使用范围、例外条件并形成一致可测试的规则"
+      },
+      {
+        "id": "C",
+        "text": "两句都保留，等测试时再说"
+      },
+      {
+        "id": "D",
+        "text": "直接删掉安全相关需求"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "需求一致性要求同一条件下不能同时要求互斥行为。应由业务与相关人员澄清意图，而不是开发自行猜测。",
+      "steps": [
+        "识别两句若作用于同一种会话和条件，会产生直接矛盾。",
+        "确认是否区分交互会话、服务令牌或特定可信设备等情况。",
+        "将最终规则写成可测试的条件、时限和例外，并更新验收标准。"
+      ],
+      "keyPoint": "评审检查一致性、完整性、可行性和可验证性。",
+      "pitfall": "把冲突当作技术实现细节，拖到后期会造成返工和安全缺口。",
+      "optionAnalysis": {
+        "A": "会让行为取决于实现者，无法验收。",
+        "B": "先澄清冲突，才有一致的设计依据。",
+        "C": "问题仍存在且更晚暴露。",
+        "D": "没有授权依据，不能任意取消业务约束。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 40 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "需求分析",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-41",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "订单模块直接读取库存模块的私有内存结构；库存调整字段后，订单多处失效。最合适的改进方向是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "复制一份库存模块代码到订单模块"
+      },
+      {
+        "id": "B",
+        "text": "通过稳定的库存接口交互，隐藏内部数据表示"
+      },
+      {
+        "id": "C",
+        "text": "让所有模块读写全局变量"
+      },
+      {
+        "id": "D",
+        "text": "要求库存模块永不改变任何实现"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "问题来自对内部表示的依赖，破坏信息隐藏；应将业务契约与实现细节分开。",
+      "steps": [
+        "识别订单真正需要的能力，例如查询可售量或预留库存。",
+        "以明确输入、输出和错误语义提供接口，内部结构只由库存模块维护。",
+        "通过接口测试保证契约，使内部优化不必扩散到所有调用方。"
+      ],
+      "keyPoint": "低耦合不等于无协作，而是通过清晰稳定的契约协作。",
+      "pitfall": "以复制代码或全局共享换取短期方便，反而扩大变更影响。",
+      "optionAnalysis": {
+        "A": "会产生多份事实来源和维护分叉。",
+        "B": "减少对内部细节的依赖。",
+        "C": "全局写入加重耦合和一致性风险。",
+        "D": "实现需要演进，约束应在公共契约层。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 41 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "系统设计",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-42",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "implementation"
+    ],
+    "type": "single",
+    "stem": "下面函数需要支持 n=0 的空数组。哪项修改最能直接修复越界风险？\n```c\nint first(const int *a, int n) {\n  return a[0];\n}\n```",
+    "options": [
+      {
+        "id": "A",
+        "text": "只把 a 改名为 data"
+      },
+      {
+        "id": "B",
+        "text": "读取前检查有效长度，并用明确的错误返回约定处理空数组；接口还应约定指针有效性"
+      },
+      {
+        "id": "C",
+        "text": "把返回类型改为 long，其他不变"
+      },
+      {
+        "id": "D",
+        "text": "加一条“这里不会越界”的注释"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "错误来自不满足数组访问前置条件，必须改变控制逻辑和接口契约。",
+      "steps": [
+        "a[0] 要求数组至少有一个有效元素。",
+        "n<=0 时不读取；可采用状态码加输出参数等明确区分无值与合法数值。",
+        "有效长度非零时还需调用者提供合法指针，并用空数组与正常数组测试边界。"
+      ],
+      "keyPoint": "代码检查要围绕前置条件、边界值和错误处理，而不是表面改名。",
+      "pitfall": "用 0 充当错误值但未说明约定，可能与合法首元素 0 混淆。",
+      "optionAnalysis": {
+        "A": "不改变访问行为。",
+        "B": "在访问前建立必要条件并明确空值语义。",
+        "C": "扩大返回类型不能阻止非法读取。",
+        "D": "注释无法改变运行时行为。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 42 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "系统开发",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-43",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "boundary-testing"
+    ],
+    "type": "single",
+    "stem": "二分支判定为 `if (x>0 && y>0)`。希望两个原子条件都分别出现真和假，并让整个判定也出现真和假。下列哪组两条测试可满足这些目标？（条件取值按逻辑值分析，不要求所有条件都实际求值）",
+    "options": [
+      {
+        "id": "A",
+        "text": "(1,1)、(−1,−1)"
+      },
+      {
+        "id": "B",
+        "text": "(1,1)、(1,2)"
+      },
+      {
+        "id": "C",
+        "text": "(−1,1)、(−2,2)"
+      },
+      {
+        "id": "D",
+        "text": "(1,−1)、(−1,1)"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "条件覆盖关注每个原子条件的真、假，判定覆盖关注组合表达式的真、假。两者同时满足并不自动等于 MC/DC。",
+      "steps": [
+        "(1,1) 时两个原子条件均真，整个判定为真。",
+        "(−1,−1) 时两个原子条件均假，整个判定为假。",
+        "因此按题设的逻辑值分析，A 覆盖了各目标；短路执行覆盖是另一个需明确的度量。"
+      ],
+      "keyPoint": "条件覆盖、判定覆盖和条件独立影响的 MC/DC 是不同准则。",
+      "pitfall": "忽略题设是否按逻辑值或实际执行求值计覆盖，导致短路表达式产生歧义。",
+      "optionAnalysis": {
+        "A": "按题设同时覆盖每个条件和判定的真、假。",
+        "B": "只出现全真判定。",
+        "C": "x>0 从未为真，判定也一直为假。",
+        "D": "各条件有真有假，但整个与表达式从未为真。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 43 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件测试",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-44",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "software-delivery"
+    ],
+    "type": "single",
+    "stem": "发布新版本后，发现少数请求报错。希望降低继续影响并快速恢复服务，下列方案最合适的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "发布前准备可验证的回退方案，结合监控在触发条件下回滚或停止扩大发布"
+      },
+      {
+        "id": "B",
+        "text": "删除错误日志，避免干扰判断"
+      },
+      {
+        "id": "C",
+        "text": "发布后不监控，只等用户再次投诉"
+      },
+      {
+        "id": "D",
+        "text": "直接修改生产数据而不记录操作"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "交付不仅是把代码放上去，还要保证可观测、可恢复并管理数据兼容性。",
+      "steps": [
+        "发布前确认旧版与新版的数据兼容和回退限制，必要时分阶段迁移。",
+        "用错误率、延迟等指标监控，先小范围验证再扩大发布。",
+        "达到预设异常阈值时执行回退或应急方案，并保留证据追因。"
+      ],
+      "keyPoint": "可回滚性取决于代码与数据变化，不能只保留一个旧安装包。",
+      "pitfall": "把“发布成功”理解为文件上传成功，忽略真实服务质量与恢复路径。",
+      "optionAnalysis": {
+        "A": "预先设计恢复路径并以监控驱动决策。",
+        "B": "会丢失诊断证据。",
+        "C": "延迟发现并扩大影响。",
+        "D": "缺少审计与恢复依据，风险更高。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 44 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件交付与维护",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-45",
+    "revision": 1,
+    "moduleId": "ai",
+    "knowledgeIds": [
+      "supervised-learning"
+    ],
+    "type": "boolean",
+    "stem": "训练模型时先用全体数据计算归一化参数，再划分训练集和测试集。即使没用测试集标签，也完全不存在数据泄漏。判断正误。",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "F"
+    ],
+    "explanation": {
+      "analysis": "测试集的特征分布也会提供未来信息。通常应先划分，再只用训练集拟合预处理参数。",
+      "steps": [
+        "先固定训练、验证、测试的分割，避免同一主体跨集合等泄漏。",
+        "用训练数据估计均值、方差、填充值或特征选择规则。",
+        "验证与测试仅应用已拟合的变换；交叉验证时应在每个训练折内重新拟合。"
+      ],
+      "keyPoint": "数据泄漏不仅包含直接使用标签，还包括不恰当地利用评估集合的信息。",
+      "pitfall": "以“没有看答案”为唯一标准，漏掉预处理、重复样本和时间穿越泄漏。",
+      "optionAnalysis": {
+        "T": "全体特征统计已经使用了评估集合的信息。",
+        "F": "先划分再拟合可避免该类泄漏。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 45 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "人工智能基础",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-46",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "iot"
+    ],
+    "type": "single",
+    "stem": "温度传感器每秒采样，由就近网关筛除异常值并在断网期间缓存，再上传云端。下列哪项最能体现边缘计算的作用？",
+    "options": [
+      {
+        "id": "A",
+        "text": "把全部原始数据无条件远传后才做任何处理"
+      },
+      {
+        "id": "B",
+        "text": "靠近数据源完成部分处理，降低上行负担并改善断网时的可用性"
+      },
+      {
+        "id": "C",
+        "text": "有网关后就不需要任何设备安全措施"
+      },
+      {
+        "id": "D",
+        "text": "边缘计算意味着数据永远不能传到云端"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "边缘与云端是处理位置和职责的分配，可共同构成系统，不是相互排斥的二选一。",
+      "steps": [
+        "传感器产生数据，网关在附近做过滤与局部判断。",
+        "本地缓存使临时断网不必立刻丢失全部采样；恢复后还需去重与补传。",
+        "云端可做长期存储和跨设备分析；网关本身仍需认证、更新与防护。"
+      ],
+      "keyPoint": "物联网链路可按感知—连接—边缘处理—平台分析理解。",
+      "pitfall": "把边缘理解为取消云端或天然安全，而不是合理分配时延与资源。",
+      "optionAnalysis": {
+        "A": "这是集中处理，未体现就近计算。",
+        "B": "对应本题的过滤、缓存与韧性需求。",
+        "C": "网关也是需要保护的计算节点。",
+        "D": "边缘与云可协同。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 46 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "物联网基础",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-47",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "cloud-service-models"
+    ],
+    "type": "single",
+    "stem": "应用采用 IaaS 云主机，自行安装操作系统和数据库。哪项责任划分最合理？",
+    "options": [
+      {
+        "id": "A",
+        "text": "云厂商必须替用户修复其自行安装数据库的所有漏洞，用户不需管理"
+      },
+      {
+        "id": "B",
+        "text": "用户仍需管理客户操作系统、应用配置和数据访问权限等职责，具体边界以服务约定为准"
+      },
+      {
+        "id": "C",
+        "text": "只要上云，就自动获得无限备份和零数据丢失"
+      },
+      {
+        "id": "D",
+        "text": "共享责任模型意味着任何安全问题都无人负责"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "云服务降低部分基础设施管理负担，但不会移除用户对其配置、软件与数据的管理责任。",
+      "steps": [
+        "IaaS 通常由厂商管理底层物理设施与虚拟化相关基础能力。",
+        "客户使用的系统、应用、身份与数据配置等仍有客户职责。",
+        "SaaS、PaaS 与 IaaS 的边界不同，具体服务还需核对合同与文档，不能一概而论。"
+      ],
+      "keyPoint": "共享责任模型按服务层次和具体服务划分职责。",
+      "pitfall": "把“云厂商管理基础设施”误读为“用户不需要安全运维或备份计划”。",
+      "optionAnalysis": {
+        "A": "自行安装软件的维护通常仍由客户承担。",
+        "B": "承认职责边界，并保留具体服务差异。",
+        "C": "备份与恢复目标需要明确设计和约定。",
+        "D": "共享是划分职责，不是取消职责。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 47 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "云计算基础",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-extra-48",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "big-data"
+    ],
+    "type": "single",
+    "stem": "使用 MapReduce 统计词频。Map 阶段输出 (word,1)。下列哪个流程正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "直接把所有 Map 输出拼接起来就得到最终词频"
+      },
+      {
+        "id": "B",
+        "text": "Shuffle 按 word 分组，Reduce 对该词对应的数值求和"
+      },
+      {
+        "id": "C",
+        "text": "先按随机数分组，再假设每组都是同一个词"
+      },
+      {
+        "id": "D",
+        "text": "每个 Reduce 必须读取全部原始文本，Map 输出不参与计算"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "理解键值对在 Map、Shuffle、Reduce 三阶段的变化，比记框架名更重要。",
+      "steps": [
+        "例如输入“电网 电网 计算机”，Map 输出 (电网,1)、(电网,1)、(计算机,1)。",
+        "Shuffle 将相同键聚集，形成 电网→[1,1]、计算机→[1]。",
+        "Reduce 对列表求和，得到 (电网,2)、(计算机,1)。"
+      ],
+      "keyPoint": "键决定分组，Reduce 对每个分组做聚合；数据倾斜可能让热点键成为瓶颈。",
+      "pitfall": "把 Shuffle 当成纯随机打乱，或认为 Map 已自动完成全局聚合。",
+      "optionAnalysis": {
+        "A": "拼接保留重复键，并没有求和。",
+        "B": "按键分组后聚合才得到总词频。",
+        "C": "随机分组不能保证同词汇聚。",
+        "D": "这会违背该分解方式，也不利用中间键值对。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 48 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "大数据基础",
+      "推理练习"
+    ]
+  },
+  {
+    "id": "review-drill-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "insertion-sort"
+    ],
+    "type": "single",
+    "stem": "对 [7,2,6,3,5] 执行一趟快速排序划分：取末元素 5 为枢轴；i 初值 −1，j 从 0 到 3；若 a[j]≤5 则先 i++，再交换 a[i] 与 a[j]；循环后交换 a[i+1] 与末元素。划分后的数组是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "[2,3,5,6,7]"
+      },
+      {
+        "id": "B",
+        "text": "[2,3,5,7,6]"
+      },
+      {
+        "id": "C",
+        "text": "[5,2,3,7,6]"
+      },
+      {
+        "id": "D",
+        "text": "[2,5,3,7,6]"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "这里明确给出 Lomuto 划分过程，应逐次交换；一次划分只保证枢轴左右的大小关系，不保证两侧内部有序。",
+      "steps": [
+        "j=0：7>5，不动。j=1：2≤5，i 变 0，交换 7 和 2，得到 [2,7,6,3,5]。",
+        "j=2：6>5，不动。j=3：3≤5，i 变 1，交换 7 和 3，得到 [2,3,6,7,5]。",
+        "最后交换位置 i+1=2 与末尾，得到 [2,3,5,7,6]，枢轴位置为 2（从 0 起）。"
+      ],
+      "keyPoint": "题目不给划分约定时可能存在多种合法中间序列；考试计算应遵照指定实现。",
+      "pitfall": "把一趟划分误认为整个排序完成，直接输出完全有序数组。",
+      "optionAnalysis": {
+        "A": "这是全部排序完成的结果，并非本算法的一趟结果。",
+        "B": "按每次交换得到该序列。",
+        "C": "划分后 2、3 应在枢轴 5 左侧；将 5 放首位不符合指定交换步骤。",
+        "D": "3≤5，不能留在枢轴右边。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 8 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "内部排序",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "graphs"
+    ],
+    "type": "single",
+    "stem": "有向图边权：S→A=1、S→B=4、A→B=2、A→C=6、B→C=3，其他边不存在。用 Dijkstra 从 S 求最短路，到 C 的距离为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "5"
+      },
+      {
+        "id": "C",
+        "text": "6"
+      },
+      {
+        "id": "D",
+        "text": "7"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "全部边非负，可每次确定当前距离最小的未确定顶点，再松弛其出边。",
+      "steps": [
+        "初始 d(A)=1、d(B)=4、d(C)=∞。先确定 A，把 B 更新为 min(4,1+2)=3，把 C 更新为 7。",
+        "再确定 B，C 更新为 min(7,3+3)=6。",
+        "最后确定 C；路径 S→A→B→C，总长 1+2+3=6。"
+      ],
+      "keyPoint": "距离标签表示当前已知最短路径上界，松弛后取更小值。",
+      "pitfall": "把初始直达距离当最终结果，或认为先访问到顶点后就再也不能改其临时距离。",
+      "optionAnalysis": {
+        "A": "4 是 S→B 的直接距离，不是到 C。",
+        "B": "没有总长 5 的可行路径。",
+        "C": "经 A、B 的路径为 6。",
+        "D": "S→A→C 为 7，但可通过 B 改进。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 6 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "图",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-03",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "trees"
+    ],
+    "type": "single",
+    "stem": "从空 AVL 树开始，依次插入 3、2、1。为恢复平衡，应如何调整？",
+    "options": [
+      {
+        "id": "A",
+        "text": "在结点 3 处左旋，根仍为 3"
+      },
+      {
+        "id": "B",
+        "text": "在结点 3 处右旋，得到根 2、左孩子 1、右孩子 3"
+      },
+      {
+        "id": "C",
+        "text": "先右旋结点 1，再左旋结点 2"
+      },
+      {
+        "id": "D",
+        "text": "不需要调整，因为仍是二叉搜索树"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "插入顺序形成 3 的左孩子 2、2 的左孩子 1，是 LL 型失衡。AVL 还要求高度平衡，不能仅满足搜索树顺序。",
+      "steps": [
+        "插入 3、2 后，树仍平衡。",
+        "插入 1 后，结点 3 的左子树比右子树高 2，且新结点位于其左孩子的左侧。",
+        "对 3 单次右旋：2 上升为根，1 在左，3 在右；中序仍为 1、2、3。"
+      ],
+      "keyPoint": "LL 用右旋，RR 用左旋；LR、RL 才需双旋。",
+      "pitfall": "用“向左偏”猜应该左旋，恰好把旋转方向记反。",
+      "optionAnalysis": {
+        "A": "LL 需要右旋，不是左旋。",
+        "B": "单次右旋即可兼顾有序和平衡。",
+        "C": "不是 LR 或 RL 情形，也不能随意选择不存在适当子树的旋转点。",
+        "D": "普通搜索树合法不代表 AVL 高度合法。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 5 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "树和二叉树",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-04",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": [
+      "algorithm-design"
+    ],
+    "type": "single",
+    "stem": "字符串 X=ABCBDAB，Y=BDCABA。最长公共子序列（LCS）长度为？子序列不要求连续。",
+    "options": [
+      {
+        "id": "A",
+        "text": "2"
+      },
+      {
+        "id": "B",
+        "text": "3"
+      },
+      {
+        "id": "C",
+        "text": "4"
+      },
+      {
+        "id": "D",
+        "text": "5"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "用二维动态规划保证既有可行解，又证明不存在更长解。仅找到某个公共序列不能证明最长。",
+      "steps": [
+        "定义 dp[i][j] 为 X 前 i 个字符与 Y 前 j 个字符的 LCS 长度，空前缀置 0。",
+        "字符相同时 dp[i][j]=dp[i−1][j−1]+1；不同时取 max(dp[i−1][j],dp[i][j−1])。",
+        "填表后最后一行为 0、1、2、2、3、4、4，所以 dp[7][6]=4。例如 BCBA 或 BDAB 都是长度 4 的公共子序列。"
+      ],
+      "keyPoint": "LCS 允许不连续；最长公共子串要求连续，状态与转移不同。",
+      "pitfall": "把子序列当子串，或在字符不同时把 dp 直接清零。",
+      "optionAnalysis": {
+        "A": "可能来自较短的公共子串，但不是 LCS。",
+        "B": "存在 BCBA 等长度 4 的公共子序列。",
+        "C": "动态规划给出最优值 4。",
+        "D": "状态表不支持长度 5。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 9 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "算法设计与分析基础",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-05",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "8 位有符号补码计算 (−100)+(−40)，只保留低 8 位。关于机器结果与溢出，下列哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "01110100，按补码为 +116，未溢出"
+      },
+      {
+        "id": "B",
+        "text": "01110100，按补码为 +116，发生溢出；数学和为 −140"
+      },
+      {
+        "id": "C",
+        "text": "10001100，按补码为 −116，未溢出"
+      },
+      {
+        "id": "D",
+        "text": "11110100，按补码为 −12，发生溢出"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先算表示范围和数学结果，再验证截断后的位模式；负数加负数却得到非负数，说明有符号溢出。",
+      "steps": [
+        "8 位补码范围为 −128～127，数学和 −140 已超出范围。",
+        "−100 的补码为 10011100（0x9C），−40 为 11011000（0xD8）。二者无符号和为 0x174。",
+        "保留低 8 位得 0x74=01110100，即 +116。丢弃最高进位不能恢复有符号数学结果。"
+      ],
+      "keyPoint": "同号相加结果异号是补码加法溢出的判据；进位与有符号溢出不同。",
+      "pitfall": "把 +116 当作真实数学和，或认为只要丢弃进位就一定能表示正确答案。",
+      "optionAnalysis": {
+        "A": "机器位模式对，但溢出判断错。",
+        "B": "位模式、真值、范围判断一致。",
+        "C": "不是两个补码相加后的低 8 位。",
+        "D": "0xF4 不是该运算的低 8 位。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 32 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据的机器级表示和运算",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-06",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "Cache 共能容纳 2 个块，初始为空，依次访问主存块 0、2、0、2。直接映射时行号=块号 mod 2；另一个 Cache 为单组两路组相联，采用 LRU。两者缺失次数分别为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2，2"
+      },
+      {
+        "id": "B",
+        "text": "4，2"
+      },
+      {
+        "id": "C",
+        "text": "2，4"
+      },
+      {
+        "id": "D",
+        "text": "4，4"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "总容量相同，但映射约束不同。直接映射会让 0 和 2 冲突，两路允许它们同时驻留。",
+      "steps": [
+        "直接映射：0 与 2 都只能放第 0 行，每次访问都会替换另一块，四次全缺失。",
+        "两路组相联：第一次 0 缺失、第二次 2 缺失，分别占据一路。",
+        "之后 0、2 均命中，没有触发替换，所以缺失数为 4 与 2。"
+      ],
+      "keyPoint": "区分强制缺失、容量缺失与冲突缺失；此例主要展示映射造成的冲突。",
+      "pitfall": "看到有两个空行就认为直接映射可以任意放置两个主存块。",
+      "optionAnalysis": {
+        "A": "忽视了两个块映射到同一行。",
+        "B": "直接映射冲突，组相联可共存。",
+        "C": "把两种映射的限制颠倒。",
+        "D": "两路容量够容纳两个块，后两次应命中。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 33 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "多级层次的存储系统",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-07",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cpu"
+    ],
+    "type": "single",
+    "stem": "经典 IF、ID、EX、MEM、WB 五级单发射顺序流水线，各级 1 周期，有完整可用的转发。规定紧邻 load-use 仍需停顿 1 周期，ALU 结果可转发给下一条 EX。执行以下 3 条指令，无其他停顿，最后一条完成 WB 共需多少周期？\n```text\nLW  R1,0(R2)\nADD R3,R1,R4\nSUB R5,R3,R6\n```",
+    "options": [
+      {
+        "id": "A",
+        "text": "7"
+      },
+      {
+        "id": "B",
+        "text": "8"
+      },
+      {
+        "id": "C",
+        "text": "9"
+      },
+      {
+        "id": "D",
+        "text": "15"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "按“理想流水线总周期 + 额外停顿”计算，逐条检查结果可用时刻。",
+      "steps": [
+        "无停顿的 3 条指令，五级流水线需 5+3−1=7 周期。",
+        "LW 的数据在 MEM 后可用，紧跟的 ADD 需要在 EX 使用，按题设增加一个 load-use 停顿。",
+        "ADD→SUB 为 ALU 依赖，可转发解决，不再增加停顿。最后 SUB 的 WB 在第 8 周期。"
+      ],
+      "keyPoint": "有依赖不必然停顿，关键是数据产生和使用阶段。",
+      "pitfall": "把两个 RAW 依赖都各算一个停顿，或以为有转发就连 load-use 也无需停顿。",
+      "optionAnalysis": {
+        "A": "漏掉题设明确的 load-use 停顿。",
+        "B": "7 个理想周期加 1 个停顿。",
+        "C": "把 ADD→SUB 的可转发依赖也算了停顿。",
+        "D": "这是三条完全不重叠执行的周期数。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 35 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "中央处理器",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-08",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "parallel-computing"
+    ],
+    "type": "single",
+    "stem": "某程序串行部分占原单核执行时间的 10%，其余部分可理想均分至 8 核；忽略通信与调度开销。8 核加速比约为多少？核数趋于无穷时理论上限又是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "8，∞"
+      },
+      {
+        "id": "B",
+        "text": "4.71，10"
+      },
+      {
+        "id": "C",
+        "text": "1.25，8"
+      },
+      {
+        "id": "D",
+        "text": "7.2，9"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "Amdahl 定律把不能并行的部分保留下来；加速比不能把比例直接乘核数得到。",
+      "steps": [
+        "把单核总时间归一为 1；8 核时间 T=0.1+0.9/8=0.2125。",
+        "加速比 S=1/0.2125=80/17≈4.71。",
+        "核数趋无穷时并行部分时间趋 0，但串行部分仍需 0.1，所以 S 上限为 10。"
+      ],
+      "keyPoint": "$S(p)=1/(s+(1-s)/p)$；忽略额外开销已经是乐观估计。",
+      "pitfall": "把并行率 90% 理解为一定能达到 90%×8 的加速，忽略串行时间。",
+      "optionAnalysis": {
+        "A": "只有串行比例为 0 才可能不受该上限约束。",
+        "B": "代入 0.1 与 8 得到正确值。",
+        "C": "没有按时间反比计算。",
+        "D": "7.2 是 0.9×8，不是 Amdahl 加速比。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 37 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "并行计算与异构计算",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-09",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "fifo-pages"
+    ],
+    "type": "single",
+    "stem": "有 3 个页框，初始为空，访问页序列为 1、2、3、1、4、1。分别使用 FIFO 与 LRU，两者缺页次数为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4，4"
+      },
+      {
+        "id": "B",
+        "text": "5，4"
+      },
+      {
+        "id": "C",
+        "text": "4，5"
+      },
+      {
+        "id": "D",
+        "text": "5，5"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "FIFO 的命中不改变进入时间；LRU 的命中会更新最近使用次序，因此第四次访问是分歧点。",
+      "steps": [
+        "前 3 次装入 1、2、3，均缺页，两者都是 3 次。",
+        "第 4 次访问 1 命中：FIFO 仍把 1 看作最早进入；LRU 则把 1 记为最近使用。",
+        "访问 4 时 FIFO 淘汰 1，LRU 淘汰 2，双方各加 1 次缺页。最后访问 1，FIFO 再缺一次，LRU 命中，所以分别 5、4 次。"
+      ],
+      "keyPoint": "FIFO 按进入时间，LRU 按最后使用时间；每次命中是否更新次序至关重要。",
+      "pitfall": "用 FIFO 却在命中时把页移到队尾，实际混成了 LRU。",
+      "optionAnalysis": {
+        "A": "FIFO 的最后一次访问仍会缺页。",
+        "B": "完整模拟分别得 5 和 4。",
+        "C": "两种算法的结果颠倒。",
+        "D": "LRU 保留了最近访问的 1，最后命中。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 27 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "内存管理",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-10",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "single",
+    "stem": "三个进程在时刻 0 同时到达，就绪队列初始为 A、B、C，CPU 服务时间分别为 5、3、1。用时间片轮转 RR，时间片为 2，不计切换开销。平均周转时间是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "22/3"
+      },
+      {
+        "id": "B",
+        "text": "13/3"
+      },
+      {
+        "id": "C",
+        "text": "7"
+      },
+      {
+        "id": "D",
+        "text": "3"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "先画甘特图，再取各进程完成时间减到达时间。周转时间包括等待与执行。",
+      "steps": [
+        "执行顺序：A[0,2]，B[2,4]，C[4,5]，A[5,7]，B[7,8]，A[8,9]。",
+        "完成时间 A=9、B=8、C=5；都在 0 到达，周转时间也是 9、8、5。",
+        "平均为 (9+8+5)/3=22/3。等待时间分别为 9−5=4、8−3=5、5−1=4，平均等待为 13/3，不要混用。"
+      ],
+      "keyPoint": "周转=完成−到达；等待=周转−CPU 服务时间（本题无 I/O）。",
+      "pitfall": "把每段时间片的结束当成进程完成，或把平均等待当作平均周转。",
+      "optionAnalysis": {
+        "A": "完成时间求平均为 22/3。",
+        "B": "这是平均等待时间。",
+        "C": "不是三项完成时间的精确平均。",
+        "D": "这是平均服务时间 (5+3+1)/3。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 26 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "进程与线程管理",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-11",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "single",
+    "stem": "银行家算法中有两类资源。Available=(1,1)。当前 Allocation：P0=(1,0)、P1=(0,1)、P2=(1,1)；Max：P0=(2,1)、P1=(1,2)、P2=(3,2)。哪个是安全序列？",
+    "options": [
+      {
+        "id": "A",
+        "text": "P2、P0、P1"
+      },
+      {
+        "id": "B",
+        "text": "P0、P2、P1"
+      },
+      {
+        "id": "C",
+        "text": "P2、P1、P0"
+      },
+      {
+        "id": "D",
+        "text": "不存在安全序列"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先计算 Need=Max−Allocation，再用 Work 模拟可完成进程释放资源。比较需要量和 Work 必须逐分量满足。",
+      "steps": [
+        "Need 分别是 P0=(1,1)、P1=(1,1)、P2=(2,1)，初始 Work=(1,1)。",
+        "P0 可完成，释放已分配的 (1,0)，Work 变为 (2,1)。然后 P2 可完成，Work 变 (3,2)。",
+        "最后 P1 可完成，Work 变 (3,3)，所以 P0→P2→P1 安全。P2 不能第一个完成，因为第一类资源还差 1。"
+      ],
+      "keyPoint": "安全性检查回收的是 Allocation，不是把 Max 凭空加到 Available。",
+      "pitfall": "把 Need 与 Max 混淆，或只比较资源总数而不逐类比较。",
+      "optionAnalysis": {
+        "A": "初始 Work 无法满足 P2 的第一类 Need。",
+        "B": "每一步均有足够 Work，完成后释放 Allocation。",
+        "C": "同样不能以 P2 开始。",
+        "D": "已经找到安全序列；安全序列也可能不唯一。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 26 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "进程与线程管理",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-12",
+    "revision": 1,
+    "moduleId": "os",
+    "knowledgeIds": [
+      "sjf-scheduling"
+    ],
+    "type": "single",
+    "stem": "系统要求每个进程按统一的资源编号升序申请锁，持有较大编号锁时不得再申请较小编号锁，并严格遵守该规则。这主要破坏死锁的哪个必要条件？",
+    "options": [
+      {
+        "id": "A",
+        "text": "互斥"
+      },
+      {
+        "id": "B",
+        "text": "循环等待"
+      },
+      {
+        "id": "C",
+        "text": "不可抢占"
+      },
+      {
+        "id": "D",
+        "text": "进程必须并发执行"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "统一顺序使等待边沿资源编号严格递增，无法绕一圈回到更小编号，从而破坏环路。",
+      "steps": [
+        "若持有 R1 再申请 R2，必须满足 R1<R2。",
+        "假设存在等待环，就需要 R1<R2<…<Rk<R1，这在统一严格编号中不可能。",
+        "锁仍可以互斥、仍可能不可抢占，进程也仍可并发；规则针对的是循环等待条件。"
+      ],
+      "keyPoint": "死锁四个必要条件为互斥、占有且等待、不可抢占、循环等待。",
+      "pitfall": "认为只要使用互斥锁就必然死锁，或把“并发”当作教材四条件之一。",
+      "optionAnalysis": {
+        "A": "资源仍可要求互斥访问。",
+        "B": "严格统一获取顺序使等待环无法成立。",
+        "C": "本规则没有强制回收已持有资源。",
+        "D": "并发不是所列四个必要条件之一。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 26 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "进程与线程管理",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-13",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-layer"
+    ],
+    "type": "single",
+    "stem": "从 192.168.5.0/24 中按起始地址从小到大，为 60、30、12 台主机的三个子网依次分配最小可用地址块。按传统 IPv4 子网规则，每网保留网络地址和广播地址。哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "依次使用 /27、/27、/28，起点为 .0、.32、.64"
+      },
+      {
+        "id": "B",
+        "text": "依次使用 /26、/27、/28，起点为 .0、.64、.96"
+      },
+      {
+        "id": "C",
+        "text": "三个子网都必须使用 /24"
+      },
+      {
+        "id": "D",
+        "text": "依次使用 /26、/28、/29，起点为 .0、.64、.80"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先向上取满足 $2^h−2\\geq$ 主机数的主机位数，再按块大小对齐起点。",
+      "steps": [
+        "60 台需 h=6，/26，块大小 64，可用 62。分配 .0～.63，主机 .1～.62。",
+        "30 台需 h=5，/27，块大小 32，可用 30。下一个对齐块 .64～.95，主机 .65～.94。",
+        "12 台需 h=4，/28，块大小 16，可用 14。下块 .96～.111，主机 .97～.110。三块无重叠。"
+      ],
+      "keyPoint": "VLSM 允许不同前缀；容量、网络/广播保留、边界对齐需同时满足。",
+      "pitfall": "只按主机数分块，不检查保留地址或二进制边界。",
+      "optionAnalysis": {
+        "A": "/27 只容纳 30 台，第一网不足。",
+        "B": "容量和对齐均正确。",
+        "C": "会重叠，也浪费原地址空间。",
+        "D": "/28 只容纳 14，第二网不足；/29 只容纳 6，第三网也不足。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 20 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "网络层",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-14",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "network-layer"
+    ],
+    "type": "single",
+    "stem": "一个 IPv4 数据报总长 4020 B，首部 20 B，无选项。要经过 MTU=1500 B 的链路，允许分片；各片均用 20 B 首部。最后一片的片偏移和总长度分别为？（偏移以 IPv4 规定的单位表示）",
+    "options": [
+      {
+        "id": "A",
+        "text": "2960，1060 B"
+      },
+      {
+        "id": "B",
+        "text": "370，1060 B"
+      },
+      {
+        "id": "C",
+        "text": "370，1040 B"
+      },
+      {
+        "id": "D",
+        "text": "185，1500 B"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "非最后片的数据长度应为 8 B 的整数倍；片偏移以原始数据部分起点计算，单位不是字节。",
+      "steps": [
+        "原数据长度为 4020−20=4000 B，每个满片数据容量 1500−20=1480 B，恰为 185×8。",
+        "前两片各 1480 B，剩余 4000−2960=1040 B。最后片起点相对原数据为 2960 B。",
+        "最后片偏移=2960/8=370，总长度=1040+20=1060 B。三个偏移为 0、185、370，MF 位为 1、1、0。"
+      ],
+      "keyPoint": "MTU 限制的是每片总长度；偏移按 8 B，且不包含前面各片首部。",
+      "pitfall": "把总长直接当净荷，或把字节偏移 2960 原样写进片偏移字段。",
+      "optionAnalysis": {
+        "A": "2960 是字节偏移，字段值应除 8。",
+        "B": "两次 1480 后剩余 1040，连同首部共 1060。",
+        "C": "1040 只是最后片数据长度，漏了首部。",
+        "D": "这描述第二片，不是最后一片。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 20 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "网络层",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-15",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "data-link"
+    ],
+    "type": "single",
+    "stem": "滑动窗口协议使用 3 位序号，即模 8 编号。GBN 接收窗口为 1；SR 发送和接收窗口相同。为避免新旧帧混淆，两者最大发送窗口分别为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "8，8"
+      },
+      {
+        "id": "B",
+        "text": "7，4"
+      },
+      {
+        "id": "C",
+        "text": "4，7"
+      },
+      {
+        "id": "D",
+        "text": "7，7"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "序号空间需留出区分旧帧和新帧的能力。GBN 与 SR 的接收方式不同，因此窗口上限不同。",
+      "steps": [
+        "3 位序号共有 N=8 个编号，不是只有 3 个编号。",
+        "GBN 接收窗口为 1，发送窗口最多 N−1=7。",
+        "SR 两端窗口同为 W 时需 2W≤N，所以 W≤4；否则一轮后旧帧可能落入新的接收窗口。"
+      ],
+      "keyPoint": "GBN 常用约束 $W_s\\leq2^k−1$；等窗口 SR 需 $W\\leq2^{k−1}$。",
+      "pitfall": "只记窗口可以等于序号总数，忽略确认丢失、重传和序号回绕造成的歧义。",
+      "optionAnalysis": {
+        "A": "没有留下必要的区分空间。",
+        "B": "分别符合两类协议的约束。",
+        "C": "把两个上限颠倒。",
+        "D": "SR 的两个窗口会覆盖过大的序号空间。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 19 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "数据链路层",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-16",
+    "revision": 1,
+    "moduleId": "networks",
+    "knowledgeIds": [
+      "tcp-stream"
+    ],
+    "type": "single",
+    "stem": "TCP 客户端发送 SYN，序号为 2000；服务器正常确认。随后客户端从该连接发送 300 B 数据，全部按序到达且无 FIN。服务器累计确认号应为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2300"
+      },
+      {
+        "id": "B",
+        "text": "2301"
+      },
+      {
+        "id": "C",
+        "text": "2001"
+      },
+      {
+        "id": "D",
+        "text": "300"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "SYN 占用一个序号；累计确认号表示期望收到的下一个字节序号，不是已收最后字节。",
+      "steps": [
+        "SYN 的序号为 2000，正常确认后下一可用序号为 2001。",
+        "300 B 数据的序号范围为 2001～2300（包含两端共 300 个）。",
+        "因此下一个期望字节序号为 2301。ACK 标志本身不额外消耗一个数据序号。"
+      ],
+      "keyPoint": "SYN 与 FIN 各占一个序号，普通纯 ACK 不占；确认号取下一个期望序号。",
+      "pitfall": "忽略 SYN 的 1，或把最后收到的字节序号作为 ACK。",
+      "optionAnalysis": {
+        "A": "这是最后一个数据字节的序号。",
+        "B": "SYN 后从 2001 开始，累计前移 300。",
+        "C": "仅确认了 SYN，尚未计入数据。",
+        "D": "TCP 确认号是序号空间中的位置，不是只写长度。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 21 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "传输层",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-17",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "single",
+    "stem": "Student.id 为非 NULL，值为 1、2、3；Enroll.sid 中有 1 和 NULL 两行。查询 `SELECT id FROM Student WHERE id NOT IN (SELECT sid FROM Enroll);` 返回什么？假设标准 SQL 的三值逻辑。",
+    "options": [
+      {
+        "id": "A",
+        "text": "2、3"
+      },
+      {
+        "id": "B",
+        "text": "没有任何行"
+      },
+      {
+        "id": "C",
+        "text": "1"
+      },
+      {
+        "id": "D",
+        "text": "1、2、3"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "NOT IN 不是在有 NULL 时也可直接当集合差。WHERE 只保留 TRUE，UNKNOWN 不会被保留。",
+      "steps": [
+        "对 id=1，1 IN (1,NULL) 为 TRUE，所以 NOT IN 为 FALSE。",
+        "对 id=2、3，与 1 不等，但与 NULL 的比较为 UNKNOWN；整体 NOT IN 仍为 UNKNOWN。",
+        "所以无行返回。若业务想找未选课学生，可使用相关 NOT EXISTS，或先排除子查询 NULL；本例 NOT EXISTS 会返回 2、3。"
+      ],
+      "keyPoint": "NULL 会传播 UNKNOWN；反连接写法要核对可空性。",
+      "pitfall": "用编程语言的普通集合直觉替代 SQL 三值逻辑。",
+      "optionAnalysis": {
+        "A": "这是适当的 NOT EXISTS 查询结果，不是本查询结果。",
+        "B": "FALSE 与 UNKNOWN 都被 WHERE 排除。",
+        "C": "1 已在已知选课记录中，不应通过 NOT IN。",
+        "D": "没有任何一行的条件能为 TRUE。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 12 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "关系数据库标准语言 SQL",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-18",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "relational-theory"
+    ],
+    "type": "single",
+    "stem": "关系 R(A,B,C) 满足属性原子性，函数依赖为 AB→C、C→B，没有其他独立的非平凡依赖。最高满足哪个范式？",
+    "options": [
+      {
+        "id": "A",
+        "text": "仅 1NF"
+      },
+      {
+        "id": "B",
+        "text": "2NF 但非 3NF"
+      },
+      {
+        "id": "C",
+        "text": "3NF 但非 BCNF"
+      },
+      {
+        "id": "D",
+        "text": "BCNF"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "先求全部候选码和主属性，再分别检查 3NF 与 BCNF。主属性是属于某个候选码的属性，不限某一个选定主键。",
+      "steps": [
+        "AB⁺=ABC，AC⁺ 也为 ABC，所以候选码为 AB 与 AC；A、B、C 都是主属性。A、B 或 C 单独均不是码。",
+        "依赖 C→B 的左边 C 不是超码，但右边 B 是主属性，因此仍满足 3NF 的条件。",
+        "BCNF 要求每个非平凡依赖的决定因素都是超码，C→B 违反该要求。所以最高为 3NF。"
+      ],
+      "keyPoint": "3NF 允许“右侧为主属性”的例外，BCNF 不允许。",
+      "pitfall": "只算出 AB 一个候选码，误把 B 或 C 判断为非主属性。",
+      "optionAnalysis": {
+        "A": "本题还满足更高范式。",
+        "B": "所有属性都是主属性，不存在非主属性的部分依赖或传递依赖违例。",
+        "C": "C→B 正好展示 3NF 与 BCNF 的差异。",
+        "D": "C 不能决定 A，不是超码，违反 BCNF。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 11 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "关系数据库基本理论",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-19",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "acid-transactions"
+    ],
+    "type": "single",
+    "stem": "调度为 w1(X)、r2(X)、c2、a1：T1 写 X，T2 读取该未提交值，T2 提交，之后 T1 回滚。下列哪项正确？c 表示提交，a 表示回滚。",
+    "options": [
+      {
+        "id": "A",
+        "text": "没有脏读，因为 T2 已经提交"
+      },
+      {
+        "id": "B",
+        "text": "存在脏读，且该调度不可恢复"
+      },
+      {
+        "id": "C",
+        "text": "只要把 X 加索引就能避免此问题"
+      },
+      {
+        "id": "D",
+        "text": "该调度必然是无级联回滚调度"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "恢复性关注读取依赖与提交先后。T2 已提交后才发现其读自最终回滚的 T1，已不能按通常恢复规则撤销一个已提交事务。",
+      "steps": [
+        "r2(X) 读取的是尚未提交的 w1(X)，构成脏读。",
+        "若要可恢复，读取依赖于 T1 的 T2 不应先于 T1 成功提交。",
+        "本题 c2 出现在 a1 之前，T2 可能已经基于无效数据提交，因此不可恢复。禁止读取未提交值可避免此类级联依赖。"
+      ],
+      "keyPoint": "可恢复、无级联、严格是不同约束；不要与仅检查冲突图的可串行化混为一谈。",
+      "pitfall": "误认为事务一提交就自动让它曾读取的未提交值变成合法。",
+      "optionAnalysis": {
+        "A": "脏读取决于读取时被读事务是否已提交。",
+        "B": "读取未提交值且提交顺序不满足恢复性要求。",
+        "C": "索引改善访问路径，不改变提交与读取约束。",
+        "D": "无级联要求不读取未提交值，本题已违反。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 13 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "事务处理和并发控制",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-20",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "boundary-testing"
+    ],
+    "type": "single",
+    "stem": "折扣条件为 `member && amount>=100`。设条件 A 为会员，B 为金额达标。要用 MC/DC 证明每个条件均能独立影响判定，哪组最少测试可行？用 (A,B) 表示布尔输入。",
+    "options": [
+      {
+        "id": "A",
+        "text": "(假,假)、(真,真)"
+      },
+      {
+        "id": "B",
+        "text": "(假,真)、(真,假)、(真,真)"
+      },
+      {
+        "id": "C",
+        "text": "(假,假)、(假,真)、(真,假)"
+      },
+      {
+        "id": "D",
+        "text": "只测 (真,真)"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "对 && 表达式，要证明 A 的影响时固定 B 为真；证明 B 的影响时固定 A 为真。两个配对可共用全真用例。",
+      "steps": [
+        "A 的独立影响：(假,真)→假 与 (真,真)→真，只有 A 变化。",
+        "B 的独立影响：(真,假)→假 与 (真,真)→真，只有 B 变化。",
+        "共 3 条即可。两条用例若只改一个条件，至多证明一个条件；若两个一起改，不能证明独立影响。"
+      ],
+      "keyPoint": "MC/DC 要求每个原子条件有独立改变判定结果的用例对。",
+      "pitfall": "把每个条件出现真、假，或判定出现真、假，就当成已经满足 MC/DC。",
+      "optionAnalysis": {
+        "A": "同时改变两个条件，不能隔离因果。",
+        "B": "共享全真用例，形成两组独立影响配对。",
+        "C": "全部判定为假，缺少真结果。",
+        "D": "没有任何条件变化可供比较。"
+      }
+    },
+    "difficulty": "hard",
+    "source": {
+      "label": "依据复习手册第 43 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件测试",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-21",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "boundary-testing"
+    ],
+    "type": "single",
+    "stem": "函数里只有两个独立的 if：`if(a) f(); if(b) g();`，f、g 正常返回、无隐藏分支。只考察 f、g 两条调用语句的语句覆盖，以及两个 if 的分支覆盖。达到 100% 覆盖分别最少需要多少条测试？",
+    "options": [
+      {
+        "id": "A",
+        "text": "语句 1 条，分支 2 条"
+      },
+      {
+        "id": "B",
+        "text": "语句 2 条，分支 1 条"
+      },
+      {
+        "id": "C",
+        "text": "都需要 4 条"
+      },
+      {
+        "id": "D",
+        "text": "都只需要 1 条"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "一次让两个条件均真即可执行全部调用语句，但每个 if 的假分支仍未覆盖。",
+      "steps": [
+        "用 a=真、b=真，f 与 g 都执行，调用语句覆盖已达 100%。",
+        "再补 a=假、b=假，两个 if 的假分支都得到覆盖。",
+        "所以语句覆盖最少 1 条，分支覆盖最少 2 条；不要求把 4 种条件组合全测。"
+      ],
+      "keyPoint": "语句覆盖弱于分支覆盖；条件组合覆盖是另一种更强目标。",
+      "pitfall": "把语句数、分支数或输入组合数直接当成测试用例数。",
+      "optionAnalysis": {
+        "A": "全真覆盖语句，再加全假覆盖剩余分支。",
+        "B": "单条执行不可能让同一个 if 同时取真和假。",
+        "C": "这是穷举全部布尔组合，本题不要求。",
+        "D": "一条测试无法覆盖每个 if 的两个方向。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 43 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "软件测试",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-22",
+    "revision": 1,
+    "moduleId": "ai",
+    "knowledgeIds": [
+      "supervised-learning"
+    ],
+    "type": "single",
+    "stem": "某二分类任务中，真实正类占 1%。模型对正类的检出率为 90%，对负类的误报率为 10%。随机抽到一条被预测为正的样本，它真正为正类的概率约为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "90%"
+      },
+      {
+        "id": "B",
+        "text": "50%"
+      },
+      {
+        "id": "C",
+        "text": "8.33%"
+      },
+      {
+        "id": "D",
+        "text": "1%"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "问的是精确率而不是召回率，必须把基准比例考虑进来。可用 10000 个样本转为人数计数。",
+      "steps": [
+        "10000 个样本中，正类 100 个，负类 9900 个。TP=100×0.9=90。",
+        "FP=9900×0.1=990；预测为正的总数为 90+990=1080。",
+        "真正为正的条件概率为 90/1080=1/12≈8.33%。高召回不自动等于高精确率。"
+      ],
+      "keyPoint": "$Precision=TP/(TP+FP)$，稀有正类场景中误报可能远多于真阳性。",
+      "pitfall": "把 P(预测正|真实正) 直接当作 P(真实正|预测正)，颠倒条件概率。",
+      "optionAnalysis": {
+        "A": "这是检出率即召回率。",
+        "B": "没有依据忽略 1% 的基准比例。",
+        "C": "按基准比例和误报数计算得到。",
+        "D": "这是未观察预测前的先验比例。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 45 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "人工智能基础",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-23",
+    "revision": 1,
+    "moduleId": "ai",
+    "knowledgeIds": [
+      "supervised-learning"
+    ],
+    "type": "single",
+    "stem": "某二分类模型的 TP=40、FP=10、FN=20、TN=130。正类 F1 分数为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.80"
+      },
+      {
+        "id": "B",
+        "text": "约 0.667"
+      },
+      {
+        "id": "C",
+        "text": "约 0.727"
+      },
+      {
+        "id": "D",
+        "text": "0.85"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "F1 是精确率和召回率的调和平均，也可以直接由 TP、FP、FN 计算。TN 不参与正类 F1。",
+      "steps": [
+        "Precision=40/(40+10)=0.8；Recall=40/(40+20)=2/3。",
+        "F1=2PR/(P+R)=2TP/(2TP+FP+FN)。",
+        "代入得 80/(80+10+20)=8/11≈0.727；准确率则为 (40+130)/200=0.85。"
+      ],
+      "keyPoint": "准确率、精确率、召回率和 F1 回答不同问题，先识别分母。",
+      "pitfall": "把 P 与 R 直接算术平均，或把 TN 放进 F1 分母。",
+      "optionAnalysis": {
+        "A": "这是精确率。",
+        "B": "这是召回率。",
+        "C": "这是调和平均 F1。",
+        "D": "这是准确率。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 45 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "人工智能基础",
+      "逐步计算"
+    ]
+  },
+  {
+    "id": "review-drill-24",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "big-data"
+    ],
+    "type": "single",
+    "stem": "分布式计算平均值：分片甲有 2 条数据，总和 10；分片乙有 8 条数据，总和 80。要得到全部数据的平均值，哪种合并方式正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "(5+10)/2=7.5"
+      },
+      {
+        "id": "B",
+        "text": "取较大分片均值 10"
+      },
+      {
+        "id": "C",
+        "text": "合并 (sum,count)，得到 (10+80)/(2+8)=9"
+      },
+      {
+        "id": "D",
+        "text": "先丢弃数量小的分片，再求平均"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "局部平均值不能直接等权平均，除非各分片数量恰好相同。保留 sum 与 count 才能正确组合。",
+      "steps": [
+        "甲均值为 10/2=5，乙均值为 80/8=10，但两片权重不同。",
+        "分别输出中间状态 (10,2)、(80,8)。",
+        "逐项相加得 (90,10)，最终均值 9；也等价于 (2×5+8×10)/10。"
+      ],
+      "keyPoint": "可组合聚合需要保存足够统计量，平均值通常用总和与计数共同表示。",
+      "pitfall": "将“平均数的平均数”当成总平均，忽略分区数据量和数据倾斜。",
+      "optionAnalysis": {
+        "A": "只有两片数量相同时才可这样等权合并。",
+        "B": "丢掉了甲的数据贡献。",
+        "C": "合并总和与计数保留了正确权重。",
+        "D": "无依据丢弃数据会改变统计目标。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "依据复习手册第 48 节编写的拓展自测题 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "大数据基础",
+      "逐步计算"
+    ]
+  }
+]

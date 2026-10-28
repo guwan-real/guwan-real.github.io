@@ -104,15 +104,16 @@ export function questionStats(data: StudyData, id: string): QuestionStats {
   const flag = data.flags[id];
   const lastWrong = wrong.at(-1);
   const mastered = Boolean(lastWrong && flag?.masteredAt && flag.masteredAt >= lastWrong.answeredAt);
-  return { attempts: attempts.length, wrongCount: wrong.length, latest: attempts.at(-1) ?? null,
+  return { attempts: attempts.length, answeredCount: attempts.filter((a) => a.selectedOptionIds.length > 0).length, wrongCount: wrong.length, latest: attempts.at(-1) ?? null,
     needsReview: wrong.length > 0 && !mastered, favorite: flag?.favorite ?? false, uncertain: flag?.uncertain ?? false, mastered };
 }
-export const emptyQuestionStats = (): QuestionStats => ({ attempts: 0, wrongCount: 0, latest: null, needsReview: false, favorite: false, uncertain: false, mastered: false });
+export const emptyQuestionStats = (): QuestionStats => ({ attempts: 0, answeredCount: 0, wrongCount: 0, latest: null, needsReview: false, favorite: false, uncertain: false, mastered: false });
 export function questionStatsIndex(data: StudyData): Map<string, QuestionStats> {
-  const histories = new Map<string, { count: number; wrong: number; latest: Attempt | null; lastWrong: Attempt | null }>();
+  const histories = new Map<string, { count: number; answeredCount: number; wrong: number; latest: Attempt | null; lastWrong: Attempt | null }>();
   for (const attempt of data.attempts) {
-    const history = histories.get(attempt.questionId) ?? { count: 0, wrong: 0, latest: null, lastWrong: null };
+    const history = histories.get(attempt.questionId) ?? { count: 0, answeredCount: 0, wrong: 0, latest: null, lastWrong: null };
     history.count++;
+    if (attempt.selectedOptionIds.length) history.answeredCount++;
     if (!history.latest || attempt.answeredAt >= history.latest.answeredAt) history.latest = attempt;
     if (!attempt.correct) { history.wrong++; if (!history.lastWrong || attempt.answeredAt >= history.lastWrong.answeredAt) history.lastWrong = attempt; }
     histories.set(attempt.questionId, history);
@@ -120,7 +121,7 @@ export function questionStatsIndex(data: StudyData): Map<string, QuestionStats> 
   return new Map([...new Set([...histories.keys(), ...Object.keys(data.flags)])].map((id) => {
     const history = histories.get(id); const flag = data.flags[id];
     const mastered = Boolean(history?.lastWrong && flag?.masteredAt && flag.masteredAt >= history.lastWrong.answeredAt);
-    return [id, { attempts: history?.count ?? 0, wrongCount: history?.wrong ?? 0, latest: history?.latest ?? null,
+    return [id, { attempts: history?.count ?? 0, answeredCount: history?.answeredCount ?? 0, wrongCount: history?.wrong ?? 0, latest: history?.latest ?? null,
       needsReview: Boolean(history?.wrong) && !mastered, mastered, favorite: flag?.favorite ?? false, uncertain: flag?.uncertain ?? false }];
   }));
 }

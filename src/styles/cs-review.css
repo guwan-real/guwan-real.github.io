@@ -269,6 +269,15 @@
 .review-import-preview p { font-size: 12px; }
 .review-storage-warning, .review-feedback { padding: 14px 16px; border-left: 2px solid #ab762b; background: #f4ebd9; color: #71521e; font-size: 12px; line-height: 1.9; margin-bottom: 24px; }
 .review-storage-warning a { text-decoration: underline; margin-left: 7px; }
+.review-storage-status { color: var(--review-muted); font-size: 11px; line-height: 1.8; margin: 0 0 24px; }
+.review-storage-status a { display: inline-block; color: var(--review-green); margin-left: 8px; text-decoration: underline; text-underline-offset: 3px; }
+.review-question-history { color: var(--review-muted); font-size: 12px; line-height: 1.8; margin: -8px 0 24px; }
+.review-option-analysis { margin: 16px 0; }
+.review-option-analysis > div { display: grid; grid-template-columns: 2.5em minmax(0, 1fr); gap: 12px; padding: 12px 0; border-top: 1px solid var(--review-line); }
+.review-option-analysis dt { color: var(--review-green); font-weight: 600; }
+.review-option-analysis dd { margin: 0; min-width: 0; }
+.review-option-analysis dd p:first-child { margin-top: 0; }
+.review-option-analysis dd p:last-child { margin-bottom: 0; }
 .review-feedback { border-color: var(--review-red); background: var(--review-red-wash); color: #873e2d; }
 .review-feedback.is-success { border-color: var(--review-green); background: var(--review-green-wash); color: var(--review-green); }
 .review-dialog { color: var(--review-ink); background: var(--review-white); border: 1px solid #bac3af; border-radius: 7px; padding: 28px; width: min(450px, calc(100% - 32px)); box-shadow: 0 20px 100px #20271f24; }

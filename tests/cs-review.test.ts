@@ -14,6 +14,7 @@ import type { Answer, Attempt, PublicQuestion, Question } from '../src/lib/cs-re
 
 const questionData: Question[] = JSON.parse(await readFile(new URL('../src/content/cs-review/questions/examples.json', import.meta.url), 'utf8'));
 const handbookQuestions: Question[] = JSON.parse(await readFile(new URL('../src/content/cs-review/questions/handbook-self-tests.json', import.meta.url), 'utf8'));
+const expansionQuestions: Question[] = JSON.parse(await readFile(new URL('../src/content/cs-review/questions/review-expansion.json', import.meta.url), 'utf8'));
 const knowledgeDirectory = new URL('../src/content/cs-review/knowledge/', import.meta.url);
 const knowledgeData = await Promise.all((await readdir(knowledgeDirectory)).map(async (name) => matter(await readFile(new URL(name, knowledgeDirectory), 'utf8')).data));
 const publicQuestions: PublicQuestion[] = questionData.map((q) => ({ id: q.id, revision: q.revision, moduleId: q.moduleId, knowledgeIds: q.knowledgeIds,
@@ -38,10 +39,62 @@ class MemoryStorage {
 }
 
 test('the actual content catalogue is valid and example labels are explicit', () => {
-  const result = validateCatalogue(knowledgeData, [...questionData, ...handbookQuestions]);
-  assert.equal(result.knowledge.length, 48); assert.equal(result.questions.length, 58);
+  const result = validateCatalogue(knowledgeData, [...questionData, ...handbookQuestions, ...expansionQuestions]);
+  assert.equal(result.knowledge.length, 48); assert.equal(result.questions.length, 130);
   assert.ok(result.questions.every((q) => q.source.isExample && q.source.label.includes('非官方真题')));
   assert.ok(result.knowledge.every((k) => k.status === 'handbook'));
+});
+test('expanded practice covers all 48 topics with complete per-option reasoning', () => {
+  assert.equal(expansionQuestions.length, 72);
+  for (const item of syllabus) assert.ok(expansionQuestions.some((q) => q.id === `review-extra-${String(item.number).padStart(2, '0')}` && q.knowledgeIds.includes(item.knowledgeId)));
+  for (const q of expansionQuestions) {
+    assert.deepEqual(Object.keys(q.explanation.optionAnalysis!).sort(), q.options.map((o) => o.id).sort());
+    assert.ok(q.explanation.steps.length >= 3);
+  }
+});
+test('per-option reasoning cannot omit or invent option IDs', () => {
+  const incomplete = structuredClone(expansionQuestions[0]); delete incomplete.explanation.optionAnalysis!.A;
+  assert.equal(questionSchema.safeParse(incomplete).success, false);
+  const extra = structuredClone(expansionQuestions[0]); extra.explanation.optionAnalysis!.Z = '不存在的选项';
+  assert.equal(questionSchema.safeParse(extra).success, false);
+});
+test('expanded numeric answers agree with independent timing and bit calculations', () => {
+  const text = (id: string) => { const q = expansionQuestions.find((q) => q.id === id)!; return q.options.find((o) => q.correctOptionIds.includes(o.id))!.text; };
+  assert.equal(text('review-extra-27'), `${0.95 * 110 + 0.05 * 210} ns`);
+  assert.equal(text('review-extra-31'), `${1e8 * (0.8 + 0.2 * 4) / 2e9 * 1000} ms`);
+  assert.equal(text('review-extra-32'), ((-5 >>> 0) & 0xffff).toString(2).padStart(16, '0'));
+  assert.equal(text('review-extra-33'), `${2 + 0.05 * 80} ns`);
+  assert.equal(text('review-extra-36'), `${2 ** 20 / 2 ** 12}`);
+  assert.match(text('review-extra-37'), /4\/3/);
+  const payload = 4020 - 20; const chunk = Math.floor((1500 - 20) / 8) * 8;
+  assert.equal(text('review-drill-14'), `${chunk * 2 / 8}，${payload - chunk * 2 + 20} B`);
+  assert.equal(text('review-drill-22'), `${Number((90 / (90 + 990) * 100).toFixed(2))}%`);
+  assert.ok(Math.abs(Number(text('review-drill-23').replace('约 ', '')) - 80 / 110) < 0.0005);
+});
+test('sorting, LCS and FIFO/LRU walkthroughs agree with independent simulations', () => {
+  const text = (id: string) => { const q = expansionQuestions.find((q) => q.id === id)!; return q.options.find((o) => q.correctOptionIds.includes(o.id))!.text; };
+  const a = [7, 2, 6, 3, 5]; const pivot = a.at(-1)!; let i = -1;
+  for (let j = 0; j < a.length - 1; j++) if (a[j] <= pivot) { i++; [a[i], a[j]] = [a[j], a[i]]; }
+  [a[i + 1], a[a.length - 1]] = [a[a.length - 1], a[i + 1]];
+  assert.equal(text('review-drill-01'), `[${a.join(',')}]`);
+  const x = 'ABCBDAB', y = 'BDCABA'; const table = Array.from({ length: x.length + 1 }, () => Array<number>(y.length + 1).fill(0));
+  for (let r = 1; r <= x.length; r++) for (let c = 1; c <= y.length; c++) table[r][c] = x[r - 1] === y[c - 1] ? table[r - 1][c - 1] + 1 : Math.max(table[r - 1][c], table[r][c - 1]);
+  assert.equal(text('review-drill-04'), `${table[x.length][y.length]}`);
+  const faults = (lru: boolean) => { const memory: number[] = []; let misses = 0;
+    for (const page of [1, 2, 3, 1, 4, 1]) { const at = memory.indexOf(page); if (at < 0) { misses++; if (memory.length === 3) memory.shift(); memory.push(page); } else if (lru) memory.push(...memory.splice(at, 1)); }
+    return misses;
+  };
+  assert.equal(text('review-drill-09'), `${faults(false)}，${faults(true)}`);
+});
+test('unanswered exam submissions remain wrong but do not count as answered practice', () => {
+  const data = emptyStudyData(); const blank = attempt(false); blank.selectedOptionIds = [];
+  appendAttempt(data, blank);
+  assert.equal(questionStats(data, blank.questionId).answeredCount, 0);
+  assert.equal(questionStatsIndex(data).get(blank.questionId)!.needsReview, true);
+  appendAttempt(data, attempt(true, t2, 'later'));
+  assert.equal(questionStats(data, blank.questionId).answeredCount, 1);
+  assert.deepEqual(questionStatsIndex(data).get(blank.questionId), questionStats(data, blank.questionId));
+  assert.equal(questionStats(data, blank.questionId).wrongCount, 1);
 });
 test('all 48 syllabus items have their own chapter and handbook self-test', () => {
   assert.deepEqual(syllabus.map((item) => item.number), Array.from({ length: 48 }, (_, i) => i + 1));

@@ -15,20 +15,20 @@ export function initMistakes(ctx: ReviewContext) {
   let moduleId = '';
   let page = 0;
   const pageSize = 20;
-  const views = { pending: '仍需复习', history: '全部历史错题', favorites: '收藏', uncertain: '不确定' };
+  const views = { pending: '仍需复习', history: '全部历史错题', done: '已做记录', favorites: '收藏', uncertain: '不确定' };
   function render() {
     preserveFocus(app, () => {
       const data = ctx.store.snapshot();
       const index = questionStatsIndex(data);
       const rows = ctx.questions.map((q) => ({ q, stats: index.get(q.id) ?? emptyQuestionStats() })).filter(({ q, stats }) => (!moduleId || q.moduleId === moduleId)
-        && (view === 'pending' ? stats.needsReview : view === 'history' ? stats.wrongCount > 0 : view === 'favorites' ? stats.favorite : stats.uncertain))
+        && (view === 'pending' ? stats.needsReview : view === 'history' ? stats.wrongCount > 0 : view === 'done' ? stats.answeredCount > 0 : view === 'favorites' ? stats.favorite : stats.uncertain))
         .sort((a, b) => b.stats.wrongCount - a.stats.wrongCount || (b.stats.latest?.answeredAt ?? '').localeCompare(a.stats.latest?.answeredAt ?? ''));
       page = Math.max(0, Math.min(page, Math.ceil(rows.length / pageSize) - 1));
       const scope = view === 'favorites' ? '' : `&scope=${view}`;
-      const practice = ctx.url(`practice/?mode=${view === 'favorites' ? 'favorites' : 'mistakes'}${scope}${moduleId ? `&module=${moduleId}` : ''}&start=1`);
+      const practice = ctx.url(`practice/?mode=${view === 'done' ? 'random&record=done' : view === 'favorites' ? 'favorites' : 'mistakes'}${view === 'done' ? '' : scope}${moduleId ? `&module=${moduleId}` : ''}&start=1`);
       app.innerHTML = `<div class="review-tabs" role="group" aria-label="记录类型">${Object.entries(views).map(([key, label]) => `<button data-view="${key}" data-focus="view-${key}" aria-pressed="${view === key}">${label}</button>`).join('')}</div>
         <div class="review-filter-row"><label class="review-field">按章节筛选<select data-mistake-module data-focus="mistake-module">${moduleOptions(moduleId)}</select></label>${rows.length ? `<a class="review-button is-primary is-small" href="${practice}">练习这组题 →</a>` : ''}</div>
-        <p class="review-caption" role="status">${Object.hasOwn(views, view) ? views[view as keyof typeof views] : ''} · ${rows.length} 道题。手动掌握后仍保留错误次数；以后再次做错会重新进入待复习。</p>
+        <p class="review-caption" role="status">${Object.hasOwn(views, view) ? views[view as keyof typeof views] : ''} · ${rows.length} 道题。${view === 'done' ? '提交过有效选择的题目会标记为已做；模拟考试未答题仍按未做筛选，同时保留交卷错误记录。' : '手动掌握后仍保留错误次数；以后再次做错会重新进入待复习。'}</p>
         ${rows.length ? rows.slice(page * pageSize, (page + 1) * pageSize).map(({ q, stats }) => `<article class="review-mistake"><div class="review-mistake-header"><div class="review-question-meta"><span class="review-tag">${e(moduleTitle(q.moduleId))}</span><span class="review-tag">${TYPE_LABELS[q.type]}</span>${q.source.isExample ? '<span class="review-tag is-example">自测题</span>' : ''}${stats.mastered ? '<span class="review-tag">已手动掌握</span>' : ''}</div><a class="review-text-link" href="${practiceLink(ctx, q.id)}">重新练习 ↗</a></div>
           <div class="review-prose">${q.stemHtml}</div><div class="review-mistake-footer"><p class="review-caption">累计错 ${stats.wrongCount} 次 / 提交 ${stats.attempts} 次<br />最近：${stats.latest ? `${stats.latest.correct ? '正确' : stats.latest.selectedOptionIds.length ? '错误' : '未作答（模拟交卷）'} · ${formatDate(stats.latest.answeredAt)}` : '尚未提交'}</p><div class="review-question-tools">${stats.wrongCount ? `<button class="review-button is-small" data-id="${q.id}" data-mistake-flag="mastered" data-focus="mastered-${q.id}" aria-pressed="${stats.mastered}">${stats.mastered ? '移回待复习' : '标记已掌握'}</button>` : ''}<button class="review-button is-small" data-id="${q.id}" data-mistake-flag="favorite" data-focus="favorite-${q.id}" aria-pressed="${stats.favorite}">${stats.favorite ? '已收藏' : '收藏'}</button>${stats.uncertain ? `<button class="review-button is-small" data-id="${q.id}" data-mistake-flag="uncertain" data-focus="uncertain-${q.id}">移除不确定</button>` : ''}</div></div></article>`).join('') : `<div class="review-empty"><h2>${view === 'pending' ? '此刻，没有待复习的错题。' : '这里还没有记录。'}</h2><p>${view === 'pending' ? '新错题会自动出现在这里。答对一次不会删除历史；确认理解后，你可以手动标记掌握。' : '练习时可以收藏或标记不确定；每一次错误都会保留在历史错题中。'}</p><a class="review-button is-primary" href="${ctx.url('practice/')}">开始练习 →</a></div>`}
         ${rows.length > pageSize ? `<div class="review-actions"><button class="review-button is-small" data-record-page="previous" ${page ? '' : 'disabled'}>上一页</button><span class="review-caption">${page + 1} / ${Math.ceil(rows.length / pageSize)}</span><button class="review-button is-small" data-record-page="next" ${((page + 1) * pageSize) < rows.length ? '' : 'disabled'}>下一页</button></div>` : ''}`;
@@ -69,7 +69,7 @@ export function initProgress(ctx: ReviewContext) {
     const correct = data.attempts.filter((a) => a.correct).length;
     const index = questionStatsIndex(data);
     const questionById = new Map(ctx.questions.map((q) => [q.id, q]));
-    const practicedKnowledge = new Set(currentAttempts.flatMap((a) => questionById.get(a.questionId)?.knowledgeIds ?? []));
+    const practicedKnowledge = new Set(currentAttempts.filter((a) => a.selectedOptionIds.length > 0).flatMap((a) => questionById.get(a.questionId)?.knowledgeIds ?? []));
     const knownStats = ctx.questions.map((q) => ({ q, stats: index.get(q.id) ?? emptyQuestionStats() }));
     const needingReview = knownStats.filter(({ stats }) => stats.needsReview);
     const reviewed = ctx.knowledge.filter((k) => data.reviewed[k.knowledgeId]);
@@ -89,8 +89,8 @@ export function initProgress(ctx: ReviewContext) {
           const ids = new Set(ctx.questions.filter((q) => q.moduleId === module.id).map((q) => q.id));
           const attempts = currentAttempts.filter((a) => ids.has(a.questionId));
           const right = attempts.filter((a) => a.correct).length;
-          return `<tr><th scope="row"><a href="${ctx.url(`knowledge/#${module.id}`)}">${module.short}</a></th><td>${attempts.length} / ${right}</td><td>${percent(right, attempts.length)}</td><td>${new Set(attempts.map((a) => a.questionId)).size} / ${ids.size}</td></tr>`;
-        }).join('')}</tbody></table></div><p class="review-caption">当前模块统计按现有题目 ID 归组，包含这些题目的历史版本。练过题数按 ID 去重；小样本正确率只能作参考。</p></section>
+          return `<tr><th scope="row"><a href="${ctx.url(`knowledge/#${module.id}`)}">${module.short}</a></th><td>${attempts.length} / ${right}</td><td>${percent(right, attempts.length)}</td><td>${new Set(attempts.filter((a) => a.selectedOptionIds.length > 0).map((a) => a.questionId)).size} / ${ids.size}</td></tr>`;
+        }).join('')}</tbody></table></div><p class="review-caption">当前模块统计按现有题目 ID 归组，包含这些题目的历史版本。练过题数按已提交有效选择的 ID 去重，模拟交卷未答题不计入覆盖；小样本正确率只能作参考。</p></section>
         <section class="review-section"><h2>优先回看的知识点</h2><p class="review-caption">按当前待复习题数排序，仅作为复习优先级提示。</p><div class="review-status-list">${weaknesses.length ? weaknesses.map(({ k, count }) => `<a href="${ctx.url(`knowledge/${k.knowledgeId}/`)}"><span>${e(k.title)}</span><span class="review-muted">${count} 道待复习 ↗</span></a>`).join('') : '<p class="review-caption">暂无待复习关联记录。这不等于所有知识点已经掌握。</p>'}</div></section>
         <section class="review-section"><h2>高频错题</h2><div class="review-status-list">${highFrequency.length ? highFrequency.map(({ q, stats }) => `<a href="${practiceLink(ctx, q.id)}"><span>${e(plainStem(q).slice(0, 66))}${plainStem(q).length > 66 ? '…' : ''}<p>${e(moduleTitle(q.moduleId))} · ${stats.mastered ? '已手动掌握，历史保留' : '仍需复习'}</p></span><span class="review-muted">错 ${stats.wrongCount} 次 ↗</span></a>`).join('') : '<p class="review-caption">尚无错误记录，做错的题会自动收录。</p>'}</div></section>
         <details class="review-details"><summary>尚未练习的知识点 · ${unpracticed.length} 个</summary><div class="review-status-list">${unpracticed.map((k) => `<a href="${ctx.url(`knowledge/${k.knowledgeId}/`)}"><span>${e(k.title)}</span><span class="review-muted">先复习 ↗</span></a>`).join('') || '<p class="review-caption">当前每个知识点都已有提交记录。</p>'}</div></details>

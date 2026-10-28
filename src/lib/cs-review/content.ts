@@ -33,5 +33,8 @@ export async function getAnswer(id: string): Promise<Answer> {
     stepsHtml: await Promise.all(q.explanation.steps.map(renderMarkdown)),
     keyPointHtml: await renderMarkdown(q.explanation.keyPoint),
     pitfallHtml: await renderMarkdown(q.explanation.pitfall),
+    optionAnalysisHtml: q.explanation.optionAnalysis ? await Promise.all(q.options.map(async (option) => ({
+      id: option.id, html: await renderMarkdown(q.explanation.optionAnalysis![option.id]),
+    }))) : [],
   };
 }

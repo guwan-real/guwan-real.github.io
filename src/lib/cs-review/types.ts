@@ -22,6 +22,7 @@ export interface Answer {
   stepsHtml: string[];
   keyPointHtml: string;
   pitfallHtml: string;
+  optionAnalysisHtml?: { id: string; html: string }[];
 }
 export interface Attempt {
   id: string;
@@ -60,6 +61,7 @@ export interface StudyData {
 }
 export interface QuestionStats {
   attempts: number;
+  answeredCount: number;
   wrongCount: number;
   latest: Attempt | null;
   needsReview: boolean;

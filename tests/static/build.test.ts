@@ -37,7 +37,7 @@ test('KaTeX fonts and stylesheet asset paths resolve locally', async () => {
   }
 });
 test('public questions contain no answer or explanation payload', () => {
-  const forbidden = ['correctOptionIds', 'explanation', 'analysisHtml', 'stepsHtml', 'keyPointHtml', 'pitfallHtml'];
+  const forbidden = ['correctOptionIds', 'explanation', 'analysisHtml', 'stepsHtml', 'keyPointHtml', 'pitfallHtml', 'optionAnalysisHtml'];
   const json = JSON.stringify(questions);
   for (const key of forbidden) assert.ok(!json.includes(`"${key}"`), key);
   assert.ok(questions.every((q) => q.stemHtml && q.options.length >= 2));
@@ -48,6 +48,10 @@ test('all answer files match the published question revisions and options', asyn
     assert.equal(answer.id, q.id); assert.equal(answer.revision, q.revision);
     assert.ok(answer.correctOptionIds.length && answer.correctOptionIds.every((id) => q.options.some((o) => o.id === id)));
     assert.ok(answer.analysisHtml && answer.keyPointHtml && answer.pitfallHtml);
+    if (q.id.startsWith('review-extra-') || q.id.startsWith('review-drill-')) {
+      assert.deepEqual(answer.optionAnalysisHtml?.map((o) => o.id), q.options.map((o) => o.id));
+      assert.ok(answer.optionAnalysisHtml?.every((o) => o.html));
+    }
   }
 });
 test('exam HTML and client bundles do not embed question answers', async () => {

@@ -15,7 +15,7 @@ export function formatDate(value: string | null) {
   return value ? new Intl.DateTimeFormat('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value)) : '尚无记录';
 }
 export async function fetchJson<T>(url: string): Promise<T> {
-  const response = await fetch(url, { credentials: 'same-origin' });
+  const response = await fetch(url, { credentials: 'same-origin', cache: 'no-cache' });
   if (!response.ok) throw new Error('内容暂时无法加载，请检查网络后重试。你的已保存记录不会改变。');
   return response.json() as Promise<T>;
 }

@@ -30,6 +30,7 @@ export const questionSchema = z.object({
     steps: z.array(text),
     keyPoint: text,
     pitfall: text,
+    optionAnalysis: z.record(z.string().regex(/^[A-Z]$/), text).optional(),
   }),
   difficulty: z.enum(['easy', 'medium', 'hard']),
   source: z.object({ label: text, url: z.url().refine((url) => /^https?:\/\//i.test(url), '来源链接仅支持 HTTP(S)').optional(), isExample: z.boolean() }),
@@ -44,6 +45,8 @@ export const questionSchema = z.object({
   if (q.type === 'multiple' && q.correctOptionIds.length < 2) add('多选题必须至少有两个正确选项');
   if (q.type === 'boolean' && (q.options.length !== 2 || !optionIds.has('T') || !optionIds.has('F'))) add('判断题选项必须为 T 和 F');
   if (new Set(q.knowledgeIds).size !== q.knowledgeIds.length) add('关联知识点重复');
+  if (q.explanation.optionAnalysis && (Object.keys(q.explanation.optionAnalysis).length !== optionIds.size
+    || [...optionIds].some((id) => !q.explanation.optionAnalysis?.[id]))) add('逐项解析必须恰好覆盖所有选项');
 });
 export type Question = z.infer<typeof questionSchema>;
 

@@ -32,6 +32,9 @@ function renderShared() {
   const warning = document.querySelector<HTMLElement>('[data-storage-warning]')!;
   warning.hidden = store.state === 'ok';
   warning.innerHTML = `${e(store.message)} <a href="${url('progress/#data')}">前往备份与恢复</a>`;
+  const status = document.querySelector<HTMLElement>('[data-storage-status]')!;
+  status.hidden = store.state !== 'ok';
+  status.innerHTML = `记录保存在当前浏览器 · 刷新、正常关闭后可继续 <a href="${url('progress/#data')}">备份与恢复 ↗</a>`;
   const button = document.querySelector<HTMLButtonElement>('[data-mark-reviewed]');
   if (button) {
     const reviewed = Boolean(store.snapshot().reviewed[button.dataset.markReviewed!]);
