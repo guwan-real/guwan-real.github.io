@@ -1,0 +1,17 @@
+---
+import { MODULES, reviewUrl } from '../../lib/cs-review/catalogue';
+import { getReviewContent } from '../../lib/cs-review/content';
+const { knowledge, questions } = await getReviewContent();
+---
+<div class="review-module-list">
+  {MODULES.map((module) => {
+    const topics = knowledge.filter((k) => k.moduleId === module.id);
+    const count = questions.filter((q) => q.moduleId === module.id).length;
+    return <article class="review-module-row">
+      <span class="review-module-number">{module.number}</span>
+      <div><a class="review-module-title" href={`${reviewUrl('knowledge/')}#${module.id}`}>{module.title}</a><p>{module.description}</p></div>
+      <span class="review-module-count">{topics.length} 个知识点<br />{count} 道自测题</span>
+      <a class="review-text-link" href={reviewUrl(`practice/?module=${module.id}&mode=chapter&start=1`)} aria-label={`练习${module.title}`}>练习 <span aria-hidden="true">↗</span></a>
+    </article>;
+  })}
+</div>

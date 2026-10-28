@@ -1,0 +1,15 @@
+<section class="review-record-management" id="data">
+  <p class="review-eyebrow">YOUR DATA</p>
+  <h2>记录属于你，记得备份。</h2>
+  <p>普通练习提交后记为已做，模拟考试交卷后统一记录；只选择、尚未提交的答案会保存到当前练习。正常刷新、关闭再打开，以及网站更新，都不会主动重置记录。</p>
+  <p>学习记录保存在当前浏览器本地，不保证永久保存。清理浏览器数据、隐私模式或存储空间不足可能导致记录丢失；不同设备和浏览器默认不会自动同步。可以导出 JSON，带到另一台设备恢复。</p>
+  <div class="review-actions">
+    <button class="review-button" data-data-action="export" data-focus="export">导出学习记录</button>
+    <label class="review-button" for="review-import">从 JSON 恢复</label>
+    <input class="review-sr-only" type="file" id="review-import" accept=".json,application/json" />
+    <button class="review-button is-danger" data-data-action="clear" data-focus="clear">清空本地记录</button>
+    <button class="review-button" data-data-action="raw" data-focus="raw" hidden>导出原始记录</button>
+  </div>
+  <div data-import-preview></div>
+  <p class="review-caption">数据版本 v1 · 上限 50,000 次提交，单个导入文件最多 10 MiB。不识别的更新版本不会被覆盖。导出文件含个人学习历史，请自行妥善保管。</p>
+</section>

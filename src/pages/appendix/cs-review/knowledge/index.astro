@@ -1,0 +1,21 @@
+---
+import CSReviewLayout from '../../../../layouts/CSReviewLayout.astro';
+import ContentNotice from '../../../../components/cs-review/ContentNotice.astro';
+import { MODULES, reviewUrl } from '../../../../lib/cs-review/catalogue';
+import { getReviewContent } from '../../../../lib/cs-review/content';
+const { knowledge, questions } = await getReviewContent();
+---
+<CSReviewLayout title="知识目录" active="knowledge">
+  <header class="review-page-heading"><p class="review-eyebrow">KNOWLEDGE / 知识目录</p><h1>理解，先于记忆。</h1><p class="review-lead">读懂原理，记住方法，再用一道题检验。</p></header>
+  <ContentNotice compact />
+  <div class="review-actions review-resource-actions"><a class="review-text-link" href={reviewUrl('handbook/')}>整本手册与题型决策表 ↗</a><a class="review-text-link" href={reviewUrl('resources/sgcc-2027-computer-syllabus.pdf')} target="_blank" rel="noopener noreferrer">国网 2027 大纲 PDF ↗</a></div>
+  <label class="review-search"><span>搜索知识全文</span><input type="search" data-knowledge-search placeholder="例如：补码、FIFO、隔离级别…" aria-controls="knowledge-search-results" autocomplete="off" /><kbd aria-hidden="true">/</kbd></label>
+  <div id="knowledge-search-results" role="region" aria-label="全文搜索结果" aria-live="polite" hidden></div>
+  <div data-knowledge-directory>
+    {MODULES.map((m) => <section class="review-knowledge-section" id={m.id}>
+      <div class="review-section-heading"><h2><span class="review-inline-number">{m.number}</span>{m.title}</h2><a class="review-text-link" href={reviewUrl(`practice/?module=${m.id}&mode=chapter&start=1`)}>章节练习 ↗</a></div>
+      <div class="review-topic-list">{knowledge.filter((k) => k.moduleId === m.id).map((k) => <a href={reviewUrl(`knowledge/${k.knowledgeId}/`)}><div><h3>{k.title}</h3><p>{k.description}</p></div><span class="review-topic-meta">{questions.filter((q) => q.knowledgeIds.includes(k.knowledgeId)).length} 道关联题 <span aria-hidden="true">→</span></span></a>)}</div>
+      <p class="review-caption">保留手册原理、解题方法与易错点；题目为自编自测，不代表官方出题或权重。</p>
+    </section>)}
+  </div>
+</CSReviewLayout>
