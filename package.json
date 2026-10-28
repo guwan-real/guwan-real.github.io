@@ -26,6 +26,7 @@
     "katex": "^0.19.1",
     "rehype-katex": "^7.0.1",
     "rehype-sanitize": "^6.0.0",
+    "remark-cjk-friendly": "2.3.3",
     "remark-math": "^6.0.0",
     "zod": "^4.6.7"
   }

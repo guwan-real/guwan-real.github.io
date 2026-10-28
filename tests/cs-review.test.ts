@@ -344,3 +344,19 @@ test('Markdown renders math, tables and highlighted code while stripping active 
   assert.match(html, /class="katex/); assert.match(html, /<table>/); assert.match(html, /<pre/); assert.match(html, /<span style="color:/);
   assert.doesNotMatch(html, /<script|onerror|href="javascript:/);
 });
+test('Chinese inline emphasis handles adjacent brackets, punctuation and mixed-language text', async () => {
+  const html = await renderMarkdown('**操作系统（OS）**管理资源。**验证（verification）**检查要求。答案：**3 与 2。**BST 不一定完全。**公式：**$L/R$。');
+  for (const phrase of ['操作系统（OS）', '验证（verification）', '3 与 2。', '公式：']) {
+    assert.ok(html.includes(`<strong>${phrase}</strong>`), phrase);
+  }
+  assert.match(html, /class="katex"/);
+  assert.doesNotMatch(html, /\*\*/);
+});
+test('CJK emphasis parsing leaves literal Markdown, identifiers and code unchanged', async () => {
+  const html = await renderMarkdown('`**原样保留。**` 与 foo_bar_baz。\\*\\*字面星号\\*\\*\n\n```text\n**代码中的星号。**\n```');
+  assert.match(html, /<code>\*\*原样保留。\*\*<\/code>/);
+  assert.match(html, /foo_bar_baz/);
+  assert.match(html, /\*\*字面星号\*\*/);
+  assert.match(html, /\*\*代码中的星号。\*\*/);
+  assert.doesNotMatch(html, /<strong>|<em>/);
+});

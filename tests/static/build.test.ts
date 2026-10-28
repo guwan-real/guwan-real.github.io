@@ -126,3 +126,23 @@ test('paper-derived practice links to a published audit with real source and top
   assert.match(search.find((entry) => entry.id === 'acid-transactions')!.text, /三级封锁/);
   assert.match(search.find((entry) => entry.id === 'data-link')!.text, /海明/);
 });
+test('Chinese emphasis renders in every lesson, handbook and exercise without leaking markers', async () => {
+  const check = (html: string, label: string) => {
+    const prose = html.replace(/<(pre|code|script|style|annotation)\b[^>]*>[\s\S]*?<\/\1>/gi, '').replace(/<[^>]*>/g, '');
+    assert.doesNotMatch(prose, /\*\*[^*\n]+\*\*/, `${label}: unrendered emphasis`);
+  };
+  for (const path of paths.filter((path) => path.startsWith('appendix/cs-review/knowledge/') && path.endsWith('.html'))) {
+    check(await readFile(new URL(path, dist), 'utf8'), path);
+  }
+  check(await readFile(new URL('handbook/index.html', root), 'utf8'), 'handbook');
+  const osPage = await readFile(new URL('knowledge/os-overview/index.html', root), 'utf8');
+  assert.match(osPage, /<strong>操作系统（OS）<\/strong>/);
+  const arraysPage = await readFile(new URL('knowledge/arrays-strings/index.html', root), 'utf8');
+  assert.match(arraysPage, /<strong>10 项。<\/strong>/);
+  for (const question of questions) {
+    check([question.stemHtml, ...question.options.map((option) => option.html)].join('\n'), question.id);
+    const answer: Answer = JSON.parse(await readFile(new URL(`data/answers/${question.id}.json`, root), 'utf8'));
+    check([answer.analysisHtml, ...answer.stepsHtml, answer.keyPointHtml, answer.pitfallHtml,
+      ...(answer.optionAnalysisHtml?.map((option) => option.html) ?? [])].join('\n'), `${question.id}: answer`);
+  }
+});
