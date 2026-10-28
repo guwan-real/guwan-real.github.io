@@ -68,6 +68,12 @@ test('homepage retains its own stylesheet and review styles are isolated', async
   assert.match(home, /Appendix \/ CS Review/); assert.match(home, /hero-workbench/);
   assert.match(review, /class="cs-review"/);
 });
+test('sync credentials cannot be entered into a native form before its JS handler is ready', async () => {
+  const page = await readFile(new URL('progress/index.html', root), 'utf8');
+  assert.match(page, /<fieldset[^>]*data-sync-fields[^>]*disabled/);
+  assert.match(page, /name="token"[^>]*type="password"/);
+  assert.match(page, /Only select repositories/);
+});
 test('full handbook, original Markdown download and PDF are published', async () => {
   const page = await readFile(new URL('handbook/index.html', root), 'utf8');
   assert.match(page, /高频题型决策表/); assert.match(page, /48 项逐项复习勾选表/); assert.match(page, /文档与大纲关系/);

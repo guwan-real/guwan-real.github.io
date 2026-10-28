@@ -8,6 +8,7 @@ export interface ReviewContext {
   url: (path?: string) => string;
   notify: (message: string, success?: boolean) => void;
   confirm: (title: string, message: string, label: string) => Promise<boolean>;
+  beforeClear?: () => void;
 }
 export const escapeHtml = (value: unknown): string => String(value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
 export const pluralCount = (count: number, unit: string) => `${count} ${unit}`;

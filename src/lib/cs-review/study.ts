@@ -125,6 +125,12 @@ export function questionStatsIndex(data: StudyData): Map<string, QuestionStats> 
       needsReview: Boolean(history?.wrong) && !mastered, mastered, favorite: flag?.favorite ?? false, uncertain: flag?.uncertain ?? false }];
   }));
 }
+export function masteryTimestamp(data: StudyData, id: string, now = new Date().toISOString()) {
+  const latestWrong = data.attempts.filter((a) => a.questionId === id && !a.correct).map((a) => a.answeredAt).sort().at(-1);
+  // Clamp a new user action to an already-received mistake when a device clock is slow.
+  // Imported historical flags keep their original timestamps through setQuestionFlag.
+  return latestWrong && now < latestWrong ? new Date(Date.parse(latestWrong) + 1).toISOString() : now;
+}
 export function setQuestionFlag(data: StudyData, id: string, patch: Partial<Omit<QuestionFlag, 'updatedAt'>>, now = new Date().toISOString()) {
   const previous: QuestionFlag | undefined = data.flags[id];
   data.flags[id] = { ...(previous ?? { favorite: false, uncertain: false, masteredAt: null }), ...patch, updatedAt: now };
