@@ -3,7 +3,8 @@ import CSReviewLayout from '../../../../layouts/CSReviewLayout.astro';
 import ContentNotice from '../../../../components/cs-review/ContentNotice.astro';
 import { MODULES, reviewUrl } from '../../../../lib/cs-review/catalogue';
 import { getReviewContent } from '../../../../lib/cs-review/content';
-const { knowledge, questions } = await getReviewContent();
+const { knowledge, questions, explanations } = await getReviewContent();
+const lessons = new Map(explanations.map((entry) => [entry.data.knowledgeId, entry.data]));
 ---
 <CSReviewLayout title="知识目录" active="knowledge">
   <header class="review-page-heading"><p class="review-eyebrow">KNOWLEDGE / 知识目录</p><h1>理解，先于记忆。</h1><p class="review-lead">读懂原理，记住方法，再用一道题检验。</p></header>
@@ -14,8 +15,8 @@ const { knowledge, questions } = await getReviewContent();
   <div data-knowledge-directory>
     {MODULES.map((m) => <section class="review-knowledge-section" id={m.id}>
       <div class="review-section-heading"><h2><span class="review-inline-number">{m.number}</span>{m.title}</h2><a class="review-text-link" href={reviewUrl(`practice/?module=${m.id}&mode=chapter&start=1`)}>章节练习 ↗</a></div>
-      <div class="review-topic-list">{knowledge.filter((k) => k.moduleId === m.id).map((k) => <a href={reviewUrl(`knowledge/${k.knowledgeId}/`)}><div><h3>{k.title}</h3><p>{k.description}</p></div><span class="review-topic-meta">{questions.filter((q) => q.knowledgeIds.includes(k.knowledgeId)).length} 道关联题 <span aria-hidden="true">→</span></span></a>)}</div>
-      <p class="review-caption">保留手册原理、解题方法与易错点；题目为自编自测，不代表官方出题或权重。</p>
+      <div class="review-topic-list">{knowledge.filter((k) => k.moduleId === m.id).map((k) => <a href={reviewUrl(`knowledge/${k.knowledgeId}/`)}><div><h3>{k.title}{lessons.has(k.knowledgeId) && <small class="review-lesson-label">基础讲义</small>}</h3><p>{lessons.get(k.knowledgeId)?.description ?? k.description}</p></div><span class="review-topic-meta">{questions.filter((q) => q.knowledgeIds.includes(k.knowledgeId)).length} 道关联题 <span aria-hidden="true">→</span></span></a>)}</div>
+      <p class="review-caption">手册原文完整保留，基础讲义补充解释与例子；题目均为自编自测。</p>
     </section>)}
   </div>
 </CSReviewLayout>

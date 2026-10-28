@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 730" role="img" aria-labelledby="title desc">
+  <title id="title">借阅系统的实体和联系</title>
+  <desc id="desc">读者可有零到多条借阅，每条借阅对应一位读者与一本副本。一本副本可有多次历史借阅，只属于一份书目。借阅引用读者与副本，副本引用书目。未归还记录还需限制同一副本最多一条。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#42647f"/></marker></defs>
+  <rect width="1000" height="730" rx="24" fill="#f5f8fc"/>
+  <g font-family="system-ui, sans-serif" fill="#15324a">
+    <text x="500" y="42" text-anchor="middle" font-size="29" font-weight="700">书目与实体副本分开，借阅保留历史事件</text>
+    <g fill="#e4effb" stroke="#7399c5" stroke-width="2"><rect x="55" y="85" width="285" height="180" rx="16"/><rect x="660" y="85" width="285" height="260" rx="16"/><rect x="660" y="475" width="285" height="180" rx="16"/><rect x="55" y="475" width="285" height="180" rx="16"/></g>
+    <g font-size="25" font-weight="700"><text x="80" y="125">Reader 读者</text><text x="685" y="125">Loan 借阅事件</text><text x="685" y="515">Copy 副本</text><text x="80" y="515">Book 书目</text></g>
+    <g font-size="22"><text x="80" y="169">PK reader_id</text><text x="80" y="207">name、phone</text><text x="685" y="169">PK loan_id</text><text x="685" y="207">FK reader_id</text><text x="685" y="245">FK copy_id</text><text x="685" y="283">借出、到期、归还时间</text><text x="685" y="559">PK copy_id</text><text x="685" y="597">FK book_id、barcode</text><text x="80" y="559">PK book_id</text><text x="80" y="597">title</text></g>
+    <path d="M650 195 H350" stroke="#42647f" stroke-width="3" marker-end="url(#arrow)"/>
+    <g font-size="21" text-anchor="middle"><text x="500" y="155">一位读者：0..N 次借阅</text><text x="500" y="231">每次借阅：1 位读者</text></g>
+    <path d="M802 355 V465" stroke="#42647f" stroke-width="3" marker-end="url(#arrow)"/>
+    <g font-size="21" text-anchor="end"><text x="773" y="393">每次借阅：1 本副本</text><text x="773" y="430">每本副本：0..N 次历史借阅</text></g>
+    <path d="M650 565 H350" stroke="#42647f" stroke-width="3" marker-end="url(#arrow)"/>
+    <g font-size="21" text-anchor="middle"><text x="500" y="530">一份书目：0..N 本副本</text><text x="500" y="605">每本副本：1 份书目</text></g>
+    <text x="500" y="699" text-anchor="middle" font-size="22" font-weight="700" fill="#97621b">额外业务约束：同一副本最多有 1 条“未归还”借阅记录</text>
+  </g>
+</svg>

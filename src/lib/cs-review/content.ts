@@ -1,17 +1,23 @@
 import { getCollection } from 'astro:content';
 import { renderMarkdown } from './markdown';
-import { validateCatalogue } from './content-schema';
+import { validateCatalogue, validateExplanations } from './content-schema';
 import type { Answer, PublicQuestion } from './types';
 
 const chunks = import.meta.glob<unknown[]>('../../content/cs-review/questions/*.json', { eager: true, import: 'default' });
 let cache: ReturnType<typeof load> | undefined;
 async function load() {
-  const entries = await getCollection('csKnowledge');
+  const [entries, explanations] = await Promise.all([getCollection('csKnowledge'), getCollection('csExplanations')]);
   const { knowledge, questions } = validateCatalogue(entries.map((entry) => entry.data), Object.values(chunks).flat());
   for (const entry of entries) {
     if (entry.id !== entry.data.knowledgeId) throw new Error(`知识点文件名必须与 ID 一致：${entry.id}`);
   }
-  return { entries, knowledge: knowledge.sort((a, b) => a.order - b.order), questions };
+  validateExplanations(knowledge, explanations.map((entry) => entry.data));
+  for (const entry of explanations) {
+    if (entry.id !== entry.data.knowledgeId) throw new Error(`扩展讲义文件名必须与 ID 一致：${entry.id}`);
+  }
+  const lessonDescriptions = new Map(explanations.map((entry) => [entry.data.knowledgeId, entry.data.description]));
+  const enrichedKnowledge = knowledge.map((entry) => ({ ...entry, description: lessonDescriptions.get(entry.knowledgeId) ?? entry.description }));
+  return { entries, explanations, knowledge: enrichedKnowledge.sort((a, b) => a.order - b.order), questions };
 }
 export const getReviewContent = () => import.meta.env.DEV ? load() : cache ??= load();
 

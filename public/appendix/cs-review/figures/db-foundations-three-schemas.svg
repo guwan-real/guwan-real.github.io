@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 650" role="img" aria-labelledby="title desc">
+  <title id="title">数据库三级模式和两级映像</title>
+  <desc id="desc">多个用户外模式通过外模式与模式映像对应统一逻辑结构，逻辑结构再通过模式与内模式映像对应物理存储。前一种映像支持逻辑数据独立性，后一种支持物理数据独立性。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#42647f"/></marker></defs>
+  <rect width="1080" height="650" rx="24" fill="#f5f8fc"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle" fill="#15324a">
+    <text x="540" y="48" font-size="30" font-weight="700">同一批数据，三个观察层次</text>
+    <g fill="#e4effb" stroke="#7399c5" stroke-width="2">
+      <rect x="70" y="85" width="270" height="105" rx="16"/>
+      <rect x="405" y="85" width="270" height="105" rx="16"/>
+      <rect x="740" y="85" width="270" height="105" rx="16"/>
+    </g>
+    <g font-size="24" font-weight="700"><text x="205" y="127">学生外模式</text><text x="540" y="127">教师外模式</text><text x="875" y="127">教务员外模式</text></g>
+    <g font-size="20"><text x="205" y="162">自己的选课与成绩</text><text x="540" y="162">所教课程的学生</text><text x="875" y="162">全校课程与统计</text></g>
+    <g stroke="#42647f" stroke-width="3" marker-end="url(#arrow)"><path d="M205 190 V290"/><path d="M540 190 V290"/><path d="M875 190 V290"/></g>
+    <rect x="267" y="210" width="546" height="62" rx="12" fill="#f5f8fc"/>
+    <text x="540" y="234" font-size="22" font-weight="700">外模式—模式映像</text>
+    <text x="540" y="260" font-size="20">支持逻辑数据独立性</text>
+    <rect x="150" y="300" width="780" height="110" rx="16" fill="#e4f4eb" stroke="#6d9f80" stroke-width="2"/>
+    <text x="540" y="344" font-size="26" font-weight="700">模式：统一的全局逻辑结构</text>
+    <text x="540" y="382" font-size="22">Student、Course、Enrollment 及其键、联系和约束</text>
+    <path d="M540 410 V505" stroke="#42647f" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="267" y="425" width="546" height="62" rx="12" fill="#f5f8fc"/>
+    <text x="540" y="449" font-size="22" font-weight="700">模式—内模式映像</text>
+    <text x="540" y="476" font-size="20">支持物理数据独立性</text>
+    <rect x="150" y="515" width="780" height="95" rx="16" fill="#fff0d9" stroke="#c6a065" stroke-width="2"/>
+    <text x="540" y="553" font-size="26" font-weight="700">内模式：物理存储安排</text>
+    <text x="540" y="587" font-size="22">文件、数据页、索引、压缩与存储位置</text>
+  </g>
+</svg>

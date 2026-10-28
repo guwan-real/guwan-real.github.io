@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="448" viewBox="0 0 1080 448" role="img" aria-labelledby="title desc">
+  <title id="title">报修软件的生命周期与成果</title>
+  <desc id="desc">可行性与计划产生方案和风险清单，需求产生可验收规格，设计产生结构与接口，实现产生代码和软件包，测试产生质量证据，交付运行产生可用服务与维护记录。运行反馈可返回前面的活动，各活动可反复进行。</desc>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#52728a" stroke-width="1.5"/></marker></defs>
+  <rect width="1080" height="448" rx="24" fill="#f7fafc"/>
+  <g font-family="system-ui, sans-serif" fill="#18354b">
+    <text x="40" y="48" font-size="26" font-weight="700">软件生命周期：每一步都留下可检查的成果</text>
+    <text x="40" y="80" font-size="17" fill="#526879">报修系统教学示意 · 活动可以交叠、回溯和重复</text>
+    <g fill="#fff" stroke="#a7becd" stroke-width="2">
+      <rect x="40" y="118" width="300" height="92" rx="14"/>
+      <rect x="390" y="118" width="300" height="92" rx="14"/>
+      <rect x="740" y="118" width="300" height="92" rx="14"/>
+      <rect x="740" y="270" width="300" height="92" rx="14"/>
+      <rect x="390" y="270" width="300" height="92" rx="14"/>
+      <rect x="40" y="270" width="300" height="92" rx="14"/>
+    </g>
+    <g font-size="22" font-weight="650" text-anchor="middle">
+      <text x="190" y="154">1 可行性与计划</text><text x="540" y="154">2 需求分析</text><text x="890" y="154">3 系统设计</text>
+      <text x="890" y="306">4 实现</text><text x="540" y="306">5 测试与评价</text><text x="190" y="306">6 交付、运行、维护</text>
+    </g>
+    <g font-size="17" text-anchor="middle" fill="#526879">
+      <text x="190" y="185">方案、预算、风险清单</text><text x="540" y="185">规则、模型、验收条件</text><text x="890" y="185">模块职责、接口、数据结构</text>
+      <text x="890" y="337">代码、构建配置、软件包</text><text x="540" y="337">测试结果、缺陷、质量证据</text><text x="190" y="337">可用服务、监控、变更记录</text>
+    </g>
+    <g stroke="#52728a" fill="none" stroke-width="2.3" marker-end="url(#arrow)"><path d="M342 164H383"/><path d="M692 164H733"/><path d="M890 212V263"/><path d="M738 316H697"/><path d="M388 316H347"/></g>
+    <path d="M180 268V236H520V213" stroke="#168277" stroke-width="2.3" stroke-dasharray="7 5" fill="none" marker-end="url(#arrow)"/>
+    <text x="295" y="230" font-size="16" fill="#168277">运行反馈与变更</text>
+    <text x="40" y="410" font-size="17" fill="#526879">阶段用于定位主要目标；质量、配置管理与风险管理贯穿全过程。</text>
+  </g>
+</svg>

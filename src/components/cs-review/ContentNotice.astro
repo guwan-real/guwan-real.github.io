@@ -5,5 +5,5 @@ const { compact = false } = Astro.props;
 ---
 <aside class:list={['review-notice', { 'is-compact': compact }]}>
   <span class="review-status-dot" aria-hidden="true"></span>
-  <p><strong>按你的手册复习</strong>{compact ? ' · 国网 2027 专业知识 48 项，练习题均为自编自测。' : ' · 已对照你提供的国网 2027 大纲接入 48 项知识与专项解题方法。题目根据手册编写，用于自测，非官方真题。'} <a href={reviewUrl('handbook/')}>阅读原稿 ↗</a></p>
+  <p><strong>从基础讲明白</strong>{compact ? ' · 48 章基础讲义与原手册对照阅读，练习均为自编自测。' : ' · 按你提供的国网 2027 大纲与手册补充 48 章基础讲解、具体例子与解题过程；原稿完整保留。练习用于自测，非官方真题。'} <a href={reviewUrl('handbook/')}>阅读原稿 ↗</a></p>
 </aside>

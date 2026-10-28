@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="790" viewBox="0 0 960 790" role="img" aria-labelledby="title desc">
+  <title id="title">TCP握手和首段数据的字节序号</title>
+  <desc id="desc">客户端初始序号1000，服务端5000。SYN消耗一个序号，三次握手结束后客户端200字节数据从1001到1200，服务端确认1201表示下一期待字节。时间从上向下。</desc>
+  <defs><marker id="blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#356c98"/></marker><marker id="green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#35806d"/></marker></defs>
+  <rect width="960" height="790" fill="#f8fafc"/>
+  <text x="40" y="49" font-family="sans-serif" font-size="29" font-weight="700" fill="#153b5d">TCP按字节计数：SYN占1，纯ACK不占</text>
+  <g font-family="sans-serif" text-anchor="middle" fill="#153b5d">
+    <rect x="100" y="78" width="190" height="55" rx="11" fill="#e1edf8" stroke="#537ea2" stroke-width="2"/><text x="195" y="114" font-size="24" font-weight="700">客户端</text>
+    <rect x="670" y="78" width="190" height="55" rx="11" fill="#e1edf8" stroke="#537ea2" stroke-width="2"/><text x="765" y="114" font-size="24" font-weight="700">服务端</text>
+  </g>
+  <path d="M195 139V706M765 139V706" fill="none" stroke="#a3b7c8" stroke-width="3"/>
+  <g fill="none" stroke-width="3"><path d="M198 166L759 218" stroke="#356c98" marker-end="url(#blue)"/><path d="M762 272L201 324" stroke="#356c98" marker-end="url(#blue)"/><path d="M198 378L759 430" stroke="#356c98" marker-end="url(#blue)"/><path d="M198 490L759 542" stroke="#35806d" marker-end="url(#green)"/><path d="M762 600L201 652" stroke="#35806d" marker-end="url(#green)"/></g>
+  <g font-family="sans-serif" font-size="22" fill="#244b6d"><text x="320" y="168">① SYN：seq=1000</text><text x="290" y="269">② SYN+ACK：seq=5000，ack=1001</text><text x="290" y="378">③ ACK：seq=1001，ack=5001</text></g>
+  <g font-family="sans-serif" font-size="22" fill="#245e52"><text x="290" y="488">④ 数据：seq=1001，长度200字节</text><text x="300" y="598">⑤ ACK：ack=1201，下一期待字节</text></g>
+  <rect x="305" y="678" width="350" height="41" rx="8" fill="#e2f4ee"/>
+  <text x="480" y="706" font-family="sans-serif" font-size="21" text-anchor="middle" fill="#245e52">这段数据占用序号1001—1200</text>
+  <text x="40" y="754" font-family="sans-serif" font-size="20" fill="#445b6e">时间向下。示例握手不带应用数据；TCP确认字节不等于业务已完成提交。</text>
+</svg>

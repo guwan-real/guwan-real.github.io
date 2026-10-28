@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="760" viewBox="0 0 900 760" role="img" aria-labelledby="title desc">
+  <title id="title">物联网感知、边缘、云与应用</title>
+  <desc id="desc">现场传感器采集数据，经本地连接到边缘网关，再通过承载网络送到云端平台供运维应用使用。下行控制需要独立的权限、时限与失联设计；边缘可以按预设规则进行本地判断和缓存。</desc>
+  <rect width="900" height="760" fill="#f8fafc"/>
+  <text x="40" y="50" font-family="sans-serif" font-size="29" font-weight="700" fill="#153b5d">一条温度记录怎样走到运维人员面前</text>
+  <g font-family="sans-serif" text-anchor="middle">
+    <rect x="220" y="88" width="460" height="112" rx="14" fill="#e1edf8" stroke="#537ea2" stroke-width="2"/>
+    <text x="450" y="125" font-size="25" font-weight="700" fill="#153b5d">感知：传感器与设备终端</text><text x="450" y="161" font-size="21" fill="#244b6d">设备ID、测量时间、序号、单位、数值</text><text x="450" y="188" font-size="18" fill="#244b6d">测量与采样各有误差、频率和能耗约束</text>
+    <rect x="220" y="252" width="460" height="112" rx="14" fill="#e2f4ee" stroke="#448975" stroke-width="2"/>
+    <text x="450" y="289" font-size="25" font-weight="700" fill="#164d48">边缘：站内网关</text><text x="450" y="325" font-size="21" fill="#245e52">接入转换、数据缓存、本地告警</text><text x="450" y="352" font-size="18" fill="#245e52">断网时仍按已设计的规则处理</text>
+    <rect x="220" y="416" width="460" height="112" rx="14" fill="#fff2cd" stroke="#a98125" stroke-width="2"/>
+    <text x="450" y="453" font-size="25" font-weight="700" fill="#664b10">云端平台：设备与数据管理</text><text x="450" y="489" font-size="21" fill="#795c19">消息接入、历史存储、全局分析</text><text x="450" y="516" font-size="18" fill="#795c19">统一标识、时间、权限与资料版本</text>
+    <rect x="220" y="580" width="460" height="100" rx="14" fill="#eee7f7" stroke="#7b63a0" stroke-width="2"/>
+    <text x="450" y="620" font-size="25" font-weight="700" fill="#4e376b">应用：运维与业务响应</text><text x="450" y="657" font-size="21" fill="#624681">趋势看板、告警、待审核工单</text>
+  </g>
+  <g fill="#416784"><path d="M442 207v25h-9l17 17 17-17h-9v-25z"/><path d="M442 371v25h-9l17 17 17-17h-9v-25z"/><path d="M442 535v25h-9l17 17 17-17h-9v-25z"/></g>
+  <g font-family="sans-serif" font-size="19" fill="#445b6e"><text x="41" y="232">本地无线或有线</text><text x="41" y="396">IP承载与应用协议</text><text x="41" y="560">数据服务与业务接口</text></g>
+  <path d="M705 632h55V146h-55" fill="none" stroke="#ad533c" stroke-width="3"/>
+  <path d="M706 139l-15 7 15 7" fill="none" stroke="#ad533c" stroke-width="3"/>
+  <g font-family="sans-serif" font-size="20" fill="#93422f"><text x="778" y="310">下行控制</text><text x="778" y="344">需权限</text><text x="778" y="378">与反馈</text></g>
+  <text x="40" y="722" font-family="sans-serif" font-size="20" fill="#445b6e">联网不等于可随意控制：实时控制还要分析时限、可靠性和失联行为。</text>
+</svg>
