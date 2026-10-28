@@ -271,6 +271,21 @@
 .review-storage-warning a { text-decoration: underline; margin-left: 7px; }
 .review-storage-status { color: var(--review-muted); font-size: 11px; line-height: 1.8; margin: 0 0 24px; }
 .review-storage-status a { display: inline-block; color: var(--review-green); margin-left: 8px; text-decoration: underline; text-underline-offset: 3px; }
+.review-sync-status { font-size: 11px; line-height: 1.8; color: var(--review-green); margin: -14px 0 28px; }
+.review-sync-status a { text-decoration: underline; text-underline-offset: 3px; margin-left: 6px; }
+.review-sync-status.is-sync-error { color: var(--review-red); }
+.review-sync-settings { border-top: 1px solid var(--review-line); padding-top: 36px; margin-top: 48px; scroll-margin-top: 24px; }
+.review-sync-form { max-width: 680px; margin: 24px 0; }
+.review-sync-fields { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+.review-sync-form input:not([type='checkbox']) { width: 100%; min-width: 0; border: 1px solid var(--review-line); border-radius: 3px; padding: 11px 12px; background: var(--review-white); }
+.review-sync-fields > .review-field { margin-top: 18px; }
+.review-sync-remember { display: flex; gap: 10px; align-items: center; font-size: 13px; margin: 20px 0 8px; cursor: pointer; }
+.review-sync-remember input { width: 18px; height: 18px; accent-color: var(--review-green); }
+.review-sync-guide { margin: 24px 0; font-size: 13px; line-height: 1.9; }
+.review-sync-guide summary { cursor: pointer; color: var(--review-green); padding: 8px 0; }
+.review-sync-guide li + li { margin-top: 12px; }
+.review-sync-session-list { list-style: none; padding: 0; }
+.review-sync-session-list li { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--review-line); padding: 12px 0; }
 .review-question-history { color: var(--review-muted); font-size: 12px; line-height: 1.8; margin: -8px 0 24px; }
 .review-option-analysis { margin: 16px 0; }
 .review-option-analysis > div { display: grid; grid-template-columns: 2.5em minmax(0, 1fr); gap: 12px; padding: 12px 0; border-top: 1px solid var(--review-line); }

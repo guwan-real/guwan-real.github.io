@@ -1,0 +1,39 @@
+<section class="review-sync-settings" id="github-sync" aria-labelledby="github-sync-title">
+  <p class="review-eyebrow">PICK UP WHERE YOU LEFT OFF</p>
+  <h2 id="github-sync-title">手机和电脑，接着练。</h2>
+  <p>把答题历史、错题、收藏、复习标记和当前练习自动备份到你的 GitHub 私有仓库。每台设备连接一次同一个仓库，之后无需手动导入导出。</p>
+  <p data-sync-message role="status" class="review-caption">当前仅在本机保存。</p>
+  <div data-sync-connected hidden>
+    <p><a class="review-text-link" data-sync-repository target="_blank" rel="noopener noreferrer"></a></p>
+    <div class="review-actions">
+      <button class="review-button is-primary" data-sync-action="now">立即同步</button>
+      <button class="review-button" data-sync-action="edit">更换连接</button>
+      <button class="review-button" data-sync-action="disconnect">断开本机</button>
+    </div>
+    <p class="review-caption">断开只移除本机连接凭据，本地记录和 GitHub 备份都保留。换设备前确认显示“已同步”；浏览器关闭或休眠期间不能保证上传完成。</p>
+  </div>
+  <form data-sync-form class="review-sync-form">
+    <fieldset class="review-sync-fields" data-sync-fields disabled>
+    <legend class="review-sr-only">GitHub 私有备份连接设置</legend>
+    <div class="review-fields">
+      <label class="review-field">GitHub 用户名<input name="owner" value="guwan-real" required autocomplete="off" spellcheck="false" autocapitalize="none" /></label>
+      <label class="review-field">私有备份仓库<input name="repo" value="cs-review-records" required autocomplete="off" spellcheck="false" autocapitalize="none" /></label>
+    </div>
+    <label class="review-field">连接密钥（Fine-grained token）<input name="token" type="password" required autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="github_pat_…" /></label>
+    <label class="review-sync-remember"><input type="checkbox" name="remember" /> 在这台个人设备保持连接</label>
+    <p class="review-caption">勾选后，密钥保存在此浏览器，能读取此站点数据的脚本也能访问它；请只授权备份仓库，勿在公用设备勾选。不勾选则仅在当前标签页会话保持连接。密钥不会写入学习备份或网站代码。</p>
+    <details class="review-sync-guide">
+      <summary>首次连接：怎样准备密钥？</summary>
+      <ol>
+        <li><a class="review-text-link" data-sync-token-link href="https://github.com/settings/personal-access-tokens/new?name=CS+Review+sync&amp;description=Personal+CS+Review+private+backup&amp;target_name=guwan-real&amp;expires_in=90&amp;contents=write" target="_blank" rel="noopener noreferrer">在 GitHub 创建专用连接密钥 ↗</a>。设置有效期，设备可各用一枚。</li>
+        <li>在 <strong>Repository access</strong> 选择 <strong>Only select repositories</strong>，仅选 <strong>cs-review-records</strong> 私有仓库。不要选个人主页仓库或全部仓库。</li>
+        <li>在 <strong>Repository permissions</strong> 将 <strong>Contents</strong> 设为 <strong>Read and write</strong>，其他权限维持默认。</li>
+        <li>生成后粘贴到上方，在这台设备点击“连接并同步”。密钥只会显示一次，请保存在你自己的密码管理器中，不要发到聊天或提交进仓库。</li>
+      </ol>
+    </details>
+    <div class="review-actions"><button class="review-button is-primary" type="submit">连接并同步</button><button class="review-button" type="button" data-sync-action="cancel" hidden>取消更换</button></div>
+    </fieldset>
+  </form>
+  <div data-sync-sessions></div>
+  <p class="review-caption">自动合并历史，不因一次答对删除错题；取消复习、取消收藏也会同步。两端同时作答时保留提交历史；若开始了不同练习，可从这里找回未完成的一组。仍可使用下方 JSON 留一份独立备份。</p>
+</section>

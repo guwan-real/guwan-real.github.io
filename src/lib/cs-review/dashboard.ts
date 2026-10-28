@@ -1,5 +1,5 @@
 import { MODULES, TYPE_LABELS, moduleTitle } from './catalogue';
-import { createBackup, emptyQuestionStats, mergeStudyData, parseBackup, questionStats, questionStatsIndex, setQuestionFlag } from './study';
+import { createBackup, emptyQuestionStats, masteryTimestamp, mergeStudyData, parseBackup, questionStats, questionStatsIndex, setQuestionFlag } from './study';
 import { downloadJson, escapeHtml as e, formatDate, preserveFocus } from './browser';
 import type { ReviewContext } from './browser';
 import type { PublicQuestion, StudyData } from './types';
@@ -46,7 +46,7 @@ export function initMistakes(ctx: ReviewContext) {
       try {
         await ctx.store.update((data) => {
           const stats = questionStats(data, id);
-          if (button.dataset.mistakeFlag === 'mastered') setQuestionFlag(data, id, { masteredAt: stats.mastered ? null : new Date().toISOString() });
+          if (button.dataset.mistakeFlag === 'mastered') setQuestionFlag(data, id, { masteredAt: stats.mastered ? null : masteryTimestamp(data, id) });
           if (button.dataset.mistakeFlag === 'favorite') setQuestionFlag(data, id, { favorite: !stats.favorite });
           if (button.dataset.mistakeFlag === 'uncertain') setQuestionFlag(data, id, { uncertain: false });
         });
@@ -126,7 +126,8 @@ export function initProgress(ctx: ReviewContext) {
         incoming = null; render();
         if (ctx.store.state === 'ok') ctx.notify('记录已合并恢复，重复提交没有重复计数。', true);
       }
-      if (action === 'clear' && await ctx.confirm('清空本地学习记录？', '将删除本浏览器中全部答题历史、当前练习、错题、收藏与复习标记。请先导出备份；清空后无法直接撤销。', '清空记录')) {
+      if (action === 'clear' && await ctx.confirm('清空本地学习记录？', '将清空本浏览器的历史与标记，并断开本机 GitHub 同步。GitHub 备份仍保留；重新连接会恢复云端记录。请先导出备份。', '清空记录')) {
+        ctx.beforeClear?.();
         await ctx.store.clear(); incoming = null; render();
         if (ctx.store.state === 'ok') ctx.notify('本浏览器的学习记录已清空。', true);
       }

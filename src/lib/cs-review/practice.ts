@@ -1,5 +1,5 @@
 import { DIFFICULTY_LABELS, MODULES, TYPE_LABELS, moduleTitle } from './catalogue';
-import { createSession, emptyQuestionStats, questionStats, questionStatsIndex, recordExam, recordPracticeAnswer, setQuestionFlag } from './study';
+import { createSession, emptyQuestionStats, masteryTimestamp, questionStats, questionStatsIndex, recordExam, recordPracticeAnswer, setQuestionFlag } from './study';
 import { escapeHtml as e, fetchAnswer } from './browser';
 import type { ReviewContext } from './browser';
 import type { Answer, Attempt, PracticeMode, PublicQuestion, Session } from './types';
@@ -241,7 +241,7 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
       const stats = questionStats(data, id);
       if (button.dataset.flag === 'favorite') setQuestionFlag(data, id, { favorite: !stats.favorite });
       if (button.dataset.flag === 'uncertain') setQuestionFlag(data, id, { uncertain: !stats.uncertain });
-      if (button.dataset.flag === 'mastered') setQuestionFlag(data, id, { masteredAt: stats.mastered ? null : new Date().toISOString() });
+      if (button.dataset.flag === 'mastered') setQuestionFlag(data, id, { masteredAt: stats.mastered ? null : masteryTimestamp(data, id) });
     }));
   });
   document.addEventListener('keydown', (event) => {

@@ -2,6 +2,7 @@ import { STORAGE_KEY, StudyStore } from './study';
 import { escapeHtml as e, fetchJson } from './browser';
 import type { ReviewContext } from './browser';
 import type { KnowledgeMeta, PublicQuestion } from './types';
+import { initGitHubSync } from './sync-client';
 
 const body = document.body;
 const base = body.dataset.reviewBase!;
@@ -60,6 +61,7 @@ document.querySelector('[data-mark-reviewed]')?.addEventListener('click', async 
 });
 
 let redraw = () => {};
+let githubSync: ReturnType<typeof initGitHubSync> | undefined;
 window.addEventListener('storage', (event) => {
   if (event.key === STORAGE_KEY || event.key === null) { store.reload(); redraw(); }
 });
@@ -74,12 +76,12 @@ async function start() {
     fetchJson<PublicQuestion[]>(url('data/questions.json')),
     fetchJson<KnowledgeMeta[]>(url('data/knowledge.json')),
   ]);
-  const context: ReviewContext = { store, questions, knowledge, url, notify, confirm };
+  const context: ReviewContext = { store, questions, knowledge, url, notify, confirm, beforeClear: () => githubSync?.disconnect(true) };
   if (page === 'practice') redraw = await (await import('./practice')).initPractice(context);
   if (page === 'mistakes') redraw = (await import('./dashboard')).initMistakes(context);
   if (page === 'progress') redraw = (await import('./dashboard')).initProgress(context);
 }
-start().catch((error) => {
+start().then(() => { githubSync = initGitHubSync(store, storage, url, () => redraw()); }).catch((error) => {
   document.querySelectorAll('[aria-busy="true"]').forEach((el) => el.setAttribute('aria-busy', 'false'));
   notify(error instanceof Error ? error.message : '页面加载失败。请刷新重试。');
   const retry = document.createElement('button');
