@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 550" role="img" aria-labelledby="title desc">
+  <title id="title">增量备份链和时间点恢复</title>
+  <desc id="desc">恢复到周三增量备份状态需要周一全量、周二增量和周三增量。恢复到某天十四点三十分，需要该时点前的可用基础备份及连续日志，并在十五点误操作之前停止重放。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#42647f"/></marker></defs>
+  <rect width="1120" height="550" rx="24" fill="#f5f8fc"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle" fill="#15324a">
+    <text x="560" y="45" font-size="30" font-weight="700">先准备可用副本，再补齐目标前的变化</text>
+    <text x="560" y="91" font-size="23" font-weight="700">增量链：恢复到周三，需要 F + I1 + I2</text>
+    <path d="M100 184 H1020" stroke="#42647f" stroke-width="4" marker-end="url(#arrow)"/>
+    <g fill="#e4effb" stroke="#7399c5" stroke-width="2"><rect x="60" y="116" width="210" height="50" rx="12"/><rect x="325" y="116" width="210" height="50" rx="12"/><rect x="590" y="116" width="210" height="50" rx="12"/></g>
+    <rect x="855" y="116" width="210" height="50" rx="12" fill="#e9edf1" stroke="#9daab6" stroke-width="2"/>
+    <g font-size="22"><text x="165" y="149">周一：全量 F</text><text x="430" y="149">周二：增量 I1</text><text x="695" y="149">周三：增量 I2</text><text x="960" y="149">周四：增量 I3</text></g>
+    <g fill="#42647f"><circle cx="165" cy="184" r="7"/><circle cx="430" cy="184" r="7"/><circle cx="695" cy="184" r="7"/><circle cx="960" cy="184" r="7"/></g>
+    <text x="560" y="230" font-size="21">I2 只包含上次备份后的变化，不能单独代表完整数据库</text>
+    <path d="M60 270 H1060" stroke="#cdd9e5" stroke-width="2"/>
+    <text x="560" y="316" font-size="23" font-weight="700">时间点恢复：从基础备份重放连续日志，停在目标时刻</text>
+    <path d="M150 394 H970" stroke="#aab8c5" stroke-width="5"/>
+    <path d="M150 394 H780" stroke="#42866b" stroke-width="8" marker-end="url(#arrow)"/>
+    <circle cx="150" cy="394" r="10" fill="#42647f"/><circle cx="780" cy="394" r="10" fill="#42866b"/><circle cx="970" cy="394" r="10" fill="#c65959"/>
+    <text x="150" y="360" font-size="23">08:00 基础备份</text><text x="480" y="370" font-size="21" fill="#2f7058">必须有连续可用的日志</text><text x="780" y="438" font-size="23" fill="#2f7058">14:30 恢复目标</text><text x="970" y="360" font-size="23" fill="#a73e3e">15:00 误操作</text>
+    <text x="560" y="503" font-size="21">恢复到误操作之前，需要历史材料；崩溃重启不会自动撤回已提交的误操作</text>
+  </g>
+</svg>

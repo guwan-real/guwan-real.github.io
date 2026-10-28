@@ -1,7 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { basename } from 'node:path';
 import matter from 'gray-matter';
-import { validateCatalogue } from '../src/lib/cs-review/content-schema';
+import { validateCatalogue, validateExplanations } from '../src/lib/cs-review/content-schema';
 
 const knowledgeDirectory = new URL('../src/content/cs-review/knowledge/', import.meta.url);
 const questionDirectory = new URL('../src/content/cs-review/questions/', import.meta.url);
@@ -17,4 +17,12 @@ const questions = (await Promise.all((await readdir(questionDirectory)).filter((
   return value;
 }))).flat();
 const catalogue = validateCatalogue(knowledge, questions);
-console.log(`CS Review 内容校验通过：${catalogue.knowledge.length} 个知识点，${catalogue.questions.length} 道题目。`);
+const explanationDirectory = new URL('../src/content/cs-review/explanations/', import.meta.url);
+const explanations = await Promise.all((await readdir(explanationDirectory)).filter((name) => name.endsWith('.md')).map(async (name) => {
+  const { data, content } = matter(await readFile(new URL(name, explanationDirectory), 'utf8'));
+  if (data.knowledgeId !== basename(name, '.md')) throw new Error(`扩展讲义文件名与 ID 不一致：${name}`);
+  if (!content.trim()) throw new Error(`扩展讲义正文为空：${name}`);
+  return data;
+}));
+validateExplanations(catalogue.knowledge, explanations);
+console.log(`CS Review 内容校验通过：${catalogue.knowledge.length} 个知识点，${explanations.length} 篇基础讲义，${catalogue.questions.length} 道题目。`);

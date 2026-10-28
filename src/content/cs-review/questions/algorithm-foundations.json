@@ -1,0 +1,416 @@
+[
+  {
+    "id": "foundation-ds-foundations-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["ds-foundations"],
+    "type": "single",
+    "stem": "设 n=2^k，k≥1，每次 work() 为常数时间。以下程序中 work() 的执行次数和紧确时间量级是什么？\n```text\nfor i = 0 .. n-1:\n    j = 1\n    while j < n:\n        work()\n        j = 2*j\n```",
+    "options": [
+      {"id": "A", "text": "n 次，Θ(n)"},
+      {"id": "B", "text": "n·k 次，Θ(n log n)"},
+      {"id": "C", "text": "n² 次，Θ(n²)"},
+      {"id": "D", "text": "k 次，Θ(log n)"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "内层 j 成倍增长，不是逐一增加；它的对数次工作会对每次外层迭代重复。",
+      "steps": [
+        "内层 work 执行时，j 依次为 1、2、4、…、2^(k-1)，共有 k 个值；变成 2^k=n 后退出。",
+        "外层 i 有 n 个值，每次都把 j 重新置为 1，因此总次数为 n·k。",
+        "由 k=log₂n，总工作量为 n log₂n，紧确时间量级为 Θ(n log n)。"
+      ],
+      "keyPoint": "先数单次内层循环，再乘独立重复的外层次数。",
+      "pitfall": "看到两层循环就直接判平方，或只算了内层忽略外层。",
+      "optionAnalysis": {
+        "A": "忽略了每次外层仍有 k 次内层工作。",
+        "B": "准确计算了成倍增长循环与外层重复。",
+        "C": "内层不是 n 次，而是 k=log₂n 次。",
+        "D": "只计算了一次内层循环。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["时间复杂度", "循环计数", "对数增长"]
+  },
+  {
+    "id": "foundation-ds-foundations-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["ds-foundations"],
+    "type": "multiple",
+    "stem": "关于数据结构与复杂度，下列哪些判断正确？",
+    "options": [
+      {"id": "A", "text": "同一个栈 ADT 可以用数组或链表实现，ADT 本身不限定存储方式"},
+      {"id": "B", "text": "动态数组追加为均摊常数时间，仍可能有某一次因扩容而需要线性时间"},
+      {"id": "C", "text": "循环中反复复用固定数量临时变量，不能仅因循环 n 次就计为 Θ(n) 辅助空间"},
+      {"id": "D", "text": "只要写 O(n)，就已经说明该算法的平均时间与最坏时间都恰为线性"}
+    ],
+    "correctOptionIds": ["A", "B", "C"],
+    "explanation": {
+      "analysis": "分别检查语义与实现、单次与均摊、空间峰值与累计次数，以及上界与输入情形。",
+      "steps": [
+        "ADT 描述允许的操作与含义，实现可以不同，因此栈可由数组或链表支持。",
+        "均摊分析对一串操作的总成本平摊，不排除个别昂贵扩容。",
+        "空间通常看同时占用的峰值，能复用的固定变量不随循环次数累计为 n 份。",
+        "O 是渐近上界，本身既不等于紧确界，也不自动说明采用平均或最坏输入模型。"
+      ],
+      "keyPoint": "分析结论要注明模型与维度，不能把几个不同分类合并。",
+      "pitfall": "把均摊当成每次保证，或把时间上的重复直接累加成空间。",
+      "optionAnalysis": {
+        "A": "正确区分抽象接口与实现。",
+        "B": "正确区分一串操作的成本与单次最坏成本。",
+        "C": "正确使用辅助空间峰值的思路。",
+        "D": "O(n) 只是上界，平均和最坏还要分别定义、分析。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["ADT", "均摊分析", "空间复杂度"]
+  },
+  {
+    "id": "foundation-linear-lists-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["linear-lists"],
+    "type": "single",
+    "stem": "顺序表采用 0 下标，初始为 [10,20,30,40]，容量足够。先在下标 2 插入 25，再删除新表下标 1 的元素。只计为了腾位或补空而移动已有元素，不计写入新值、清理尾格，两次合计移动多少个元素？",
+    "options": [
+      {"id": "A", "text": "4 个"},
+      {"id": "B", "text": "5 个"},
+      {"id": "C", "text": "6 个"},
+      {"id": "D", "text": "不移动，只修改两个指针"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "先算插入后的实际表，再按新的长度计算删除，不能两步都使用旧长度。",
+      "steps": [
+        "在下标 2 插入时，30、40 各向右移动一次，共 2 个，得到 [10,20,25,30,40]。",
+        "从长度 5 的新表删除下标 1 的 20，需要把 25、30、40 各向左移动一次，共 3 个。",
+        "最终表为 [10,25,30,40]，移动次数合计 2+3=5。"
+      ],
+      "keyPoint": "0 下标插入移动 n-i 个，删除移动 n-i-1 个，n 要使用当前长度。",
+      "pitfall": "将位置从 1 编号，或把新值的写入混入已有元素移位计数。",
+      "optionAnalysis": {
+        "A": "通常来自第二步仍使用旧长度，少算一次移动。",
+        "B": "按两步的实际状态计数正确。",
+        "C": "可能把写入 25 也误计为移动已有元素。",
+        "D": "这是顺序表，保持连续逻辑顺序通常需要移位；不是链表改链接。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["顺序表", "插入删除", "下标"]
+  },
+  {
+    "id": "foundation-linear-lists-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["linear-lists"],
+    "type": "multiple",
+    "stem": "关于普通单链表，下列哪些说法正确？",
+    "options": [
+      {"id": "A", "text": "已知结点 p 地址，在其后插入新结点，修改链接本身可在常数时间完成"},
+      {"id": "B", "text": "只知道插入位置编号、需从头定位时，整个插入操作最坏仍可能是线性时间"},
+      {"id": "C", "text": "只给尾结点地址，就总能在常数时间删除尾结点，无须前驱"},
+      {"id": "D", "text": "带头结点的空单链表，头指针必须为 NULL"}
+    ],
+    "correctOptionIds": ["A", "B"],
+    "explanation": {
+      "analysis": "链表的常数修改成本依赖位置已经定位；哨兵结点与业务元素也要分开。",
+      "steps": [
+        "已知 p 时，可以先令 s.next=p.next，再令 p.next=s，只改固定数量链接。",
+        "如果只给位置编号，先沿 next 逐结点寻找，最坏需要扫描线性数量结点，再进行常数修改。",
+        "删除单链表尾部通常要让前驱的 next 变空，只有尾结点地址不一定能直接获得前驱。",
+        "带头结点的空表仍可以有实际 head 结点，用 head.next=NULL 表示没有业务元素。"
+      ],
+      "keyPoint": "总成本=定位成本+修改成本；头结点不等于首个业务结点。",
+      "pitfall": "将“链表插删 O(1)”当成无条件结论。",
+      "optionAnalysis": {
+        "A": "位置已知时改链接数量固定。",
+        "B": "包含了可能昂贵的定位步骤。",
+        "C": "普通单链表缺少反向链接，尾部前驱可能仍须查找。",
+        "D": "有头结点的表示法中，head 可以非空而业务表为空。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["链表", "定位成本", "头结点"]
+  },
+  {
+    "id": "foundation-stacks-queues-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["stacks-queues"],
+    "type": "single",
+    "stem": "用栈计算后缀表达式 `12 5 2 - /`，其中每个数字都是一个完整操作数，结果是什么？",
+    "options": [
+      {"id": "A", "text": "4"},
+      {"id": "B", "text": "-4"},
+      {"id": "C", "text": "1/4"},
+      {"id": "D", "text": "7"}
+    ],
+    "correctOptionIds": ["A"],
+    "explanation": {
+      "analysis": "运算符先弹出的是右操作数，第二个弹出的是左操作数。",
+      "steps": [
+        "12、5、2 依次入栈，栈从底到顶为 [12,5,2]。",
+        "遇减号，先取右操作数 2，再取左操作数 5，计算 5-2=3，压回得到 [12,3]。",
+        "遇除号，先取右操作数 3，再取左操作数 12，计算 12/3=4，最后只剩一个结果。"
+      ],
+      "keyPoint": "后缀求值用栈保存尚未组合的操作数，减除需要保持左右顺序。",
+      "pitfall": "按弹出顺序直接写成第一个减第二个，或误当中缀从左到右处理。",
+      "optionAnalysis": {
+        "A": "对应 12/(5-2)，正确。",
+        "B": "可能把 5-2 颠倒成 2-5。",
+        "C": "可能把最后的 12/3 颠倒成 3/12。",
+        "D": "没有按两个运算符的后缀结合顺序计算。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["栈", "后缀表达式", "操作数顺序"]
+  },
+  {
+    "id": "foundation-stacks-queues-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["stacks-queues"],
+    "type": "single",
+    "stem": "循环队列底层数组有 6 格，下标 0～5，front 指队首、rear 指下一空位，采用牺牲一格区分空满。现 front=4、rear=1，不出队的情况下还可成功入队几项？",
+    "options": [
+      {"id": "A", "text": "0 项"},
+      {"id": "B", "text": "1 项"},
+      {"id": "C", "text": "2 项"},
+      {"id": "D", "text": "3 项"}
+    ],
+    "correctOptionIds": ["C"],
+    "explanation": {
+      "analysis": "rear 小于 front 是下标绕回，不表示负长度；先算当前长度和有效容量。",
+      "steps": [
+        "当前长度为 (rear-front+6)%6=(1-4+6)%6=3，有效元素在 4、5、0。",
+        "牺牲一格方案的有效容量为 6-1=5，所以剩余可用容量为 2。",
+        "连续入队使用下标 1、2，rear 最后为 3；此时 (rear+1)%6=4=front，恰好满队。"
+      ],
+      "keyPoint": "区分底层数组格数与有效容量，长度按模计算。",
+      "pitfall": "把容量当 6，或看到 rear 绕回就误判为空。",
+      "optionAnalysis": {
+        "A": "当前并未满足队满条件。",
+        "B": "多预留了一格，少算可用容量。",
+        "C": "长度 3、容量 5，因此还能入 2 项。",
+        "D": "把全部 6 格都当成可用，忽略了牺牲一格约定。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["循环队列", "队满", "取模"]
+  },
+  {
+    "id": "foundation-arrays-strings-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["arrays-strings"],
+    "type": "single",
+    "stem": "五阶对称矩阵采用 0 下标，将含对角线的下三角按行存入同样采用 0 下标的一维数组。A[1][4] 对应的一维下标是多少？",
+    "options": [
+      {"id": "A", "text": "9"},
+      {"id": "B", "text": "10"},
+      {"id": "C", "text": "11"},
+      {"id": "D", "text": "12"}
+    ],
+    "correctOptionIds": ["C"],
+    "explanation": {
+      "analysis": "上三角位置先利用对称性映射到下三角，再数完整行与本行偏移。",
+      "steps": [
+        "因为矩阵对称，A[1][4]=A[4][1]，所以只需求第 4 行第 1 列的下三角存放位置。",
+        "第 4 行之前保存 1+2+3+4=10 项。",
+        "本行从第 0 列开始，列下标 1 再偏移 1 项，因此一维下标为 10+1=11。"
+      ],
+      "keyPoint": "0 下标下三角映射 k=i(i+1)/2+j；上三角先交换下标。",
+      "pitfall": "把下标 11 又加一变成位置 12，或未先做对称映射。",
+      "optionAnalysis": {
+        "A": "少算了前面完整行中的元素。",
+        "B": "只算了前 4 行，漏掉本行列偏移。",
+        "C": "完整行与本行偏移均正确。",
+        "D": "这是从 1 开始的序号，不是题目要求的 0 下标。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["对称矩阵", "压缩存储", "下标映射"]
+  },
+  {
+    "id": "foundation-arrays-strings-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["arrays-strings"],
+    "type": "single",
+    "stem": "KMP 使用 0 下标，lps[i] 表示模式 P[0..i] 的最长相等真前后缀长度。P=ABABC，T=ABABABC，已匹配 ABAB，现 i=4、j=4，T[4]=A 与 P[4]=C 失配。刚完成一次回退、尚未重新比较时，i、j 应分别为多少？",
+    "options": [
+      {"id": "A", "text": "i=2，j=0"},
+      {"id": "B", "text": "i=4，j=2"},
+      {"id": "C", "text": "i=5，j=0"},
+      {"id": "D", "text": "i=4，j=4"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "已匹配 ABAB 的后缀 AB 可复用为模式前缀，因此只缩短模式状态，不回退文本。",
+      "steps": [
+        "当前已经匹配的部分为 P[0..3]=ABAB，最长相等真前后缀为 AB，长度 2。",
+        "失配回退使用 j=lps[j-1]=lps[3]=2。",
+        "文本当前字符尚未消费，i 仍为 4；下一步比较 T[4] 与 P[2]，而不是跳过该文本字符。"
+      ],
+      "keyPoint": "KMP 复用已匹配前后缀，回退模式状态并保留当前文本位置。",
+      "pitfall": "把模式回退理解成文本也回退，或失配后无条件消费当前文本字符。",
+      "optionAnalysis": {
+        "A": "不需要将文本指针退回 2，也不必把模式长度直接清零。",
+        "B": "正确保留了两字符重合和当前文本字符。",
+        "C": "跳过 T[4] 会丢掉可能匹配的开头。",
+        "D": "没有发生回退，继续保持原失配状态无法推进。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["KMP", "LPS", "前后缀"]
+  },
+  {
+    "id": "foundation-trees-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["trees"],
+    "type": "single",
+    "stem": "某二叉树结点标识互异，先序为 D、B、A、C、F、E、G，中序为 A、B、C、D、E、F、G。它的后序是什么？",
+    "options": [
+      {"id": "A", "text": "A、B、C、E、F、G、D"},
+      {"id": "B", "text": "A、C、B、E、G、F、D"},
+      {"id": "C", "text": "A、C、B、G、E、F、D"},
+      {"id": "D", "text": "D、B、A、C、F、E、G"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "先序找根，中序划分子树，再将左右子树后序连接，根放最后。",
+      "steps": [
+        "先序首项 D 是根；中序将其划为左子树 A、B、C 和右子树 E、F、G。",
+        "左子树先序为 B、A、C，所以 B 为根、A 与 C 为左右孩子，后序为 A、C、B。",
+        "右子树先序为 F、E、G，所以后序为 E、G、F。",
+        "全树后序是左子树、右子树、根，得到 A、C、B、E、G、F、D。"
+      ],
+      "keyPoint": "子树边界由中序确定，先序或后序用来定位该子树的根。",
+      "pitfall": "把左右子树内部继续按中序输出，或只把整个先序倒过来。",
+      "optionAnalysis": {
+        "A": "子树内没有遵守左右根规则。",
+        "B": "两棵子树与根的后序都正确。",
+        "C": "颠倒了右子树 E、G 的左右访问顺序。",
+        "D": "这是题给先序，根不应在后序最前。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["二叉树", "遍历还原", "后序"]
+  },
+  {
+    "id": "foundation-trees-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["trees"],
+    "type": "single",
+    "stem": "四个符号权值为 1、3、6、8，按哈夫曼算法构造二叉树，根到叶子的边数为码长。最小带权路径长度 WPL 是多少？",
+    "options": [
+      {"id": "A", "text": "18"},
+      {"id": "B", "text": "22"},
+      {"id": "C", "text": "32"},
+      {"id": "D", "text": "36"}
+    ],
+    "correctOptionIds": ["C"],
+    "explanation": {
+      "analysis": "每轮重新选择当前最小两个权值，所有合并权之和就是 WPL。",
+      "steps": [
+        "先合并 1 与 3 得 4，当前集合为 4、6、8。",
+        "再合并 4 与 6 得 10，当前集合为 8、10。",
+        "最后合并 8 与 10 得 18，WPL=4+10+18=32。",
+        "核查码长：8 的深度 1，6 的深度 2，1、3 的深度 3，带权和为 8+12+3+9=32。"
+      ],
+      "keyPoint": "WPL 是各叶权乘深度的和，不是只有最终根权。",
+      "pitfall": "只把原始权值相加，或每次没有把新合并权重新参与最小值选择。",
+      "optionAnalysis": {
+        "A": "只是权值总和或最终根权，没有计入深度。",
+        "B": "漏掉了中间合并权 10。",
+        "C": "合并法与叶深度法相互核对均为 32。",
+        "D": "相当于全部符号码长都取 2，未利用权值不均得到更优前缀码。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["哈夫曼树", "WPL", "前缀码"]
+  },
+  {
+    "id": "foundation-graphs-01",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["graphs"],
+    "type": "single",
+    "stem": "无向图边权为 AB=4、AC=1、CB=2、BD=1、CD=7，除此无边。从 A 用标准 Dijkstra 算法，顶点的确定顺序与 A 到 D 的最短距离分别是什么？",
+    "options": [
+      {"id": "A", "text": "A、B、C、D；距离 5"},
+      {"id": "B", "text": "A、C、B、D；距离 4"},
+      {"id": "C", "text": "A、C、D、B；距离 8"},
+      {"id": "D", "text": "A、C、B、D；距离 3"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "每次确定最小暂定总距离顶点，并用它到邻居的路径做松弛。",
+      "steps": [
+        "确定 A 后，暂定 C=1、B=4、D=∞，所以接下来选 C。",
+        "经 C 到 B 为 1+2=3，比 4 小；到 D 为 1+7=8，因此更新 B=3、D=8。",
+        "选择 B，其距离 3；经 B 到 D 为 3+1=4，比 8 小，更新 D=4。",
+        "最后确定 D，顺序 A、C、B、D，最短路径为 A—C—B—D，总长 4。"
+      ],
+      "keyPoint": "选择依据是源点到未确定顶点的暂定总距离，更新要加当前已知路径长度。",
+      "pitfall": "初次发现就当最终距离，或只看单条边权。",
+      "optionAnalysis": {
+        "A": "忽略了 C 的暂定距离更小，以及经 C 改进 B 的机会。",
+        "B": "确定次序与各轮松弛都正确。",
+        "C": "在 B=3 时不能先确定 D=8。",
+        "D": "3 是到 B 的距离，还需加 BD=1。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["图", "Dijkstra", "松弛"]
+  },
+  {
+    "id": "foundation-graphs-02",
+    "revision": 1,
+    "moduleId": "algorithms",
+    "knowledgeIds": ["graphs"],
+    "type": "multiple",
+    "stem": "三顶点无向图的边权为 AB=2、BC=2、AC=3。关于最小生成树与从 A 出发的最短路径，下列哪些说法正确？",
+    "options": [
+      {"id": "A", "text": "A 到 C 的最短距离为 4，因为所有路径都必须使用最小生成树的边"},
+      {"id": "B", "text": "最小生成树可选择 AB、BC，总边权为 4"},
+      {"id": "C", "text": "从 A 出发的最短路径树可选择 AB、AC，总边权为 5"},
+      {"id": "D", "text": "只要生成树总边权最小，它就保证任意两点在树中的路径最短"}
+    ],
+    "correctOptionIds": ["B", "C"],
+    "explanation": {
+      "analysis": "两个优化目标不同：一个最小化所选边总成本，另一个保持源点到各点的最短距离。",
+      "steps": [
+        "三点生成树需两条边，AB+BC=4，小于 AB+AC=5 与 BC+AC=5，所以 MST 总权为 4。",
+        "原图中 A 到 C 可直接走 AC=3，比经 B 的 2+2=4 更短。",
+        "从 A 到 B 的最短路为 AB=2，到 C 的最短路为 AC=3，因此 AB、AC 形成一种最短路径树，总边权为 5。",
+        "MST 中 A 到 C 为 4，已经给出“树内各点对不一定最短”的反例。"
+      ],
+      "keyPoint": "最小生成树与最短路径树可能不同，结果都是树也不能互换目标。",
+      "pitfall": "把“总建造费用最少”误读成“所有出行路线都最短”。",
+      "optionAnalysis": {
+        "A": "最短路在原图中求，不必受 MST 选边限制；AC=3 更短。",
+        "B": "两条最轻边连通三点且无环，总权最小。",
+        "C": "分别保持 A 到 B、C 的最短距离，正确。",
+        "D": "本图 A 到 C 就是反例，MST 树内为 4 而原图最短为 3。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["最小生成树", "最短路径树", "算法目标"]
+  }
+]

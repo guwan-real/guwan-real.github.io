@@ -1,0 +1,776 @@
+[
+  {
+    "id": "foundation-system-overview-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-overview"
+    ],
+    "type": "single",
+    "stem": "某程序执行 $10^6$ 条指令，平均 CPI=2，CPU 时钟为 2 GHz。仅计算 CPU 执行时间，是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.5 ms"
+      },
+      {
+        "id": "B",
+        "text": "1 ms"
+      },
+      {
+        "id": "C",
+        "text": "2 ms"
+      },
+      {
+        "id": "D",
+        "text": "4 ms"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "CPU 时间由指令数、CPI、时钟频率共同决定。",
+      "steps": [
+        "总周期数为 $10^6×2=2×10^6$。",
+        "2 GHz 表示每秒 $2×10^9$ 个周期。",
+        "执行时间为 $2×10^6/(2×10^9)=0.001$ s，即 1 ms。"
+      ],
+      "keyPoint": "CPU 时间由指令数、CPI、时钟频率共同决定。",
+      "pitfall": "CPI 不是每秒指令数；GHz 与 ms 要先换单位。",
+      "optionAnalysis": {
+        "A": "只考虑指令数而漏乘 CPI。",
+        "B": "总周期除以每秒周期数，单位与数值均正确。",
+        "C": "可能把频率方向用反；主频越高同周期量耗时越短。",
+        "D": "重复乘了周期因子，没有按公式正确换算。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-overview-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-overview"
+    ],
+    "type": "single",
+    "stem": "同一任务旧总时间 10 s，其中 8 s 的部分加速到原来的 1/4，其余不变。整体加速比为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "5"
+      },
+      {
+        "id": "C",
+        "text": "2.5"
+      },
+      {
+        "id": "D",
+        "text": "1.25"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "整体优化要按原时间比例分账。",
+      "steps": [
+        "不能把局部加速4倍当整体加速4倍。",
+        "新时间为 $8/4+2=4$ s。",
+        "整体加速比为 $10/4=2.5$。"
+      ],
+      "keyPoint": "整体优化要按原时间比例分账。",
+      "pitfall": "剩余的串行部分不会自动同时缩短。",
+      "optionAnalysis": {
+        "A": "忽略未优化的2秒。",
+        "B": "这是可优化部分无限快时的上限，不是本题。",
+        "C": "完整计入优化部分和不变部分。",
+        "D": "不能用局部耗时差直接当性能比。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-twos-complement-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "相同位串 `11111110`，分别按8位无符号整数和8位补码整数解释，结果为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "254 和 −2"
+      },
+      {
+        "id": "B",
+        "text": "−2 和 254"
+      },
+      {
+        "id": "C",
+        "text": "−126 和 −2"
+      },
+      {
+        "id": "D",
+        "text": "254 和 −126"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "位宽和编码规则决定同一位串的数值。",
+      "steps": [
+        "按无符号求值得 $128+64+32+16+8+4+2=254$。",
+        "8位补码最高位为1，可用无符号值减256。",
+        "$254-256=-2$。"
+      ],
+      "keyPoint": "位宽和编码规则决定同一位串的数值。",
+      "pitfall": "不能把最高位恒当成独立负号，原码与补码不同。",
+      "optionAnalysis": {
+        "A": "分别按两种正确规则解释。",
+        "B": "把两种解释顺序颠倒。",
+        "C": "−126是将该位串误按8位原码解释。",
+        "D": "补码解释不是原码的符号加绝对值。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-twos-complement-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "twos-complement"
+    ],
+    "type": "single",
+    "stem": "8位加法 `7FH + 01H = 80H`（只保留低8位）。下列判断正确的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "最高位外无进位，所以有符号不溢出"
+      },
+      {
+        "id": "B",
+        "text": "作为补码有符号运算溢出，不能仅凭无进位判安全"
+      },
+      {
+        "id": "C",
+        "text": "真实数学结果是 −128，所以没有溢出"
+      },
+      {
+        "id": "D",
+        "text": "8位补码可表示128，所以结果正确"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "有符号溢出与无符号进位是两件事。",
+      "steps": [
+        "7FH按8位补码是127，01H是1。",
+        "真实和128超过8位补码最大值127。",
+        "保留位串80H会读成−128；同号相加变异号，发生有符号溢出。"
+      ],
+      "keyPoint": "有符号溢出与无符号进位是两件事。",
+      "pitfall": "不要用保留下来的错误真值证明运算没有溢出。",
+      "optionAnalysis": {
+        "A": "进位不能替代有符号范围检查。",
+        "B": "127+1超范围且正加正变负，判断正确。",
+        "C": "−128只是截断后的解释，真实数学和是128。",
+        "D": "8位补码上界为127。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-cache-mapping-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "按字节编址，16位地址；Cache数据区1 KiB、每块16 B、2路组相联。tag/index/offset 位数分别为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "6 / 6 / 4"
+      },
+      {
+        "id": "B",
+        "text": "8 / 4 / 4"
+      },
+      {
+        "id": "C",
+        "text": "7 / 5 / 4"
+      },
+      {
+        "id": "D",
+        "text": "7 / 4 / 5"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "组相联地址拆分用组数，不是总行数。",
+      "steps": [
+        "每块16B，offset需要4位。",
+        "组数为 $1024/(16×2)=32$，index需要5位。",
+        "tag占其余 $16-5-4=7$ 位。"
+      ],
+      "keyPoint": "组相联地址拆分用组数，不是总行数。",
+      "pitfall": "先确认容量是数据容量、地址按字节编址。",
+      "optionAnalysis": {
+        "A": "把64行直接当64组，漏了2路。",
+        "B": "把组数算成16组。",
+        "C": "按32组和16字节块正确拆分。",
+        "D": "把组索引与块内偏移混淆。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-cache-mapping-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cache-mapping"
+    ],
+    "type": "single",
+    "stem": "Cache命中时间2 ns，命中率95%；缺失时在已经花掉2 ns之外，额外花80 ns。AMAT是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4 ns"
+      },
+      {
+        "id": "B",
+        "text": "5.9 ns"
+      },
+      {
+        "id": "C",
+        "text": "82 ns"
+      },
+      {
+        "id": "D",
+        "text": "6 ns"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "命中时间加缺失率乘额外代价。",
+      "steps": [
+        "题目已明确80ns是额外缺失代价。",
+        "缺失率是5%。",
+        "平均为 $2+0.05×80=6$ ns。"
+      ],
+      "keyPoint": "命中时间加缺失率乘额外代价。",
+      "pitfall": "若80ns是缺失的总时间，公式口径才需要调整。",
+      "optionAnalysis": {
+        "A": "没有正确计入额外缺失代价。",
+        "B": "把80ns误当缺失总时间。",
+        "C": "把每次访问都当缺失。",
+        "D": "与本题额外代价定义一致。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-instruction-set-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "instruction-set"
+    ],
+    "type": "single",
+    "stem": "某指令地址字段A=100，内存M[100]=500、M[500]=7。按立即寻址、直接寻址、一次存储器间接寻址取得的操作数分别为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "100、500、7"
+      },
+      {
+        "id": "B",
+        "text": "500、7、100"
+      },
+      {
+        "id": "C",
+        "text": "100、100、500"
+      },
+      {
+        "id": "D",
+        "text": "7、500、100"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "字段、有效地址、地址中的值必须逐层区分。",
+      "steps": [
+        "立即寻址直接使用字段的值100。",
+        "直接寻址EA=100，再取M[100]=500。",
+        "间接寻址先取EA=M[100]=500，再取M[500]=7。"
+      ],
+      "keyPoint": "字段、有效地址、地址中的值必须逐层区分。",
+      "pitfall": "本题不计取指访存；问的是操作数而非地址。",
+      "optionAnalysis": {
+        "A": "三种规则均对应正确。",
+        "B": "把寻址层数与次序串错。",
+        "C": "把直接的有效地址当最终值，间接少取一层。",
+        "D": "立即数不需要先访问M[500]。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-instruction-set-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "instruction-set"
+    ],
+    "type": "single",
+    "stem": "相对寻址规定基准是下一条指令地址2004，位移−12，位移单位为字节。目标地址为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "2016"
+      },
+      {
+        "id": "B",
+        "text": "1992"
+      },
+      {
+        "id": "C",
+        "text": "1988"
+      },
+      {
+        "id": "D",
+        "text": "−12"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "相对寻址必须先确定PC基准与位移单位。",
+      "steps": [
+        "先取题设明确规定的PC基准2004。",
+        "相对目标=基准+带符号位移。",
+        "$2004+(-12)=1992$。"
+      ],
+      "keyPoint": "相对寻址必须先确定PC基准与位移单位。",
+      "pitfall": "不能把某ISA相对当前指令的规则替换本题约定。",
+      "optionAnalysis": {
+        "A": "误把负位移作正位移。",
+        "B": "按指定基准减12。",
+        "C": "擅自改成当前指令地址，题目没有这一约定。",
+        "D": "位移不是绝对目标地址。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-cpu-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cpu"
+    ],
+    "type": "single",
+    "stem": "理想五级单发射流水线，各级1周期，无停顿，执行4条指令，最后一条完成需要多少周期？",
+    "options": [
+      {
+        "id": "A",
+        "text": "5"
+      },
+      {
+        "id": "B",
+        "text": "20"
+      },
+      {
+        "id": "C",
+        "text": "8"
+      },
+      {
+        "id": "D",
+        "text": "4"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "流水线重叠执行提高吞吐量，不能把所有阶段机械相加。",
+      "steps": [
+        "第一条指令经过5级，需5个周期完成。",
+        "之后每周期完成一条，再完成3条需3周期。",
+        "总周期 $5+4-1=8$。"
+      ],
+      "keyPoint": "流水线重叠执行提高吞吐量，不能把所有阶段机械相加。",
+      "pitfall": "忽略题设无停顿才可直接用k+n−1。",
+      "optionAnalysis": {
+        "A": "只算了第一条。",
+        "B": "这是非流水且每条5周期依次执行的总量。",
+        "C": "首条填充5周期加后续3周期。",
+        "D": "忽略流水线填充和排空。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-cpu-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "cpu"
+    ],
+    "type": "single",
+    "stem": "已知LOAD的数据在MEM后可用；紧邻load-use需停1周期，ALU结果可转发给下一条EX。五级执行 `LOAD R1,0(R2); ADD R3,R1,R4; SUB R5,R3,R6`，无其他停顿，共需？",
+    "options": [
+      {
+        "id": "A",
+        "text": "7周期"
+      },
+      {
+        "id": "B",
+        "text": "10周期"
+      },
+      {
+        "id": "C",
+        "text": "15周期"
+      },
+      {
+        "id": "D",
+        "text": "8周期"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "先画理想时间，再按数据就绪时刻加入必要气泡。",
+      "steps": [
+        "无冲突时3条五级需7周期。",
+        "ADD紧邻使用LOAD结果，按题设停1周期。",
+        "SUB使用ADD结果可转发，不再停顿，总计8周期。"
+      ],
+      "keyPoint": "先画理想时间，再按数据就绪时刻加入必要气泡。",
+      "pitfall": "转发不能让LOAD结果在尚未读出前就存在。",
+      "optionAnalysis": {
+        "A": "漏掉明确规定的load-use等待。",
+        "B": "为ALU相关也多加了题设无需的等待。",
+        "C": "按完全不重叠执行计算。",
+        "D": "只增加题设要求的一周期。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-buses-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-buses"
+    ],
+    "type": "single",
+    "stem": "32位数据总线，时钟100 MHz，每次数据传输占2周期，忽略其他开销。理论数据带宽为？（MB按十进制）",
+    "options": [
+      {
+        "id": "A",
+        "text": "200 MB/s"
+      },
+      {
+        "id": "B",
+        "text": "400 MB/s"
+      },
+      {
+        "id": "C",
+        "text": "100 MB/s"
+      },
+      {
+        "id": "D",
+        "text": "3.2 GB/s"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "位宽、频率与每次所需周期共同决定带宽。",
+      "steps": [
+        "32bit每次等于4B。",
+        "每次2周期，每秒传输 $100×10^6/2$ 次。",
+        "带宽 $4×50×10^6=200×10^6$ B/s。"
+      ],
+      "keyPoint": "位宽、频率与每次所需周期共同决定带宽。",
+      "pitfall": "不要漏除每次传输的周期数，也别混bit与byte。",
+      "optionAnalysis": {
+        "A": "计算和单位均正确。",
+        "B": "默认每周期1次，漏除2。",
+        "C": "没有正确换算每次字节数。",
+        "D": "把bit/s等单位混成byte/s且漏掉周期约束。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-buses-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "system-buses"
+    ],
+    "type": "boolean",
+    "stem": "采用DMA传送一块数据时，CPU完全不需要配置传输，也不需要处理完成或错误。这个说法正确吗？",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "F"
+    ],
+    "explanation": {
+      "analysis": "DMA卸载数据搬运的一部分工作，仍有配置与协调。",
+      "steps": [
+        "DMA可让数据在设备与内存间按配置搬运。",
+        "CPU通常仍需提供地址、长度等参数，并参与错误或完成处理。",
+        "减少逐项搬运负担不等于CPU完全不参与。"
+      ],
+      "keyPoint": "DMA卸载数据搬运的一部分工作，仍有配置与协调。",
+      "pitfall": "不要把“直接内存访问”读成没有控制逻辑与初始化。",
+      "optionAnalysis": {
+        "T": "忽略配置、映射与完成处理。",
+        "F": "指出了该绝对说法遗漏的CPU工作。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-parallel-computing-01",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "parallel-computing"
+    ],
+    "type": "single",
+    "stem": "同规模任务单处理器40 s，使用8个处理器10 s。加速比与并行效率分别是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "8、100%"
+      },
+      {
+        "id": "B",
+        "text": "4、50%"
+      },
+      {
+        "id": "C",
+        "text": "4、25%"
+      },
+      {
+        "id": "D",
+        "text": "2、50%"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "效率按加速比除处理器数定义，不等同硬件占用率。",
+      "steps": [
+        "加速比 $S=T_1/T_8=40/10=4$。",
+        "效率 $E=S/8=4/8$。",
+        "所以效率为50%，不是直接把8核当加速8倍。"
+      ],
+      "keyPoint": "效率按加速比除处理器数定义，不等同硬件占用率。",
+      "pitfall": "题目必须比较相同任务规模，不能混用缩放工作负载。",
+      "optionAnalysis": {
+        "A": "把处理器数直接当实际加速。",
+        "B": "按定义计算两项均正确。",
+        "C": "效率分母不应再多乘2。",
+        "D": "加速比应以40除10。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-parallel-computing-02",
+    "revision": 1,
+    "moduleId": "architecture",
+    "knowledgeIds": [
+      "parallel-computing"
+    ],
+    "type": "single",
+    "stem": "旧总时间中90%可理想并行，10%串行不变。用4核且无其他开销，整体加速比约为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "10"
+      },
+      {
+        "id": "C",
+        "text": "3.08"
+      },
+      {
+        "id": "D",
+        "text": "1.11"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "固定规模下串行部分限制整体加速。",
+      "steps": [
+        "把旧时间归一化为1。",
+        "新时间为 $0.1+0.9/4=0.325$。",
+        "加速比 $1/0.325≈3.08$。"
+      ],
+      "keyPoint": "固定规模下串行部分限制整体加速。",
+      "pitfall": "90%是原运行时间中的可并行比例，不是并行后比例。",
+      "optionAnalysis": {
+        "A": "忽略串行部分。",
+        "B": "这是核数趋于无限时的简化上限。",
+        "C": "按Amdahl的同规模时间账本计算。",
+        "D": "没有正确加上缩短后的可并行部分。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  }
+]

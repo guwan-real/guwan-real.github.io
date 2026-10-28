@@ -1,9 +1,13 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { knowledgeSchema } from './lib/cs-review/content-schema';
+import { knowledgeSchema, explanationSchema } from './lib/cs-review/content-schema';
 
 const csKnowledge = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/cs-review/knowledge' }),
   schema: knowledgeSchema,
 });
-export const collections = { csKnowledge };
+const csExplanations = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/cs-review/explanations' }),
+  schema: explanationSchema,
+});
+export const collections = { csKnowledge, csExplanations };

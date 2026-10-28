@@ -8,6 +8,7 @@ const chapters = document.metadata.headings.filter((heading) => heading.depth ==
 <CSReviewLayout title="复习手册原稿" active="knowledge">
   <a class="review-back-link" href={reviewUrl('knowledge/')}>← 按知识点复习</a>
   <header class="review-page-heading"><p class="review-eyebrow">HANDBOOK / 原稿阅读</p><h1>整本手册，随时翻阅。</h1><p class="review-lead">保留你提供的正文、24 个专项讲解和两份附录。原稿中的勾选表供阅读对照，复习进度可在各知识点页标记保存。</p></header>
+  <p class="review-lesson-note">这里保留原始提纲；新增的基础解释、图例与逐步例题请到 <a class="review-text-link" href={reviewUrl('knowledge/')}>48 章基础讲义 ↗</a> 阅读。</p>
   <div class="review-actions review-resource-actions">
     <a class="review-button is-small" href={reviewUrl('resources/handbook.md')} download="电网招聘_计算机类_强化复习手册.md">下载 Markdown 原稿</a>
     <a class="review-button is-small" href={reviewUrl('resources/sgcc-2027-computer-syllabus.pdf')} target="_blank" rel="noopener noreferrer">查看国网 2027 大纲 PDF ↗</a>

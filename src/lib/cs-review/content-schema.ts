@@ -16,6 +16,27 @@ export const knowledgeSchema = z.object({
 });
 export type KnowledgeMeta = z.infer<typeof knowledgeSchema>;
 
+// Keep authored lessons separate from the byte-preserved handbook imports.
+export const explanationSchema = z.object({
+  knowledgeId: stableId,
+  description: text,
+  updatedAt: z.iso.date(),
+  sources: z.array(z.object({ label: text, url: z.url().refine((url) => /^https:\/\//i.test(url), '参考资料只接受 HTTPS 链接') })).min(1),
+});
+export type ExplanationMeta = z.infer<typeof explanationSchema>;
+
+export function validateExplanations(knowledge: KnowledgeMeta[], input: unknown[]) {
+  const explanations = input.map((entry) => explanationSchema.parse(entry));
+  const ids = new Set(knowledge.map((entry) => entry.knowledgeId));
+  const seen = new Set<string>();
+  for (const entry of explanations) {
+    if (!ids.has(entry.knowledgeId)) throw new Error(`扩展讲义关联了不存在的知识点：${entry.knowledgeId}`);
+    if (seen.has(entry.knowledgeId)) throw new Error(`扩展讲义 ID 重复：${entry.knowledgeId}`);
+    seen.add(entry.knowledgeId);
+  }
+  return explanations;
+}
+
 export const questionSchema = z.object({
   id: stableId,
   revision: z.number().int().positive(),

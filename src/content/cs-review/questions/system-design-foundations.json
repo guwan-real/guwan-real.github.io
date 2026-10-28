@@ -1,0 +1,668 @@
+[
+  {
+    "id": "foundation-system-design-01",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "下列哪项主要属于详细设计，而非总体架构层面的划分？",
+    "options": [
+      {
+        "id": "A",
+        "text": "把系统划成表现、业务、数据访问层"
+      },
+      {
+        "id": "B",
+        "text": "规定系统与外部通知服务的总体边界"
+      },
+      {
+        "id": "C",
+        "text": "为某模块写出状态检查算法、内部数据结构和伪代码"
+      },
+      {
+        "id": "D",
+        "text": "确定各子系统的主要职责"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "设计层次按问题粒度判断，不只按关键词。",
+      "steps": [
+        "先看描述涉及整个系统还是单个模块内部。",
+        "分层、子系统职责和总体边界属于较高层组织。",
+        "内部算法、数据结构和伪代码属于详细设计的典型内容。"
+      ],
+      "keyPoint": "设计层次按问题粒度判断，不只按关键词。",
+      "pitfall": "接口在不同设计层都可能出现，不能单凭“接口”二字判定。",
+      "optionAnalysis": {
+        "A": "讨论总体层次。",
+        "B": "讨论系统边界。",
+        "C": "深入模块内部实现安排。",
+        "D": "讨论整体职责分配。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-02",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "一个模块先清洗文本，再把清洗结果交给摘要步骤，前一步输出直接作为后一步输入。按传统七类内聚口径，最直接的线索是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "时间内聚"
+      },
+      {
+        "id": "B",
+        "text": "偶然内聚"
+      },
+      {
+        "id": "C",
+        "text": "逻辑内聚"
+      },
+      {
+        "id": "D",
+        "text": "顺序内聚"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "顺序内聚关注步骤间输出到输入的衔接。",
+      "steps": [
+        "找出各操作之间为何被组合。",
+        "这里不只是同时执行或按次序执行。",
+        "清洗输出作为摘要输入，形成数据处理链，是顺序内聚线索。"
+      ],
+      "keyPoint": "顺序内聚关注步骤间输出到输入的衔接。",
+      "pitfall": "仅“先A再B”不充分，还要看数据是否衔接。",
+      "optionAnalysis": {
+        "A": "没有强调同一时刻启动。",
+        "B": "两步有明确联系。",
+        "C": "没有由标志选择互不相同处理。",
+        "D": "符合前输出后输入。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-03",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "计费模块只需要hours和rate，却接收包含住址、电话等的完整工单结构，因结构变化被迫跟着改。最贴切的是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "标记（印记）耦合"
+      },
+      {
+        "id": "B",
+        "text": "内容耦合"
+      },
+      {
+        "id": "C",
+        "text": "完全无耦合"
+      },
+      {
+        "id": "D",
+        "text": "时间内聚"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "传递不必要的整体结构会扩大依赖面。",
+      "steps": [
+        "先区分模块之间的联系与模块内部组织。",
+        "调用传递了整个结构，但仅用其中部分字段。",
+        "不必要的结构依赖是传统标记耦合的典型线索。"
+      ],
+      "keyPoint": "传递不必要的整体结构会扩大依赖面。",
+      "pitfall": "不是凡传对象都不好，关键是题目明确只需部分内容且受整体变化影响。",
+      "optionAnalysis": {
+        "A": "与完整结构传递的线索对应。",
+        "B": "题目未说直接修改别的模块私有内容。",
+        "C": "存在明确参数依赖。",
+        "D": "时间内聚讨论同一模块内部，不对应此题。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-04",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "类图中工单Ticket一端写0..*，设备Device一端写1，表示两类之间的关联。正确读法是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "每台设备必须有至少一张工单"
+      },
+      {
+        "id": "B",
+        "text": "每张工单恰好关联一台设备，每台设备允许零到多张工单"
+      },
+      {
+        "id": "C",
+        "text": "每张工单关联零到多台设备"
+      },
+      {
+        "id": "D",
+        "text": "这表示现在数据库只有一台设备"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "固定一端的对象，读另一端允许的数量。",
+      "steps": [
+        "固定一张工单，读对面设备端的1。",
+        "固定一台设备，读对面工单端的0..*。",
+        "多重性是允许数量的模型约束，不是已有记录数量。"
+      ],
+      "keyPoint": "固定一端的对象，读另一端允许的数量。",
+      "pitfall": "多重性位置很容易读反，0..*允许零。",
+      "optionAnalysis": {
+        "A": "0..*允许零，不要求至少一张。",
+        "B": "两端多重性均正确。",
+        "C": "把两端的数量反读。",
+        "D": "1不是当前实例总数。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-05",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "multiple",
+    "stem": "识别UML关系时，下列哪些描述正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "泛化常画实线加空心三角，三角指向父类"
+      },
+      {
+        "id": "B",
+        "text": "实现常画虚线加空心三角，指向接口或规范"
+      },
+      {
+        "id": "C",
+        "text": "组合的实心菱形放在部分一端"
+      },
+      {
+        "id": "D",
+        "text": "共享聚合的空心菱形放在整体一端"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "线型、形状、所在端三项要一起读。",
+      "steps": [
+        "先用实线或虚线区分泛化与实现。",
+        "两种空心三角都朝较抽象的一端。",
+        "菱形标整体端，实心组合、空心共享聚合。"
+      ],
+      "keyPoint": "线型、形状、所在端三项要一起读。",
+      "pitfall": "菱形不是箭头，不按“指向部分”来猜。",
+      "optionAnalysis": {
+        "A": "实线与方向正确。",
+        "B": "虚线与目标正确。",
+        "C": "菱形应贴整体一端。",
+        "D": "符合共享聚合的符号。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-06",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "在用例图中，提交报修单包含校验表单；附加照片在条件满足时扩展提交报修单。箭头应怎样画？",
+    "options": [
+      {
+        "id": "A",
+        "text": "校验表单 include 指向提交；提交 extend 指向附加照片"
+      },
+      {
+        "id": "B",
+        "text": "两条都是实线空心三角形"
+      },
+      {
+        "id": "C",
+        "text": "提交 include 指向校验；附加照片 extend 指向提交"
+      },
+      {
+        "id": "D",
+        "text": "两条都由参与者指向系统边界"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "include与extend的语义不同，方向也要分别记。",
+      "steps": [
+        "include由包含行为的基础用例指向被包含用例。",
+        "extend由提供扩展行为的用例指向基础用例。",
+        "两者通常都用带构造型文字的虚线开放箭头。"
+      ],
+      "keyPoint": "include与extend的语义不同，方向也要分别记。",
+      "pitfall": "用例图关系不表示按图位置执行的工作流。",
+      "optionAnalysis": {
+        "A": "两条方向都反了。",
+        "B": "实线空心三角是泛化常见符号。",
+        "C": "分别符合包含和扩展方向。",
+        "D": "参与者关联与用例间关系不同。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-07",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "boolean",
+    "stem": "时序图中，顶部参与者左右位置决定执行先后，竖向消息间距精确表示经过多少秒。这个说法正确吗？",
+    "options": [
+      {
+        "id": "T",
+        "text": "正确"
+      },
+      {
+        "id": "F",
+        "text": "错误"
+      }
+    ],
+    "correctOptionIds": [
+      "F"
+    ],
+    "explanation": {
+      "analysis": "时序图关注消息与事件顺序，普通图形间距不等于计时。",
+      "steps": [
+        "顶部左右位置主要用于安排参与者。",
+        "通常沿生命线向下阅读事件顺序，跨线还需结合消息和约束。",
+        "除非明确给出时间尺度或约束，否则图上距离不是耗时刻度。"
+      ],
+      "keyPoint": "时序图关注消息与事件顺序，普通图形间距不等于计时。",
+      "pitfall": "不能用“画得远”推断网络一定更慢。",
+      "optionAnalysis": {
+        "T": "把排版误作时间尺度。",
+        "F": "指出必须依语义和明确约束读图。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-08",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "时序图中alt片段包含[设备有效]和[else]两个互斥且覆盖的分支。一次交互应怎样理解？",
+    "options": [
+      {
+        "id": "A",
+        "text": "先执行成功分支，再执行失败分支"
+      },
+      {
+        "id": "B",
+        "text": "两个分支必须并行"
+      },
+      {
+        "id": "C",
+        "text": "按守卫条件选择对应分支"
+      },
+      {
+        "id": "D",
+        "text": "无条件重复执行两段"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "alt表达备选行为，par才表达并行片段。",
+      "steps": [
+        "识别alt是备选组合片段。",
+        "本题两个守卫互斥且覆盖情形。",
+        "设备有效走成功，否则走else，而不是顺次或并行执行两段。"
+      ],
+      "keyPoint": "alt表达备选行为，par才表达并行片段。",
+      "pitfall": "“图上上下两段”不等于“执行先后两步”。",
+      "optionAnalysis": {
+        "A": "把备选当顺序。",
+        "B": "把alt误读成par。",
+        "C": "与守卫和备选语义一致。",
+        "D": "循环通常由loop等表达。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-09",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "multiple",
+    "stem": "活动图中决策、合并、fork、join的区别，哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "决策常依据守卫条件选择路径"
+      },
+      {
+        "id": "B",
+        "text": "合并节点默认等待所有备选路径都到齐"
+      },
+      {
+        "id": "C",
+        "text": "fork可启动并行流"
+      },
+      {
+        "id": "D",
+        "text": "本题默认join语义等待所需并行分支完成"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C",
+      "D"
+    ],
+    "explanation": {
+      "analysis": "合并与join外形和语义不同。",
+      "steps": [
+        "先区分备选路径与并行路径。",
+        "合并汇回备选流，不是等待所有支路的同步点。",
+        "fork负责分开并行，join按规定条件同步。"
+      ],
+      "keyPoint": "合并与join外形和语义不同。",
+      "pitfall": "不要把“多条边进来”都当成等待所有。",
+      "optionAnalysis": {
+        "A": "符合决策语义。",
+        "B": "描述的是同步，而非备选合并。",
+        "C": "符合分叉作用。",
+        "D": "在题目默认条件下正确。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-10",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "状态迁移标注 `submit [信息完整] / 生成编号`，正确解释为？",
+    "options": [
+      {
+        "id": "A",
+        "text": "信息完整是目标状态，submit是要保存的编号"
+      },
+      {
+        "id": "B",
+        "text": "发生submit事件且信息完整时可迁移，过程中执行生成编号"
+      },
+      {
+        "id": "C",
+        "text": "只要信息完整就必须立刻迁移，是否submit不重要"
+      },
+      {
+        "id": "D",
+        "text": "生成编号是触发事件，submit是迁移后动作"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "事件、条件、动作是三类不同语义。",
+      "steps": [
+        "按事件[守卫]/动作的格式分段。",
+        "submit为触发事件，信息完整为守卫。",
+        "允许迁移时执行斜杠后的生成编号动作。"
+      ],
+      "keyPoint": "事件、条件、动作是三类不同语义。",
+      "pitfall": "不能省略触发事件，也不能把守卫当对象状态名。",
+      "optionAnalysis": {
+        "A": "把守卫与事件的作用混在一起。",
+        "B": "三部分对应正确。",
+        "C": "忽略题目明确的触发事件。",
+        "D": "把事件和动作颠倒。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-11",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "需要运行时替换工单计费算法，调用方通过共同fee接口执行当前规则。最贴切的模式是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "观察者"
+      },
+      {
+        "id": "B",
+        "text": "策略"
+      },
+      {
+        "id": "C",
+        "text": "抽象工厂"
+      },
+      {
+        "id": "D",
+        "text": "部署图"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "工厂看创建，策略看替换算法，观察者看订阅通知。",
+      "steps": [
+        "题目变化点是算法，而非对象创建或订阅通知。",
+        "多种规则实现共同计算约定，可互相替换。",
+        "这是策略模式的核心应用情境。"
+      ],
+      "keyPoint": "工厂看创建，策略看替换算法，观察者看订阅通知。",
+      "pitfall": "模式名称要对应具体问题，不能只见接口就猜工厂。",
+      "optionAnalysis": {
+        "A": "观察者关注状态变化通知多个订阅者。",
+        "B": "算法族可互换，符合题意。",
+        "C": "抽象工厂重点是相关产品族创建。",
+        "D": "部署图是模型图种，不是设计模式。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  },
+  {
+    "id": "foundation-system-design-12",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "system-design"
+    ],
+    "type": "single",
+    "stem": "工单关闭时，通过统一订阅接口通知统计、消息等已订阅对象。最贴切的理解是？",
+    "options": [
+      {
+        "id": "A",
+        "text": "使用观察者思想，但并不因此自动保证跨网络可靠投递"
+      },
+      {
+        "id": "B",
+        "text": "只要有两个函数调用，就一定是观察者模式"
+      },
+      {
+        "id": "C",
+        "text": "这是把工单数据转换成机器码的工厂"
+      },
+      {
+        "id": "D",
+        "text": "说明统计模块必须继承工单类"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "一对多订阅通知与网络传输保证是不同层面的事情。",
+      "steps": [
+        "找出主体状态变化与多个订阅者的关系。",
+        "统一订阅/通知接口是观察者思想的重要线索。",
+        "该模式描述协作结构，不自行提供网络投递可靠性。"
+      ],
+      "keyPoint": "一对多订阅通知与网络传输保证是不同层面的事情。",
+      "pitfall": "不能给一个设计模式附加题目未提供的持久化或重试机制。",
+      "optionAnalysis": {
+        "A": "模式识别和限制都准确。",
+        "B": "固定调用两个函数不足以证明订阅关系。",
+        "C": "题目没有对象创建或代码生成问题。",
+        "D": "订阅者不必是主体的子类。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "基础讲义自编自测 · 非官方真题",
+      "isExample": true
+    },
+    "tags": [
+      "基础理解",
+      "逐步推演"
+    ]
+  }
+]

@@ -82,3 +82,29 @@ test('full handbook, original Markdown download and PDF are published', async ()
   const pdf = await readFile(new URL('resources/sgcc-2027-computer-syllabus.pdf', root));
   assert.ok(pdf.subarray(0, 4).toString() === '%PDF');
 });
+test('all expanded lessons publish searchable text and preserve the original chapter', async () => {
+  const search: { id: string; text: string }[] = JSON.parse(await readFile(new URL('data/search.json', root), 'utf8'));
+  assert.equal(search.length, 48);
+  for (const entry of search) {
+    const page = await readFile(new URL(`knowledge/${entry.id}/index.html`, root), 'utf8');
+    assert.match(page, /KNOWLEDGE \/ 基础讲义/);
+    assert.match(page, /id="handbook-original"/);
+    assert.match(page, /手册原文 · 完整保留/);
+    assert.doesNotMatch(page, /class="katex-error"/, `${entry.id}: invalid formula`);
+    const ids = [...page.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
+    assert.equal(new Set(ids).size, ids.length, `${entry.id}: duplicate anchors`);
+  }
+  assert.ok(search.find((entry) => entry.id === 'system-design')!.text.includes('生命线'));
+  assert.ok(search.find((entry) => entry.id === 'supervised-learning')!.text.includes('数据泄漏'));
+  assert.ok(search.find((entry) => entry.id === 'relational-theory')!.text.includes('候选键'));
+});
+test('teaching diagrams have accessible descriptions and contain no executable or external content', async () => {
+  const figures = paths.filter((path) => path.startsWith('appendix/cs-review/figures/') && path.endsWith('.svg'));
+  assert.ok(figures.length >= 7);
+  for (const path of figures) {
+    const svg = await readFile(new URL(path, dist), 'utf8');
+    assert.match(svg, /<title[\s>]/);
+    assert.match(svg, /<desc[\s>]/);
+    assert.doesNotMatch(svg, /<script\b|<foreignObject\b|\son\w+=|(?:href|src)=["'](?:https?:|javascript:)/i, path);
+  }
+});

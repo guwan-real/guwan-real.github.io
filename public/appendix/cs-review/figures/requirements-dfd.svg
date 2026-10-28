@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700" role="img" aria-labelledby="title desc">
+  <title id="title">报修登记子系统的数据流图及分解</title>
+  <desc id="desc">上图将报修登记子系统视为一个处理，学生提交报修申请并收到登记结果。下图把处理分解为校验申请与保存工单：不合格申请返回校验错误，合格申请进入保存工单处理，该处理写工单记录到工单库并向学生返回工单编号。父图的登记结果由校验错误或工单编号组成，边界输入输出保持平衡。</desc>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#44657c" stroke-width="1.5"/></marker></defs>
+  <rect width="1120" height="700" rx="24" fill="#f7fafc"/>
+  <g font-family="system-ui, sans-serif" fill="#18354b">
+    <text x="40" y="46" font-size="26" font-weight="700">DFD：只看数据与加工，先整体、再分解</text>
+    <text x="40" y="82" font-size="18" fill="#526879">教学范围仅为“登记报修”，不包含查询与接单</text>
+    <text x="40" y="122" font-size="19" font-weight="650">上下文图</text>
+    <rect x="70" y="156" width="170" height="88" fill="#fff" stroke="#62869e" stroke-width="2"/>
+    <rect x="580" y="144" width="340" height="112" rx="34" fill="#e8f5f2" stroke="#278477" stroke-width="2"/>
+    <text x="155" y="208" font-size="23" text-anchor="middle">学生</text>
+    <text x="750" y="208" font-size="23" text-anchor="middle">报修登记子系统</text>
+    <g fill="none" stroke="#44657c" stroke-width="2.2" marker-end="url(#arrow)"><path d="M242 178H573"/><path d="M578 224H247"/></g>
+    <g font-size="18" text-anchor="middle"><text x="410" y="168">报修申请</text><text x="410" y="252">登记结果</text></g>
+    <path d="M40 294H1080" stroke="#c6d7e2" stroke-width="2"/>
+    <text x="40" y="331" font-size="19" font-weight="650">第一次分解</text>
+    <rect x="270" y="360" width="810" height="250" rx="20" fill="none" stroke="#a3b9c9" stroke-dasharray="8 5" stroke-width="2"/>
+    <text x="290" y="389" font-size="16" fill="#526879">系统边界</text>
+    <rect x="70" y="418" width="150" height="80" fill="#fff" stroke="#62869e" stroke-width="2"/>
+    <rect x="310" y="410" width="210" height="94" rx="28" fill="#e8f5f2" stroke="#278477" stroke-width="2"/>
+    <rect x="650" y="410" width="210" height="94" rx="28" fill="#e8f5f2" stroke="#278477" stroke-width="2"/>
+    <path d="M920 408H1045M920 482H1045" stroke="#62869e" stroke-width="2.5"/>
+    <g font-size="22" text-anchor="middle"><text x="145" y="466">学生</text><text x="415" y="447">1 校验申请</text><text x="755" y="447">2 保存工单</text><text x="983" y="450">D1</text><text x="983" y="474" font-size="18">工单库</text></g>
+    <g fill="none" stroke="#44657c" stroke-width="2.2" marker-end="url(#arrow)"><path d="M222 435H303"/><path d="M522 457H643"/><path d="M862 433H913"/><path d="M415 506V542H145V505"/><path d="M755 506V582H105V505"/></g>
+    <g font-size="16" text-anchor="middle"><text x="264" y="420">报修申请</text><text x="584" y="445">合格申请</text><text x="893" y="403">工单记录</text><text x="300" y="532">校验错误</text><text x="540" y="574">工单编号</text></g>
+    <text x="40" y="648" font-size="18" fill="#526879">分层平衡：登记结果 = 工单编号 或 校验错误；上下两图的边界信息一致。</text>
+    <text x="40" y="676" font-size="17" fill="#526879">矩形：外部实体　圆角框：处理　箭头：数据流　双横线：数据存储</text>
+  </g>
+</svg>

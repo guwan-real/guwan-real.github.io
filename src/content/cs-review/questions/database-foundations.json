@@ -1,0 +1,486 @@
+[
+  {
+    "id": "foundation-db-foundations-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["db-foundations"],
+    "type": "single",
+    "stem": "学生表的列、约束和对应用提供的查询接口均不变。管理员增加了学号索引，并将数据文件迁到另一块存储设备，应用无须修改。这主要体现什么？",
+    "options": [
+      {"id": "A", "text": "逻辑数据独立性，因为全局关系结构已经改变"},
+      {"id": "B", "text": "物理数据独立性，因为改变的是存储与访问安排"},
+      {"id": "C", "text": "实体完整性，因为新增索引必然改变主键"},
+      {"id": "D", "text": "外模式必须复制全部数据，才能保持应用不变"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "先定位改变发生在哪一层，再判断上层为何可以保持不变。索引与文件存放属于物理安排。",
+      "steps": [
+        "题目明确列、约束和应用接口不变，所以不是在调整全局关系的逻辑结构。",
+        "索引和文件位置改变的是内模式所关注的物理存储与访问方式。",
+        "通过模式与内模式之间的对应关系隐藏物理变化，使逻辑结构和应用保持不变，体现物理数据独立性。"
+      ],
+      "keyPoint": "物理独立性保护上层不受物理安排变化影响；逻辑独立性针对逻辑模式变化。",
+      "pitfall": "看到“新增索引”就认定表的业务结构改变，或把所有不改应用的情况统称为逻辑独立性。",
+      "optionAnalysis": {
+        "A": "题目已说明全局逻辑结构未变，变化在物理层。",
+        "B": "准确对应改变层次与被保护的上层。",
+        "C": "索引可以服务访问性能，不必改变主键；题目也没有讨论标识合法性。",
+        "D": "外模式可以基于共享数据形成视图，不要求复制全部数据。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["数据库基本概念", "三级模式", "数据独立性"]
+  },
+  {
+    "id": "foundation-db-foundations-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["db-foundations"],
+    "type": "multiple",
+    "stem": "关于 DB、DBMS、数据库系统及用户视图，下列哪些说法正确？",
+    "options": [
+      {"id": "A", "text": "学生、课程和选课数据可构成数据库 DB 的一部分，DBMS 是管理这些数据的软件"},
+      {"id": "B", "text": "DBA 是一种负责执行 SQL 的数据库管理软件"},
+      {"id": "C", "text": "学生与教师可基于同一份共享成绩数据获得不同视图，不一定要各保存一份成绩"},
+      {"id": "D", "text": "客户端能访问的本地文件，数据库服务器必定也能用同一路径访问"}
+    ],
+    "correctOptionIds": ["A", "C"],
+    "explanation": {
+      "analysis": "这道题同时检查数据、管理软件、人员和访问位置的区别。",
+      "steps": [
+        "DB 指被组织和管理的数据集合，DBMS 指提供查询、约束、事务等管理功能的软件。",
+        "DBA 是数据库管理员这一人员角色，数据库系统整体还包含应用与运行环境等。",
+        "外部视图可以来自同一份逻辑数据；客户端与服务端可能位于不同机器，文件访问范围也可能不同。"
+      ],
+      "keyPoint": "数据、软件、人员与运行位置各有含义，不能因它们共同参与访问就合并为一个概念。",
+      "pitfall": "把 DB、DBMS、DBA 当成近义缩写，或误以为视图一定是复制数据。",
+      "optionAnalysis": {
+        "A": "正确区分了数据集合与管理软件。",
+        "B": "DBA 是管理员，不是一种软件。",
+        "C": "不同视图可以在统一数据上按权限与需求产生。",
+        "D": "客户端和服务端可在不同主机，路径及文件权限不一定相同。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["数据库基本概念", "DBMS", "用户视图"]
+  },
+  {
+    "id": "foundation-relational-theory-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["relational-theory"],
+    "type": "single",
+    "stem": "设关系模式 R(A,B,C,D)，函数依赖仅由 F={A→B，B→A，C→D} 及其推导结果决定。R 的全部候选键是哪些？",
+    "options": [
+      {"id": "A", "text": "仅 AC"},
+      {"id": "B", "text": "仅 BC"},
+      {"id": "C", "text": "AC 与 BC"},
+      {"id": "D", "text": "AC、BC 与 ABC"}
+    ],
+    "correctOptionIds": ["C"],
+    "explanation": {
+      "analysis": "候选键必须既能推出全部属性，又不能再删除属性。找到一个以后，还要检查是否有其他选择。",
+      "steps": [
+        "C 不出现在任何依赖右部，其他属性不能推出 C，因此每个候选键都必须包含 C。",
+        "AC 的闭包经 A→B、C→D 得到 ABCD；BC 的闭包经 B→A、C→D 也得到 ABCD。",
+        "删去 AC 或 BC 中任一属性，都不能推出全部属性，所以两者都是候选键。",
+        "C 之外至少要选 A、B 中的一个，而 ABC 包含已有候选键，不具最小性，因此全部候选键只有 AC、BC。"
+      ],
+      "keyPoint": "闭包覆盖全部属性证明超键，删除测试证明候选键，必要属性帮助证明没有遗漏。",
+      "pitfall": "只找到第一个候选键就停止，或把包含候选键的更大超键也列为候选键。",
+      "optionAnalysis": {
+        "A": "遗漏了对称的候选键 BC。",
+        "B": "遗漏了候选键 AC。",
+        "C": "覆盖全部且分别满足最小性，没有遗漏。",
+        "D": "ABC 是超键，但 AC 已足够，ABC 不最小。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["属性闭包", "候选键", "最小超键"]
+  },
+  {
+    "id": "foundation-relational-theory-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["relational-theory"],
+    "type": "multiple",
+    "stem": "关系 R(A,B,C) 满足 1NF，依赖由 AB→C、C→B 决定。下列哪些判断正确？",
+    "options": [
+      {"id": "A", "text": "AB、AC 都是候选键，A、B、C 都是主属性"},
+      {"id": "B", "text": "只有被选作主键的属性才算主属性，所以无法判断 3NF"},
+      {"id": "C", "text": "该模式满足 3NF，但 C→B 违反 BCNF"},
+      {"id": "D", "text": "分成 BC、AC 无损，所以必然保持 AB→C 这一依赖"}
+    ],
+    "correctOptionIds": ["A", "C"],
+    "explanation": {
+      "analysis": "3NF 允许非超键决定主属性；BCNF 不允许这种例外。无损性也不等于依赖保持。",
+      "steps": [
+        "AB 可由 AB→C 得到全部属性；AC 可由 C→B 得到全部属性，且删去其中任一属性都不够，所以候选键为 AB、AC。",
+        "A、B、C 均出现在某个候选键中，都是主属性。C 的闭包是 BC，缺 A，所以 C 不是超键。",
+        "AB→C 的左部为超键；C→B 的右部是主属性，因此满足 3NF。C→B 左部非超键，所以不满足 BCNF。",
+        "分解 BC、AC 的公共属性 C 能决定 BC，故无损；但子关系依赖不能推出 AB→C，不能仅因无损就说依赖保持。"
+      ],
+      "keyPoint": "主属性看全部候选键；3NF 与 BCNF 的区别在于是否允许右部主属性这一例外。",
+      "pitfall": "把主属性当成主键属性，或用无损连接替代依赖保持检查。",
+      "optionAnalysis": {
+        "A": "两个闭包与最小性检查均成立。",
+        "B": "主属性属于至少一个候选键，不依赖最终选哪个主键。",
+        "C": "准确应用了两种范式的正式条件。",
+        "D": "无损仅保证投影后可准确连接还原，不保证每条原依赖都能局部检查。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["3NF", "BCNF", "无损连接", "依赖保持"]
+  },
+  {
+    "id": "foundation-sql-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["sql"],
+    "type": "single",
+    "stem": "表 Score 的 score 列依次为 90、NULL、70、80、60、NULL。执行 `SELECT COUNT(*), COUNT(score), AVG(score) FROM Score;`，三个结果依次是什么？",
+    "options": [
+      {"id": "A", "text": "6、6、50"},
+      {"id": "B", "text": "6、4、75"},
+      {"id": "C", "text": "4、4、75"},
+      {"id": "D", "text": "6、4、50"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "COUNT(*) 数行，COUNT(列) 数非空值，AVG 对非空输入求平均。NULL 不会自动变成零。",
+      "steps": [
+        "输入表有 6 行，所以 COUNT(*)=6，包括 score 为 NULL 的两行。",
+        "非 NULL 成绩有 90、70、80、60，共 4 个，所以 COUNT(score)=4。",
+        "有效成绩合计 300，AVG(score)=300÷4=75，而不是除以全部 6 行。"
+      ],
+      "keyPoint": "先确定聚合函数的输入集合，再决定计数与分母。",
+      "pitfall": "把“未知”当作 0，或认为 COUNT(*) 会排除含 NULL 的行。",
+      "optionAnalysis": {
+        "A": "COUNT(score) 不计 NULL，AVG 也不按 NULL=0 计算。",
+        "B": "行数、非空数、平均分都正确。",
+        "C": "COUNT(*) 应数全部 6 行。",
+        "D": "前两项正确，但 AVG 应除以 4，不能把 NULL 当零。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["SQL", "NULL", "聚合函数"]
+  },
+  {
+    "id": "foundation-sql-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["sql"],
+    "type": "single",
+    "stem": "Student 只有 S1、S2、S3 三位学生，Enrollment 的 (sid,cid) 只有 (S1,C1)、(S1,C2)、(S2,C2)。Q1 为 `Student s LEFT JOIN Enrollment e ON s.sid=e.sid AND e.cid='C1'`；Q2 为 `Student s LEFT JOIN Enrollment e ON s.sid=e.sid WHERE e.cid='C1'`。两者都选择 s.sid、e.cid，且不去重，结果行数依次是多少？",
+    "options": [
+      {"id": "A", "text": "1、1"},
+      {"id": "B", "text": "3、1"},
+      {"id": "C", "text": "3、3"},
+      {"id": "D", "text": "4、2"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "ON 决定右表匹配，WHERE 在外连接完成后继续过滤，因此移动条件会改变保留的左表行。",
+      "steps": [
+        "Q1 只允许 C1 匹配，S1 得到一行 (S1,C1)。",
+        "S2 与 S3 没有符合 ON 的 C1 记录，但 LEFT JOIN 各补一行右部 NULL，所以 Q1 共 3 行。",
+        "Q2 先连接得到 S1 的两行、S2 的一行与 S3 的补空行，再执行 WHERE。",
+        "只有 S1-C1 满足 e.cid='C1'；C2 为假，NULL 比较为 UNKNOWN，均被排除，所以 Q2 只剩 1 行。"
+      ],
+      "keyPoint": "外连接补空发生在 ON 匹配之后；WHERE 只保留 TRUE。",
+      "pitfall": "认为 LEFT JOIN 一旦保留左行，后面任何条件都不能再删除它。",
+      "optionAnalysis": {
+        "A": "忽略了 Q1 为 S2、S3 补出的两行。",
+        "B": "准确追踪了 ON 匹配和 WHERE 过滤。",
+        "C": "Q2 的 WHERE 会排除不满足 C1 的行，包括补空行。",
+        "D": "将未筛选的连接行数或非 C1 记录误计入结果。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["LEFT JOIN", "ON与WHERE", "三值逻辑"]
+  },
+  {
+    "id": "foundation-acid-transactions-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["acid-transactions"],
+    "type": "single",
+    "stem": "rᵢ(X)、wᵢ(X) 分别表示事务 Ti 读、写 X。调度为 `r1(A), r2(B), w1(A), w2(B), r1(B), r2(A)`。关于冲突可串行化，哪项正确？",
+    "options": [
+      {"id": "A", "text": "只有 T1→T2，因此等价于 T1 后 T2"},
+      {"id": "B", "text": "只有 T2→T1，因此等价于 T2 后 T1"},
+      {"id": "C", "text": "有 T1→T2 与 T2→T1，形成环，不是冲突可串行化"},
+      {"id": "D", "text": "读读也冲突，所以任何并发调度都不可串行化"}
+    ],
+    "correctOptionIds": ["C"],
+    "explanation": {
+      "analysis": "分别按 A、B 找不同事务之间至少一方为写的操作，不能只看每个事务自己的顺序。",
+      "steps": [
+        "A 上 w1(A) 在 r2(A) 之前，二者跨事务且有写，加入 T1→T2。",
+        "B 上 w2(B) 在 r1(B) 之前，加入 T2→T1。",
+        "优先图出现双向环，不存在满足所有冲突先后关系的拓扑序，因此不是冲突可串行化。"
+      ],
+      "keyPoint": "优先图边由冲突操作的先后顺序决定；图无环才冲突可串行化。",
+      "pitfall": "漏看第二个数据项，或把优先图误读成谁先开始、谁先提交。",
+      "optionAnalysis": {
+        "A": "遗漏了 B 上的 T2→T1。",
+        "B": "遗漏了 A 上的 T1→T2。",
+        "C": "完整列出了两个方向的约束并正确判断有环。",
+        "D": "读读不冲突，并发调度也可能可串行化。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["事务调度", "冲突可串行化", "优先图"]
+  },
+  {
+    "id": "foundation-acid-transactions-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["acid-transactions"],
+    "type": "multiple",
+    "stem": "本题采用“严格 2PL 至少把写锁保持到提交或中止”的定义。关于并发控制，下列哪些说法正确？",
+    "options": [
+      {"id": "A", "text": "两阶段锁允许事务在释放第一把锁之前继续申请锁，但释放后不能再申请新锁"},
+      {"id": "B", "text": "即使遵守两阶段锁，两个事务仍可能相互等待而死锁"},
+      {"id": "C", "text": "严格 2PL 保持写锁到结束，有助于避免其他事务读取未提交修改造成级联回滚"},
+      {"id": "D", "text": "只要使用 MVCC，就不存在写入冲突，也不需要任何锁或重试"}
+    ],
+    "correctOptionIds": ["A", "B", "C"],
+    "explanation": {
+      "analysis": "两阶段约束、恢复安全和是否死锁是不同维度；MVCC 也不表示所有并发问题都消失。",
+      "steps": [
+        "2PL 将事务分为增长和收缩阶段，首次释放锁后不能获得新锁。",
+        "T1 先锁 A 再等 B、T2 先锁 B 再等 A，可以在未释放锁时形成死锁，仍未违反 2PL。",
+        "把写锁保持到事务结束，可阻止别的事务在此期间按冲突方式读取未提交修改。",
+        "MVCC 提供版本读取，写写冲突和跨行约束仍需协调，某些隔离机制会要求重试。"
+      ],
+      "keyPoint": "保证可串行化不等于没有死锁，版本读取也不等于无冲突。",
+      "pitfall": "把 2PL 与两阶段提交混淆，或把 MVCC 理解成完全不加锁。",
+      "optionAnalysis": {
+        "A": "符合两阶段锁的阶段规则。",
+        "B": "加锁次序不一致仍可形成循环等待。",
+        "C": "符合题目明确采用的严格 2PL 定义及其恢复目的。",
+        "D": "MVCC 不能一般性消除写入冲突、串行化异常和失败重试。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["2PL", "严格两阶段锁", "MVCC", "死锁"]
+  },
+  {
+    "id": "foundation-backup-recovery-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["backup-recovery"],
+    "type": "single",
+    "stem": "某数据库使用 WAL，并以可靠日志支持同步提交。下列哪一种执行安排可以符合其持久性要求？",
+    "options": [
+      {"id": "A", "text": "先将修改后的数据页落盘，对应日志只留在易失内存，之后再补写"},
+      {"id": "B", "text": "提交所需日志及提交信息已可靠保存，部分已提交数据页稍后落盘，崩溃时可用日志重做"},
+      {"id": "C", "text": "事务一提交就必须刷完所有数据页，否则绝不可能保证持久性"},
+      {"id": "D", "text": "只要最近发生了检查点，就可以删除所有更早日志且不再需要备份"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "WAL 的重点是可靠日志先于相关数据页，日志可支持延后刷页后的恢复。",
+      "steps": [
+        "数据页落盘前，对应该修改的日志必须先持久化，内存日志缓冲区不满足这一要求。",
+        "同步提交模型中，确认提交前应可靠保存所需日志与提交信息。",
+        "有了可靠恢复依据，部分数据页可以在提交后才刷出；崩溃后通过重做补齐它们。"
+      ],
+      "keyPoint": "日志持久化、数据页持久化与提交是不同事件，可靠日志允许 NO-FORCE。",
+      "pitfall": "把“日志已追加到内存”当成持久化，或认为提交总等于所有数据页已刷盘。",
+      "optionAnalysis": {
+        "A": "相关日志尚未持久化就刷数据页，违反题设 WAL 顺序。",
+        "B": "给出了日志保证持久性、数据页延后写出的正常安排。",
+        "C": "可靠日志和 REDO 使提交时不强制刷完数据页成为可能。",
+        "D": "检查点不是独立备份，活跃事务和脏页还可能依赖早期日志。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["WAL", "REDO", "持久性"]
+  },
+  {
+    "id": "foundation-backup-recovery-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["backup-recovery"],
+    "type": "multiple",
+    "stem": "周一全量备份为 F；周二增量 I1 记录 F 后变化；周三增量 I2 记录 I1 后变化。没有另外的恢复日志。下列哪些说法正确？",
+    "options": [
+      {"id": "A", "text": "通常恢复到周三备份状态，需要 F、I1、I2 形成完整链"},
+      {"id": "B", "text": "只要 I2 最新，就可单独恢复周三的完整数据库，或恢复到任意更晚时刻"},
+      {"id": "C", "text": "“最多允许丢失多少时间的数据”属于 RPO 关注的问题"},
+      {"id": "D", "text": "“中断后允许花多久恢复业务可用”属于 RTO 关注的问题"}
+    ],
+    "correctOptionIds": ["A", "C", "D"],
+    "explanation": {
+      "analysis": "先按题设追踪每份增量的基准，再分别判断数据损失目标与恢复耗时目标。",
+      "steps": [
+        "F 提供基准数据，I1 补上周一到周二的变化，I2 只补周二到周三的变化。",
+        "I2 不包含所有历史基准，缺 F 或 I1 不能一般性恢复完整状态；没有更晚材料也不能随意恢复未来时刻。",
+        "RPO 对应需要恢复到多近的历史位置，常理解为允许丢失的数据时间窗口。",
+        "RTO 对应恢复业务允许花费的时间，可能包含准备、还原、重放、校验和切换。"
+      ],
+      "keyPoint": "备份链完整性与 RPO/RTO 是不同问题，不能仅凭“最新”判断副本完整。",
+      "pitfall": "把增量备份当成每次完整快照，或把数据丢失时间与停机时长对调。",
+      "optionAnalysis": {
+        "A": "符合题目给出的逐次增量定义。",
+        "B": "最新增量不是完整基准，也没有包含任意更晚变化。",
+        "C": "准确描述 RPO 的常用理解。",
+        "D": "准确描述 RTO 关注的恢复时长。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["增量备份", "恢复链", "RPO", "RTO"]
+  },
+  {
+    "id": "foundation-db-design-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["db-design"],
+    "type": "single",
+    "stem": "业务规定：一份书目 Book 可有多本实体副本 Copy，每本副本必须且只属于一份书目。Book 主键为 book_id，Copy 主键为 copy_id。哪种映射符合这条 1:N 规则？",
+    "options": [
+      {"id": "A", "text": "把 copy_id 放入 Book 并设为唯一外键，从而让每份书目只能指向一个副本"},
+      {"id": "B", "text": "在 Copy 中设置非空外键 book_id 引用 Book，且不对 Copy.book_id 施加全局唯一约束"},
+      {"id": "C", "text": "让所有同书名副本共用 copy_id，以免出现重复书名"},
+      {"id": "D", "text": "将 Copy.book_id 设为 Copy 的唯一主键，替代 copy_id"}
+    ],
+    "correctOptionIds": ["B"],
+    "explanation": {
+      "analysis": "一对多联系通常把一方的键放在多方，允许多个副本引用相同书目。",
+      "steps": [
+        "多方是 Copy，因此每条副本记录保存其所属的 book_id。",
+        "外键保证引用的书目存在，NOT NULL 表达副本必须属于某份书目。",
+        "Copy.book_id 必须允许在不同副本行中重复，才能表示一本书目有多本副本；副本身份由 copy_id 区分。"
+      ],
+      "keyPoint": "外键放在多方；对该外键加唯一约束会把最大数量限制为一。",
+      "pitfall": "把“必须属于一个”误读成“该书目只能被一条记录引用”。",
+      "optionAnalysis": {
+        "A": "一条 Book 只保存一个 copy_id，不能直接表达任意多本副本。",
+        "B": "同时表达所属书目存在、必须参与和允许多个副本。",
+        "C": "实体副本需要独立身份，共用主键会无法区分不同副本。",
+        "D": "主键唯一会使同一 book_id 最多出现一次，错误限制了副本数量。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["E-R映射", "一对多", "外键"]
+  },
+  {
+    "id": "foundation-db-design-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["db-design"],
+    "type": "single",
+    "stem": "Loan(loan_id,copy_id,returned_at) 保存全部历史借阅，returned_at 为 NULL 表示未归还。要求同一副本最多一条未归还记录，但允许多条已归还历史。若使用 PostgreSQL，以下哪项最直接表达这条唯一性规则？",
+    "options": [
+      {"id": "A", "text": "只对 loan_id 设置主键"},
+      {"id": "B", "text": "只把 copy_id 设置为引用 Copy 的外键"},
+      {"id": "C", "text": "建立 `CREATE UNIQUE INDEX ... ON Loan(copy_id) WHERE returned_at IS NULL`"},
+      {"id": "D", "text": "对所有 Loan 行的 copy_id 建立普通全局唯一约束"}
+    ],
+    "correctOptionIds": ["C"],
+    "explanation": {
+      "analysis": "规则只约束未归还子集，而不是全部历史；需要同时保留重复借还的能力。",
+      "steps": [
+        "loan_id 主键只保证借阅事件编号不同，两个不同编号仍可能引用同一副本。",
+        "copy_id 外键只保证副本存在，不限制它被引用多少次。",
+        "部分唯一索引只纳入 returned_at IS NULL 的行，使未归还子集中的 copy_id 唯一。",
+        "已归还记录不进入这个索引，所以同一副本可保留多次归还历史；全局唯一则会过度限制。"
+      ],
+      "keyPoint": "代理主键、参照完整性和带条件的业务唯一性是三种约束。",
+      "pitfall": "看到已有主键或外键就以为并发双借问题已经解决，或者误删历史能力。",
+      "optionAnalysis": {
+        "A": "不能限制同一 copy_id 的两条未归还记录。",
+        "B": "只保护引用存在性。",
+        "C": "准确约束未归还记录子集，符合指定产品能力。",
+        "D": "会禁止同一副本出现任何第二条历史记录，超出了需求。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["数据库设计", "部分唯一索引", "业务约束"]
+  },
+  {
+    "id": "foundation-db-security-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["db-security"],
+    "type": "multiple",
+    "stem": "给报表服务开放读者汇总查询时，下列哪些判断正确？",
+    "options": [
+      {"id": "A", "text": "只要认证成功，就不再需要检查该账号能读哪些表与字段"},
+      {"id": "B", "text": "仅授予合适视图的读取权限，并核查没有绕过视图的基表权限，有助于缩小暴露范围"},
+      {"id": "C", "text": "TLS 保护传输过程，但不代替数据库角色和对象授权"},
+      {"id": "D", "text": "参数绑定保护查询结构，但仍需判断当前业务用户能否访问指定读者"}
+    ],
+    "correctOptionIds": ["B", "C", "D"],
+    "explanation": {
+      "analysis": "认证、授权、传输加密与参数化解决不同问题，应按各自边界判断。",
+      "steps": [
+        "认证只确认身份，授权继续限制这个身份能访问的对象与操作。",
+        "受限视图可减少列或行的暴露，但必须检查是否仍有直接访问基表的路径。",
+        "TLS 主要保护网络传输，不能限制已登录账号的读写权限。",
+        "参数绑定让输入作为值而非 SQL 语法，但不会自动判断值对应的记录是否属于当前用户。"
+      ],
+      "keyPoint": "安全措施需要组合，某一项有效不等于其余控制可省略。",
+      "pitfall": "把登录成功、连接加密或查询参数化任一条件当成全部安全保证。",
+      "optionAnalysis": {
+        "A": "认证与授权不同，登录后仍需权限检查。",
+        "B": "说明了视图与基表权限应共同设计。",
+        "C": "正确界定了传输保护的作用。",
+        "D": "正确区分语法安全与对象级业务授权。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["认证与授权", "视图", "加密", "参数化查询"]
+  },
+  {
+    "id": "foundation-db-security-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": ["db-security"],
+    "type": "single",
+    "stem": "报表允许用户按“借出时间”或“读者编号”排序，并按输入姓名筛选。对于排序列与姓名值，哪种处理最合适？",
+    "options": [
+      {"id": "A", "text": "把排序列和姓名原样拼入 SQL，限制输入长度即可"},
+      {"id": "B", "text": "先拼好包含输入的 SQL，再交给 prepare，便会自动消除所有注入"},
+      {"id": "C", "text": "将排序选项映射到程序预设允许列名，姓名通过驱动参数绑定"},
+      {"id": "D", "text": "使用管理员账号并启用 TLS，就可以自由拼接用户输入"}
+    ],
+    "correctOptionIds": ["C"],
+    "explanation": {
+      "analysis": "数据值应绑定参数；动态 SQL 结构如列名，应来自程序控制的允许列表，不能都当普通值处理。",
+      "steps": [
+        "姓名是一个用于比较的数据值，应通过驱动接口绑定，避免成为 SQL 语法。",
+        "排序列名属于查询结构，普通值占位符通常不能替代任意标识符，应把有限选项映射为固定允许列名。",
+        "若在 prepare 之前已经把不可信输入拼进语法，准备语句也不会自动撤销这种结构改变。",
+        "TLS 和高权限账号都不修复拼接问题；实际服务还应采用完成任务所需的最小权限。"
+      ],
+      "keyPoint": "固定结构、受控结构选项与参数值分别处理，才能保持 SQL 与输入数据的边界。",
+      "pitfall": "把“使用 prepare”当成魔法，忽略输入是否早已拼入语句。",
+      "optionAnalysis": {
+        "A": "长度限制不能阻止短输入改变 SQL 结构。",
+        "B": "准备前已发生的不安全拼接仍然有问题。",
+        "C": "分别正确处理了标识符选项与数据值。",
+        "D": "TLS 保护网络，管理员权限反而可能放大错误影响。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {"label": "基础讲义自编自测 · 非官方真题", "isExample": true},
+    "tags": ["SQL注入", "参数绑定", "允许列表"]
+  }
+]

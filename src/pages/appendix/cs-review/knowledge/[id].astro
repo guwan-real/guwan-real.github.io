@@ -11,8 +11,14 @@ export async function getStaticPaths() {
   return entries.map((entry) => ({ params: { id: entry.data.knowledgeId }, props: { entry } }));
 }
 const { entry } = Astro.props;
-const { Content, headings } = await render(entry);
-const { knowledge, questions } = await getReviewContent();
+const originalRendered = await render(entry);
+const { Content } = originalRendered;
+const { knowledge, questions, explanations } = await getReviewContent();
+const explanation = explanations.find((lesson) => lesson.data.knowledgeId === entry.data.knowledgeId);
+const renderedLesson = explanation ? await render(explanation) : undefined;
+const Lesson = renderedLesson?.Content;
+const headings = renderedLesson?.headings ?? originalRendered.headings;
+const description = explanation?.data.description ?? entry.data.description;
 const related = questions.filter((q) => q.knowledgeIds.includes(entry.data.knowledgeId));
 const item = syllabus.find((item) => item.number === entry.data.syllabusNumber);
 const original = (await getHandbook()).metadata.headings.find((heading) => heading.depth === 2 && heading.text.startsWith(`${entry.data.syllabusNumber}. `));
@@ -20,14 +26,17 @@ const position = knowledge.findIndex((k) => k.knowledgeId === entry.data.knowled
 const previous = knowledge[position - 1];
 const next = knowledge[position + 1];
 ---
-<CSReviewLayout title={entry.data.title} active="knowledge" description={entry.data.description}>
+<CSReviewLayout title={entry.data.title} active="knowledge" description={description}>
   <a class="review-back-link" href={`${reviewUrl('knowledge/')}#${entry.data.moduleId}`}>← {moduleTitle(entry.data.moduleId)}</a>
-  <header class="review-page-heading is-article"><p class="review-eyebrow">KNOWLEDGE / {entry.data.status === 'example' ? '示例知识点' : '复习手册'}</p><h1>{entry.data.title}</h1><p class="review-lead">{entry.data.description}</p></header>
+  <header class="review-page-heading is-article"><p class="review-eyebrow">KNOWLEDGE / {explanation ? '基础讲义' : entry.data.status === 'example' ? '示例知识点' : '复习手册'}</p><h1>{entry.data.title}</h1><p class="review-lead">{description}</p></header>
   {entry.data.status === 'example' && <ContentNotice compact />}
   {item && <div class="review-chapter-source"><p class="review-caption">对应国网 2027 专业知识第 {item.number} 项：{item.title}{item.scope ? `（${item.scope}）` : ''}</p><div class="review-actions"><a class="review-text-link" href={reviewUrl(`handbook/${original ? `#${original.slug}` : ''}`)}>查看原稿本节 ↗</a><a class="review-text-link" href={reviewUrl(`resources/sgcc-2027-computer-syllabus.pdf#page=${item.page}`)} target="_blank" rel="noopener noreferrer">对照大纲第 {item.page} 页 ↗</a></div></div>}
+  {explanation && <div class="review-lesson-note"><p>在手册提纲上补充基础讲解、例子与解题过程。图示可左右滑动，也可点开大图。</p><div class="review-actions"><a class="review-text-link" href="#handbook-original">查看保留的手册原文 ↓</a><a class="review-text-link" href="#related-practice">做本节自测 ↓</a></div></div>}
   <div class="review-article-layout">
-    <article class="review-prose" data-knowledge-id={entry.data.knowledgeId}><Content /></article>
-    <aside class="review-toc"><p class="review-label">本页内容</p><nav aria-label="本页章节">{headings.filter((h) => h.depth === 2).map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}<a href="#related-practice">关联练习</a></nav></aside>
+    <article class:list={['review-prose', { 'review-lesson': Boolean(explanation) }]} data-knowledge-id={entry.data.knowledgeId}>
+      {Lesson ? <><Lesson /><section class="review-lesson-sources" id="lesson-sources"><h2>参考资料</h2><p>讲义与图例为自编学习说明，参考以下资料核对概念；不代表官方命题范围或权重。更新于 {explanation!.data.updatedAt}。</p><ul>{explanation!.data.sources.map((source) => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul></section><details class="review-original" id="handbook-original"><summary>手册原文 · 完整保留</summary><Content /></details></> : <Content />}
+    </article>
+    <aside class="review-toc"><p class="review-label">本页内容</p><nav aria-label="本页章节">{headings.filter((h) => h.depth === 2).map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}{explanation && <a href="#handbook-original">手册原文</a>}<a href="#related-practice">关联练习</a></nav></aside>
   </div>
   <section class="review-related" id="related-practice">
     <div class="review-section-heading"><h2>用一道题，检验理解。</h2><button class="review-button is-small" data-mark-reviewed={entry.data.knowledgeId} aria-pressed="false">标记已复习</button></div>

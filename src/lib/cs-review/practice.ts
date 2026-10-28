@@ -21,7 +21,7 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
   let fixedQuestionId = ctx.questions.some((q) => q.id === params.get('question')) ? params.get('question')! : '';
   let reviewScope = params.get('scope') ?? '';
   let recordFilter = ['unseen', 'done'].includes(params.get('record') ?? '') ? params.get('record')! : '';
-  let count = '10';
+  let count = mode === 'knowledge' && knowledgeId ? 'all' : '10';
   let setup = !(params.has('resume') || (!params.size && ctx.store.snapshot().session));
   let busy = false;
   let selectionPending = Promise.resolve();

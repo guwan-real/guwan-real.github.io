@@ -3,7 +3,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { test } from 'node:test';
 import { createHash } from 'node:crypto';
 import matter from 'gray-matter';
-import { questionSchema, validateCatalogue } from '../src/lib/cs-review/content-schema';
+import { questionSchema, validateCatalogue, validateExplanations } from '../src/lib/cs-review/content-schema';
 import { renderMarkdown } from '../src/lib/cs-review/markdown';
 import { parseHandbook, chapterBody } from '../src/lib/cs-review/handbook-source';
 import syllabus from '../src/content/cs-review/syllabus.json';
@@ -15,8 +15,12 @@ import type { Answer, Attempt, PublicQuestion, Question } from '../src/lib/cs-re
 const questionData: Question[] = JSON.parse(await readFile(new URL('../src/content/cs-review/questions/examples.json', import.meta.url), 'utf8'));
 const handbookQuestions: Question[] = JSON.parse(await readFile(new URL('../src/content/cs-review/questions/handbook-self-tests.json', import.meta.url), 'utf8'));
 const expansionQuestions: Question[] = JSON.parse(await readFile(new URL('../src/content/cs-review/questions/review-expansion.json', import.meta.url), 'utf8'));
+const questionDirectory = new URL('../src/content/cs-review/questions/', import.meta.url);
+const allQuestions: Question[] = (await Promise.all((await readdir(questionDirectory)).filter((name) => name.endsWith('.json')).map(async (name) => JSON.parse(await readFile(new URL(name, questionDirectory), 'utf8')) as Question[]))).flat();
 const knowledgeDirectory = new URL('../src/content/cs-review/knowledge/', import.meta.url);
 const knowledgeData = await Promise.all((await readdir(knowledgeDirectory)).map(async (name) => matter(await readFile(new URL(name, knowledgeDirectory), 'utf8')).data));
+const explanationDirectory = new URL('../src/content/cs-review/explanations/', import.meta.url);
+const explanations = await Promise.all((await readdir(explanationDirectory)).filter((name) => name.endsWith('.md')).map(async (name) => matter(await readFile(new URL(name, explanationDirectory), 'utf8'))));
 const publicQuestions: PublicQuestion[] = questionData.map((q) => ({ id: q.id, revision: q.revision, moduleId: q.moduleId, knowledgeIds: q.knowledgeIds,
   type: q.type, stemHtml: q.stem, options: q.options.map((o) => ({ id: o.id, html: o.text })), difficulty: q.difficulty, source: q.source, tags: q.tags }));
 const answers: Answer[] = questionData.map((q) => ({ id: q.id, revision: q.revision, correctOptionIds: q.correctOptionIds, analysisHtml: '', stepsHtml: [], keyPointHtml: '', pitfallHtml: '' }));
@@ -39,10 +43,32 @@ class MemoryStorage {
 }
 
 test('the actual content catalogue is valid and example labels are explicit', () => {
-  const result = validateCatalogue(knowledgeData, [...questionData, ...handbookQuestions, ...expansionQuestions]);
-  assert.equal(result.knowledge.length, 48); assert.equal(result.questions.length, 130);
+  const result = validateCatalogue(knowledgeData, allQuestions);
+  assert.equal(result.knowledge.length, 48); assert.equal(result.questions.length, allQuestions.length);
+  assert.ok(result.questions.length > 130);
   assert.ok(result.questions.every((q) => q.source.isExample && q.source.label.includes('非官方真题')));
   assert.ok(result.knowledge.every((k) => k.status === 'handbook'));
+});
+test('authored lessons link to known topics and reject duplicate or orphan identities', () => {
+  const { knowledge } = validateCatalogue(knowledgeData, allQuestions);
+  const lessons = validateExplanations(knowledge, explanations.map((entry) => entry.data));
+  assert.equal(lessons.length, 48);
+  assert.throws(() => validateExplanations(knowledge, [lessons[0], lessons[0]]), /重复/);
+  assert.throws(() => validateExplanations(knowledge, [{ ...lessons[0], knowledgeId: 'missing-topic' }]), /不存在/);
+  assert.throws(() => validateExplanations(knowledge, [{ ...lessons[0], sources: [{ label: 'unsafe', url: 'javascript:alert(1)' }] }]));
+});
+test('each topic has worked teaching content and new practice with complete reasoning', () => {
+  for (const topic of syllabus) {
+    const lesson = explanations.find((entry) => entry.data.knowledgeId === topic.knowledgeId);
+    assert.ok(lesson, `缺少基础讲义 ${topic.knowledgeId}`);
+    assert.ok((lesson.content.match(/^## /gm)?.length ?? 0) >= 5, `${topic.knowledgeId} 缺少分节讲解`);
+    const practice = allQuestions.filter((q) => q.id.startsWith(`foundation-${topic.knowledgeId}-`));
+    assert.ok(practice.length >= 2, `${topic.knowledgeId} 缺少新增自测`);
+    for (const q of practice) {
+      assert.ok(q.explanation.steps.length >= 3);
+      assert.deepEqual(Object.keys(q.explanation.optionAnalysis!).sort(), q.options.map((o) => o.id).sort());
+    }
+  }
 });
 test('expanded practice covers all 48 topics with complete per-option reasoning', () => {
   assert.equal(expansionQuestions.length, 72);
