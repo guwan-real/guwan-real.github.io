@@ -87,7 +87,7 @@ export function initGitHubSync(store: StudyStore, storage: Storage | null, url: 
   store.subscribe(() => {
     if (!engine) return;
     try {
-      if (engine.track()) { dirty = true; message = '本机有新记录，待同步'; render(); schedule(); }
+      if (engine.track()) { dirty = true; if (!paused) message = '本机有新记录，待同步'; render(); schedule(); }
     } catch (error) { problem(error); }
   });
   form?.addEventListener('submit', async (event) => {
