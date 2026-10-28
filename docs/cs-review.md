@@ -48,6 +48,8 @@ tags: [排序, 复杂度]
 
 正文支持 `$...$` 与 `$$...$$` 数学公式、代码块、表格及二级标题导航。原始 HTML 被移除；链接协议由 rehype-sanitize 过滤，KaTeX 使用 `trust: false`。Shiki 在构建时高亮，无浏览器高亮运行时。不要使用 MDX、脚本、事件属性或任意 HTML 承载内容。
 
+Astro 内容页与题目 / 手册的 Markdown 渲染器均启用 `remark-cjk-friendly/parseOnly`，支持 `**操作系统（OS）**管理资源` 这类紧邻中文标点的强调。保留原稿写法，不通过替换正文或浏览器修补来处理；代码、转义星号和数学公式仍按各自语法解析。该依赖只在构建时使用。
+
 ## 基础讲义与原稿分开维护
 
 `src/content/cs-review/knowledge/*.md` 是由原手册生成的分节内容，不在这里混入扩写。扩展讲义位于 `src/content/cs-review/explanations/<knowledgeId>.md`，使用 `csExplanations` 内容集合与 `explanationSchema`：
