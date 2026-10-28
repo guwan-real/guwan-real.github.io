@@ -38,4 +38,6 @@ export function initSearch(url: (path: string) => string, notify: (message: stri
   document.addEventListener('keydown', (event) => {
     if (event.key === '/' && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement)) { event.preventDefault(); input.focus(); }
   });
+  // Honor text entered while this module loaded, as well as browser-restored form values.
+  if (input.value.trim()) void search();
 }
