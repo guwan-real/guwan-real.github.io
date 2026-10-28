@@ -13,6 +13,12 @@ sources:
     url: https://www.postgresql.org/docs/18/functions-subquery.html
   - label: PostgreSQL 18 官方文档：SELECT
     url: https://www.postgresql.org/docs/18/sql-select.html
+  - label: PostgreSQL 18 官方文档：标量子查询与值表达式
+    url: https://www.postgresql.org/docs/18/sql-expressions.html
+  - label: PostgreSQL 18 官方文档：视图更新与检查选项
+    url: https://www.postgresql.org/docs/18/sql-createview.html
+  - label: PostgreSQL 18 官方文档：C 中的嵌入式 SQL
+    url: https://www.postgresql.org/docs/18/ecpg-concept.html
 ---
 
 ## SQL 要先读懂结果，再背语法
@@ -306,6 +312,43 @@ CREATE TABLE Enrollment (
 `UPDATE Enrollment SET score=score+5 WHERE cid='C1'` 更新匹配行；缺少 WHERE 可能更新全部行。NULL 加 5 仍为 NULL。DELETE 删除行，DROP TABLE 删除表结构及其数据，两者不能互换。
 
 索引是访问路径，会影响性能，不应改变正确查询的逻辑结果。某个查询有没有使用索引、是否有大量重复连接，可借助执行计划观察；不能仅凭“有 WHERE”就断言一定用了索引。
+
+## 补充：查询优化要保持语义，不能只背运算顺序
+
+对内连接，如果筛选条件只引用 Student 的院系列，可以先留下该院系学生，再与选课连接，通常能减少后续处理的中间行。假设一万名学生只有一百名属于 D10，先筛这一百名再连接，比先构造所有学生的关联结果更有机会省工作；实际效率仍由数据分布、索引和执行计划决定。
+
+尽早投影也可能减少中间结果宽度，但必须保留之后还需要的列。例如先留下 sid、name，再按 sid 连接可以；若把 sid 提前丢掉，后面就无法进行原连接。需要 GROUP BY、过滤和排序的列也不能无依据地删除。
+
+这类等价变换有条件。前文已说明 LEFT JOIN 的右表过滤条件在 ON、WHERE 中含义可能不同，所以不能把“尽量下推选择”理解成“任何条件都能随意搬”。所谓先选择、再投影是入门优化线索，不是所有 DBMS 的固定物理运行顺序。
+
+## 补充：视图的 WITH CHECK OPTION 检查更新后的可见性
+
+假设 Staff(id,branch) 上有一个简单可更新视图：
+
+```sql
+CREATE VIEW EastStaff AS
+SELECT id, branch FROM Staff
+WHERE branch = 'E'
+WITH CHECK OPTION;
+```
+
+视图只显示 E 分部。若权限与其他约束均允许，通过视图把某人从 E 改为 W，会让更新后的行不再满足视图条件，因此检查选项拒绝它；通过视图插入 branch='W' 的新行，也会被拒绝。
+
+但 CHECK OPTION 不是“禁止删除”：删除当前可见的行，没有生成一条不满足条件的新行，不能仅凭这个选项断言删除一定失败。它也不让所有聚合、分组或多表视图自动变成可更新视图。[官方视图文档](https://www.postgresql.org/docs/18/sql-createview.html)说明了适用范围。
+
+## 补充：标量、聚合与子查询的结果形状
+
+`ABS(x)` 对一个数取绝对值，`MAX(x)`、`SUM(x)`、`AVG(x)` 把一组输入汇总。对 x 为 -4、3、8 的三行，单独选择 ABS(x) 得到 4、3、8 三行；不分组的 MAX(x) 得到一行 8。不要因为函数都写在 SELECT 里，就把所有函数都称为聚合函数。
+
+标量子查询放在需要一个值的位置，要分别考虑三种情况：返回一行一列，使用该值；返回零行，标量结果为 NULL；返回多行，通常是错误，不能擅自取第一行。若用“产品名称”查价格，先确认该名称是否唯一；用 MIN 或 MAX 把多行压成一值，会引入新的业务选择，不能无声地当成等价修复。[官方值表达式文档](https://www.postgresql.org/docs/18/sql-expressions.html)可核对这些规则。
+
+SQL 约束声明也要逐项读。例如 `staff_no INTEGER NOT NULL UNIQUE` 要求非空、唯一且符合整数类型，却没有自动把该列声明成 PRIMARY KEY。一个表可以有多个唯一约束；主键是明确选定的一组标识。要判“已声明主键”，应看 PRIMARY KEY 声明，不能只凭非空唯一就替数据库补写。
+
+## 补充：交互式 SQL 与嵌入式 SQL
+
+在查询工具输入 SQL 并查看结果，是交互式使用。传统嵌入式 SQL 则把带专用标记的 SQL 放在宿主语言中，由预处理和编译过程连接两种语言。例如 C 的 ECPG 形式可以写 `EXEC SQL SELECT name INTO :name FROM Staff WHERE id=:id;`，冒号标记宿主变量，程序借此传入条件、接收结果。
+
+SQL 结果可能有多行，宿主程序往往需要游标或相应结果遍历机制逐行处理。现代应用也常通过驱动和参数接口执行 SQL，这与传统预处理式嵌入 SQL 有共同的应用访问目的，但不必把每种接口都说成同一种编译方式。使用方式变化，不会把 SQL 变成某一个厂商的专有查询语言。[ECPG 官方概念说明](https://www.postgresql.org/docs/18/ecpg-concept.html)展示了预处理式嵌入的流程。
 
 ## 做题顺序与自查
 

@@ -154,6 +154,13 @@
 .review-original { margin-top: 30px; padding-block: 16px; border-block: 1px solid var(--review-line); }
 .review-original > summary { cursor: pointer; color: var(--review-green); font-size: 13px; }
 .review-original[open] > summary { margin-bottom: 22px; }
+.review-paper-gap { padding: 18px 0; border-bottom: 1px solid var(--review-line); }
+.review-paper-gap h3 { font-size: 1rem; line-height: 1.8; margin: 0 0 8px; }
+.review-paper-gap > p { font-size: 13px; margin-bottom: 12px; }
+.review-paper-gap > .review-caption { font-size: 11px; }
+.review-paper-gap .review-text-link { white-space: normal; overflow-wrap: anywhere; }
+.review-paper-source p { font-size: 13px; margin-bottom: 8px; }
+.review-paper-source summary { overflow-wrap: anywhere; }
 .review-prose table { display: block; overflow-x: auto; border-collapse: collapse; max-width: 100%; font-size: 12px; margin: 20px 0; }
 .review-prose th, .review-prose td { border-bottom: 1px solid var(--review-line); padding: 10px 13px; white-space: nowrap; text-align: left; }
 .review-lesson th, .review-lesson td { white-space: normal; min-width: 120px; max-width: 280px; vertical-align: top; }

@@ -1,0 +1,40 @@
+---
+import CSReviewLayout from '../../../../layouts/CSReviewLayout.astro';
+import { getReviewContent } from '../../../../lib/cs-review/content';
+import { MODULES, reviewUrl } from '../../../../lib/cs-review/catalogue';
+const { knowledge, questions, paperDocuments: documents, paperReview: review } = await getReviewContent();
+const documentMap = new Map(documents.map((document) => [document.id, document]));
+const topicMap = new Map(knowledge.map((topic) => [topic.knowledgeId, topic]));
+const addedQuestions = questions.filter((question) => question.source.reference);
+const pdfPages = documents.reduce((total, document) => total + (document.pages ?? 0), 0);
+const scanPages = documents.filter((document) => document.extraction === 'ocr').reduce((total, document) => total + (document.pages ?? 0), 0);
+const affectedTopics = new Set(review.gaps.map((gap) => gap.knowledgeId));
+---
+<CSReviewLayout title="资料对照与补充" active="knowledge" description="对照本地历年资料补充题型与知识，记录文件出处、页码和资料问题。">
+  <a class="review-back-link" href={reviewUrl('knowledge/')}>← 返回知识目录</a>
+  <header class="review-page-heading"><p class="review-eyebrow">MATERIALS / 资料对照</p><h1>资料对照与补充</h1><p class="review-lead">从题目发现容易漏掉的条件和方法，把解释补回对应章节。</p></header>
+  <div class="review-prose">
+    <p>本次对照你提供的 {documents.length} 个文件，其中 PDF 共 {pdfPages} 页，含 {scanPages} 页扫描资料。文件中有培训汇编、考生回忆版、单独的答案解析与相同题组；文件名里的年份仅表示资料标称，不等同于已核实的官方年度试卷。</p>
+    <p>针对 {affectedTopics.size} 个知识点补充了 {review.gaps.length} 项解释与练习，共新增 {addedQuestions.length} 道改编自测。题目保留文件名及页码或段落定位，答案重新推演；原始文件保留在本地资料目录。</p>
+  </div>
+  <div class="review-actions review-resource-actions"><a class="review-text-link" href="#topic-additions">查看补充的考点 ↓</a><a class="review-text-link" href="#source-issues">查看资料问题 ↓</a><a class="review-text-link" href="#source-files">查看文件索引 ↓</a></div>
+  <div id="topic-additions">
+    {MODULES.map((module) => {
+      const gaps = review.gaps.filter((gap) => topicMap.get(gap.knowledgeId)?.moduleId === module.id);
+      return gaps.length > 0 && <section class="review-related" id={`review-${module.id}`}><h2>{module.title}</h2>{gaps.map((gap) => <div class="review-paper-gap" id={gap.id}>
+        <h3><a class="review-text-link" href={reviewUrl(`knowledge/${gap.knowledgeId}/`)}>{topicMap.get(gap.knowledgeId)?.title} · {gap.topic} ↗</a></h3>
+        <p>{gap.summary}</p>
+        <p class="review-caption">对照：{gap.evidence.map((evidence, index) => <>{index > 0 && '；'}<a class="review-text-link" href={`#${evidence.documentId}`}>{documentMap.get(evidence.documentId)?.fileName} · {evidence.locator}</a></>)}</p>
+        <a class="review-text-link" href={reviewUrl(`practice/?mode=knowledge&knowledge=${gap.knowledgeId}&start=1`)}>练习这个知识点（含 {gap.questionIds.length} 道本项新增题）↗</a>
+      </div>)}</section>;
+    })}
+  </div>
+  <section class="review-related review-prose" id="source-issues"><h2>资料问题核对</h2><p>以下记录只针对所列位置。缺项、错答与题设歧义会影响判分；条件不够的题不强行给出唯一答案。</p>
+    {review.sourceIssues.map((issue) => <div class="review-paper-gap" id={issue.id}><h3>{issue.issue}</h3><p>{issue.resolution}</p><p class="review-caption"><a href={`#${issue.documentId}`}>{documentMap.get(issue.documentId)?.fileName}</a> · {issue.locator}</p></div>)}
+  </section>
+  <section class="review-related review-prose"><h2>本次取舍</h2><ul>{review.exclusions.map((item) => <li>{item}</li>)}</ul><p>新增内容用于计算机专业复习，不用资料里的旧年份数量推断当前考试权重。原手册、原题目编号和已有学习记录继续保留。</p></section>
+  <section class="review-related" id="source-files"><h2>原始文件索引</h2><p class="review-caption">用于确认自己正在看的资料版本；“同题组”不重复计入新增题。</p>
+    {documents.map((document) => <details class="review-original review-paper-source" id={document.id}><summary>{document.fileName}</summary><p class="review-caption">{document.format.toUpperCase()} · {document.pages ? `${document.pages} 页` : '按正文段落定位'}{document.claimedYear ? ` · 文件标称 ${document.claimedYear}` : ' · 未标年份'} · {document.extraction === 'ocr' ? '扫描页 OCR 辅助' : '正文提取'}</p><p>{document.note}</p>{document.sameQuestionSetAs && <p><a class="review-text-link" href={`#${document.sameQuestionSetAs}`}>查看相同题组的另一个文件 ↗</a></p>}</details>)}
+  </section>
+  <p class="review-source">对照更新：{review.reviewedAt}。来源核验记录与讲义、题库分开维护。</p>
+</CSReviewLayout>

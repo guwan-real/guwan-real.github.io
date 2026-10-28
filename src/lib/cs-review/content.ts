@@ -1,7 +1,9 @@
 import { getCollection } from 'astro:content';
 import { renderMarkdown } from './markdown';
-import { validateCatalogue, validateExplanations } from './content-schema';
+import { validateCatalogue, validateExplanations, validatePaperReview } from './content-schema';
 import type { Answer, PublicQuestion } from './types';
+import paperDocuments from '../../content/cs-review/paper-sources.json';
+import paperReview from '../../content/cs-review/paper-review-audit.json';
 
 const chunks = import.meta.glob<unknown[]>('../../content/cs-review/questions/*.json', { eager: true, import: 'default' });
 let cache: ReturnType<typeof load> | undefined;
@@ -17,7 +19,8 @@ async function load() {
   }
   const lessonDescriptions = new Map(explanations.map((entry) => [entry.data.knowledgeId, entry.data.description]));
   const enrichedKnowledge = knowledge.map((entry) => ({ ...entry, description: lessonDescriptions.get(entry.knowledgeId) ?? entry.description }));
-  return { entries, explanations, knowledge: enrichedKnowledge.sort((a, b) => a.order - b.order), questions };
+  const papers = validatePaperReview(knowledge, questions, paperDocuments, paperReview);
+  return { entries, explanations, knowledge: enrichedKnowledge.sort((a, b) => a.order - b.order), questions, paperDocuments: papers.documents, paperReview: papers.review };
 }
 export const getReviewContent = () => import.meta.env.DEV ? load() : cache ??= load();
 

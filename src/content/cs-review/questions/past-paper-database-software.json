@@ -1,0 +1,1631 @@
+[
+  {
+    "id": "paper-review-relational-theory-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "relational-theory"
+    ],
+    "type": "single",
+    "stem": "R、S 是可作集合运算的关系，分别有 12、8 个不同元组，R∪S 有 15 个元组。R∩S 与 R−S 的元组数依次是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "5、7"
+      },
+      {
+        "id": "B",
+        "text": "5、3"
+      },
+      {
+        "id": "C",
+        "text": "7、5"
+      },
+      {
+        "id": "D",
+        "text": "20、4"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "集合的并只计算一次重复元组。先由并求交，再从 R 中扣掉交集。",
+      "steps": [
+        "按集合计数公式，|R∪S|=|R|+|S|−|R∩S|。",
+        "代入 15=12+8−|R∩S|，得到交集有 5 个元组。",
+        "R−S 是 R 中不属于 S 的部分，因此有 12−5=7 个；S−R 则有 8−5=3 个。"
+      ],
+      "keyPoint": "差集有方向；R−S 与 S−R 一般不同。",
+      "pitfall": "把 S−R 的 3 个当成 R−S，或将并误算为两者数量直接相加。",
+      "optionAnalysis": {
+        "A": "5、7 同时满足并集公式和差集定义。",
+        "B": "第二个数 3 是 S−R 的大小。",
+        "C": "交换了交集与差集的大小。",
+        "D": "交集不可能大于较小关系的 8 个元组。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第6页第38题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第6页，第38题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "关系代数",
+      "集合基数",
+      "差集"
+    ]
+  },
+  {
+    "id": "paper-review-relational-theory-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "relational-theory"
+    ],
+    "type": "single",
+    "stem": "采用无重复元组的关系代数语义。R(A,B,C)={(a1,b1,c1),(a2,b1,c2)}，S(B,C,D)={(b1,c1,d1),(b1,c1,d2),(b1,c2,d3)}。R 与 S 自然连接的行数、列数依次是多少？",
+    "options": [
+      {
+        "id": "A",
+        "text": "6 行、4 列"
+      },
+      {
+        "id": "B",
+        "text": "3 行、6 列"
+      },
+      {
+        "id": "C",
+        "text": "3 行、4 列"
+      },
+      {
+        "id": "D",
+        "text": "2 行、4 列"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "自然连接既要检查同名属性的值，又要合并结果中的同名列。",
+      "steps": [
+        "两表的公共属性是 B、C，因此每一对元组都必须同时满足 B 相等、C 相等。",
+        "R 的第一行与 S 的前两行匹配，产生 2 行；R 的第二行只与 S 的第三行匹配，产生 1 行，共 3 行。",
+        "输出属性为 A、B、C、D，公共的 B、C 各保留一列，所以共有 4 列。"
+      ],
+      "keyPoint": "自然连接的行数取决于匹配情况，列数为两表属性数之和减去公共属性数。",
+      "pitfall": "只按 B 匹配而忽略 C，或把自然连接的去重复列误认为去除所有重复值。",
+      "optionAnalysis": {
+        "A": "只检查了共同的 B，遗漏 C 相等的条件。",
+        "B": "3 行正确，但自然连接不会同时输出两套 B、C。",
+        "C": "匹配行数与合并列数均正确。",
+        "D": "忽略了第一行可以匹配两条 S 记录，连接不保证一对一。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第10页第55题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第10页，第55题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "自然连接",
+      "关系代数",
+      "匹配行数"
+    ]
+  },
+  {
+    "id": "paper-review-relational-theory-03",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "relational-theory"
+    ],
+    "type": "single",
+    "stem": "R、S 具有相同关系模式。若只用并、差、笛卡儿积、选择、投影这五类基本运算，下列哪个表达式对所有 R、S 都等于 R∩S？",
+    "options": [
+      {
+        "id": "A",
+        "text": "R−S"
+      },
+      {
+        "id": "B",
+        "text": "R−(R−S)"
+      },
+      {
+        "id": "C",
+        "text": "(R∪S)−R"
+      },
+      {
+        "id": "D",
+        "text": "R×S"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "不必根据运算名称猜“基本”或“专门”，可逐个检查一个元组是否被保留。",
+      "steps": [
+        "R−S 保留在 R 中且不在 S 中的元组。",
+        "从 R 中再去掉 R−S，留下的恰好是在 R 中也在 S 中的元组。",
+        "因此 R−(R−S)=R∩S；并集减 R 得到的是 S−R，笛卡儿积则产生元组配对。"
+      ],
+      "keyPoint": "交运算可由差运算导出；能表达某种运算，不等于它必须单列为基本运算。",
+      "pitfall": "看到表达式多了括号就直接展开成“R−R−S”，破坏差集的方向与结合关系。",
+      "optionAnalysis": {
+        "A": "保留的是仅在 R 的元组，与交集相反。",
+        "B": "先去掉 R 独有部分，正好留下公共部分。",
+        "C": "得到 S 独有部分，一般不是交集。",
+        "D": "笛卡儿积的结果模式和元组含义都与交集不同。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第10页第56题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第10页，第56题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "基本关系运算",
+      "交集",
+      "等价表达式"
+    ]
+  },
+  {
+    "id": "paper-review-acid-transactions-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "acid-transactions"
+    ],
+    "type": "single",
+    "stem": "按教材的二级封锁协议，事务修改数据前取得 X 锁并持有到事务结束；只读数据时取得 S 锁，读完可释放。T1 读 A=100 后释放 S 锁；T2 将 A 改为 120 并提交；T1 再读 A=120。最准确的判断是什么？",
+    "options": [
+      {
+        "id": "A",
+        "text": "T1 第一次读取了未提交值，属于脏读"
+      },
+      {
+        "id": "B",
+        "text": "T2 一定违反二级封锁，因为 T1 尚未结束"
+      },
+      {
+        "id": "C",
+        "text": "这是幻读，因为两次值不同"
+      },
+      {
+        "id": "D",
+        "text": "两次读取同一数据项结果不同，属于不可重复读；该调度与题设协议相容"
+      }
+    ],
+    "correctOptionIds": [
+      "D"
+    ],
+    "explanation": {
+      "analysis": "锁协议允许只读的 S 锁提前释放，其他事务之后便有机会合法修改该数据项。",
+      "steps": [
+        "T1 第一次读的是题设已有值 100，T2 还没有写入；没有读取未提交写入的事实。",
+        "T1 释放 S 锁以后，T2 可以取得 X 锁，将 A 改为 120，并在提交后释放 X 锁。",
+        "T1 随后重新取得 S 锁再读，同一项 A 由 100 变成 120，体现不可重复读。"
+      ],
+      "keyPoint": "二级封锁主要防止脏读，不保证只读数据项在整个事务期间不被修改。",
+      "pitfall": "把“防脏读”当成“防所有读异常”，或把值变化统称为幻读。",
+      "optionAnalysis": {
+        "A": "第一次没有读取其他事务未提交的数据。",
+        "B": "题设已允许 T1 读完释放 S 锁，T2 可在其后修改。",
+        "C": "幻读关注同一范围查询的匹配记录集合变化，本题直接描述同一数据项的值变化。",
+        "D": "准确说明了异常类别和协议为何允许这一过程。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第19页第137题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第19页，第137题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "二级封锁协议",
+      "不可重复读",
+      "脏读"
+    ]
+  },
+  {
+    "id": "paper-review-acid-transactions-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "acid-transactions"
+    ],
+    "type": "multiple",
+    "stem": "采用教材一级、二级、三级封锁的约定，且讨论普通数据项的 S/X 锁。下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "三级封锁在一级基础上要求读数据的 S 锁也持有到事务结束，有助于避免同一已读数据项不可重复读"
+      },
+      {
+        "id": "B",
+        "text": "二级封锁和两阶段锁只是中文名称不同，规则完全一样"
+      },
+      {
+        "id": "C",
+        "text": "两阶段锁要求进入释放锁阶段后不再取得新锁，而不是要求每把 S 锁都读完立即释放"
+      },
+      {
+        "id": "D",
+        "text": "只要所有已读行都保持 S 锁，未被锁定的范围内就绝不可能新增满足条件的行"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "先辨认协议在规定“哪种锁持有多久”，还是在规定整个事务取得和释放锁的阶段。",
+      "steps": [
+        "三级封锁使读过的数据项受到 S 锁保护，其他事务的冲突 X 锁需要等待。",
+        "两阶段锁把事务分为取得锁的增长阶段与释放锁的收缩阶段，开始释放后不得再申请新锁；这与二级封锁的定义不同。",
+        "仅锁现有行不自动保护整个查询谓词范围，防止范围内新插入还可能需要范围锁、谓词锁或其他可串行化机制。"
+      ],
+      "keyPoint": "“二级”描述封锁强度约定，“两阶段”描述申请与释放顺序；范围保护还要单独分析。",
+      "pitfall": "因为两个名称都有“二/两”就等同；从单行锁直接推出没有幻行。",
+      "optionAnalysis": {
+        "A": "符合题设三级封锁对 S 锁持有期的规定。",
+        "B": "二者定义和保证不能按名字合并。",
+        "C": "准确描述两阶段锁的增长、收缩分界。",
+        "D": "锁住已有行不必然阻止未锁范围内的新行。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第22页第142题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第22页，第142题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "三级封锁协议",
+      "两阶段锁",
+      "范围保护"
+    ]
+  },
+  {
+    "id": "paper-review-sql-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "multiple",
+    "stem": "有 Employee(emp_id,dept_id,name) 与 Department(dept_id,region)。查询通过内连接取 region='东区' 的员工姓名；过滤条件只依赖 Department.region，无外连接、聚合或带副作用表达式。关于优化，下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "可以先在 Department 上筛出东区部门，再与 Employee 内连接，保持题设结果"
+      },
+      {
+        "id": "B",
+        "text": "连接前可以无条件从 Employee 删除 dept_id，因为最终只输出 name"
+      },
+      {
+        "id": "C",
+        "text": "若提前投影列，应保留后续连接、过滤和输出仍需要的列"
+      },
+      {
+        "id": "D",
+        "text": "只要把选择放在投影前面，每种数据分布与执行环境中都一定更快"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "优化应减少中间数据，同时保持后续运算所需信息和最终语义。",
+      "steps": [
+        "东区条件只用到 Department 的列，题设为内连接，可先从该表筛出满足条件的部门。",
+        "Employee.dept_id 与 Department.dept_id 是后续匹配依据，若提前丢失就不能按原条件连接。",
+        "保留必要列后可以考虑减少中间宽度，但实际速度仍取决于规模、索引、选择性和执行计划，不能保证固定改写总是最快。"
+      ],
+      "keyPoint": "能安全下推的条件与必须保留的列，要由具体查询确定。",
+      "pitfall": "把逻辑等价改写背成任何查询通用的机械顺序，尤其忽略外连接边界。",
+      "optionAnalysis": {
+        "A": "在题设的内连接与单表过滤条件下可保持结果。",
+        "B": "连接键仍有用途，不能只按最终输出列决定提前投影。",
+        "C": "能防止丢失后续所需的连接、筛选及输出信息。",
+        "D": "等价性不等于对所有数据和环境保证更快。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第7页第41题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第7页，第41题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "查询优化",
+      "选择下推",
+      "投影下推"
+    ]
+  },
+  {
+    "id": "paper-review-sql-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "single",
+    "stem": "在 PostgreSQL 中，Staff(id PRIMARY KEY,branch) 上定义可自动更新的简单视图 EastStaff：SELECT id,branch FROM Staff WHERE branch='E' WITH CHECK OPTION。用户已具备所需权限，且无其他触发器或约束阻止操作。哪项说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "可以通过视图把 E01 的 branch 从 E 改成 W，因为它修改前可见"
+      },
+      {
+        "id": "B",
+        "text": "通过视图插入 branch=W 的行会失败；删除视图中可见的 E 分支行，不因 CHECK OPTION 本身而被禁止"
+      },
+      {
+        "id": "C",
+        "text": "WITH CHECK OPTION 会让普通视图自动缓存结果"
+      },
+      {
+        "id": "D",
+        "text": "所有含 GROUP BY 的视图也因此自动变得可更新"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "CHECK OPTION 针对通过视图写入后的新行是否仍满足该视图条件，不是对任何操作一律拒绝。",
+      "steps": [
+        "EastStaff 的可见条件是 branch=E，题设保证它是可自动更新的简单视图。",
+        "插入 W 或把现有 E 改为 W，会使新行不满足条件，因此检查不通过。",
+        "DELETE 删除已有可见行，不产生一个需要重新通过该条件的新版本；仅 CHECK OPTION 本身不禁止题设的删除。"
+      ],
+      "keyPoint": "视图检查选项限制写入后可见性，不创造缓存，也不把所有复杂视图变成可更新视图。",
+      "pitfall": "认为“更新前看得到”就可以改到视图外，或以为检查选项还要求删除后记录继续存在。",
+      "optionAnalysis": {
+        "A": "应检查修改后的行，改为 W 会离开视图。",
+        "B": "正确区分插入后的条件检查与删除操作。",
+        "C": "普通视图与物化结果是不同概念。",
+        "D": "自动更新资格有单独规则，GROUP BY 等结构不能靠此选项变成简单可更新视图。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第10页第52题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第10页，第52题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "视图",
+      "WITH CHECK OPTION",
+      "更新可见性"
+    ]
+  },
+  {
+    "id": "paper-review-sql-03",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "multiple",
+    "stem": "在 PostgreSQL 中执行 SELECT id FROM Product WHERE price > (SELECT price FROM Product WHERE name='参考件'); 子查询没有聚合。关于右侧标量子查询，下列哪些判断正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "若子查询返回零行，其标量结果为 NULL，price > NULL 不为 TRUE，所以外层没有行通过该条件"
+      },
+      {
+        "id": "B",
+        "text": "若子查询返回两行，系统必定自动选价格较大的一行作比较"
+      },
+      {
+        "id": "C",
+        "text": "若子查询恰好返回一行且 price=100，外层会按 price > 100 比较"
+      },
+      {
+        "id": "D",
+        "text": "只要字段名字叫 name，就可以推断它唯一，不需要唯一约束或题设保证"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "这里需要一个标量值。行数不同，含义分别是空标量、一个值或违反标量基数要求。",
+      "steps": [
+        "标量子查询用在大于号右边，需要至多一行一列；零行时作为 NULL 处理。",
+        "SQL 中普通的 price > NULL 结果为 UNKNOWN，WHERE 只保留 TRUE，因此本条件没有匹配行。",
+        "一行 100 可直接比较；多于一行则报基数错误，不能自行替题目增加 MAX 或唯一性条件。"
+      ],
+      "keyPoint": "写标量子查询时同时检查列数与行数，尤其不能默认业务名称唯一。",
+      "pitfall": "只背“多行会错”却漏掉零行结果，或把 NULL 比较当成 0 比较。",
+      "optionAnalysis": {
+        "A": "符合标量零行与 WHERE 三值逻辑的组合。",
+        "B": "需要显式 MAX 等表达式才能取最大值，不会自动这样做。",
+        "C": "一行一列满足标量要求，随后按该数值比较。",
+        "D": "名称不是约束声明，重复名称完全可能。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第11页第59题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第11页，第59题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "标量子查询",
+      "NULL",
+      "子查询基数"
+    ]
+  },
+  {
+    "id": "paper-review-sql-04",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "single",
+    "stem": "Delta(id,v) 有三行，v 分别为 −4、3、8，均非 NULL。分别执行①SELECT ABS(v) FROM Delta；②SELECT SUM(v),MAX(v) FROM Delta；均无 GROUP BY。哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "①一行且为 15；②三行，每行都是 7、8"
+      },
+      {
+        "id": "B",
+        "text": "①三行，值的多重集合为 4、3、8；②一行，两个值为 7、8"
+      },
+      {
+        "id": "C",
+        "text": "①一行且为 8；②一行且为 15、8"
+      },
+      {
+        "id": "D",
+        "text": "ABS、SUM、MAX 都必须先写 GROUP BY 才能使用"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "ABS 对每行的一个值计算；SUM、MAX 在没有分组时分别聚合整个输入集合。",
+      "steps": [
+        "逐行计算 ABS，得到 4、3、8，保留三条输出记录；未写 ORDER BY，不承诺显示顺序。",
+        "SUM 在原 v 上计算，−4+3+8=7，不是先做 ABS 后的 15。",
+        "MAX 取原 v 的最大值 8；无 GROUP BY 的这两个聚合结果合在一行输出。"
+      ],
+      "keyPoint": "标量函数逐值变换，聚合函数汇总一组；表达式怎样组合决定先后意义。",
+      "pitfall": "看到 ABS 的结果就把 SUM(v) 偷换为 SUM(ABS(v))，或把聚合结果行数当成原表行数。",
+      "optionAnalysis": {
+        "A": "颠倒了逐行与聚合的结果形状。",
+        "B": "行数与两个数值均正确，并且没有暗示固定行序。",
+        "C": "把 ABS 当成求最大值，并对 SUM 改变了表达式。",
+        "D": "标量可逐行执行，聚合也可对全表形成一组，不都要求 GROUP BY。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).docx》Word段落52 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-20e0dbeaef8c",
+        "locator": "Word 第52段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "标量函数",
+      "聚合函数",
+      "SQL结果行数"
+    ]
+  },
+  {
+    "id": "paper-review-sql-05",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "single",
+    "stem": "某 C 程序在 PostgreSQL ECPG 源文件中使用 EXEC SQL SELECT name INTO :host_name FROM Reader WHERE reader_id=:host_id;。假定变量已声明且查询恰好一行。最准确的理解是什么？",
+    "options": [
+      {
+        "id": "A",
+        "text": "SQL 嵌入宿主 C 程序，冒号标记宿主变量，ECPG 预处理后再由 C 工具链构建"
+      },
+      {
+        "id": "B",
+        "text": "冒号表示两个参数都是数据库中新建的列"
+      },
+      {
+        "id": "C",
+        "text": "嵌入 SQL 表示整段 C 程序都改由 DBMS 作为 SQL 直接执行"
+      },
+      {
+        "id": "D",
+        "text": "只有在交互式查询窗口中输入的语句才属于 SQL"
+      }
+    ],
+    "correctOptionIds": [
+      "A"
+    ],
+    "explanation": {
+      "analysis": "嵌入式描述 SQL 放在宿主程序中的使用方式，C 仍负责其他程序逻辑。",
+      "steps": [
+        "EXEC SQL 标明嵌入的 SQL 语句，查询与条件仍由数据库的 SQL 机制处理。",
+        "host_id 向查询提供程序中的输入值，host_name 接收结果；它们不是自动增加的表字段。",
+        "ECPG 对源文件预处理生成相应 C 代码，之后还需编译链接；这不同于人在查询工具逐句交互执行。"
+      ],
+      "keyPoint": "宿主变量连接程序数据与 SQL；嵌入使用方式不改变 SQL 的数据库职责。",
+      "pitfall": "把变量前缀当成建表语法，或认为嵌入就不需要宿主语言的构建步骤。",
+      "optionAnalysis": {
+        "A": "符合题设 ECPG 的使用与构建方式。",
+        "B": "冒号标记宿主变量，不是 DDL 的列定义。",
+        "C": "宿主语言的控制逻辑不因此全部变成 SQL。",
+        "D": "交互执行与嵌入程序都是 SQL 的使用场景。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机题库与答案.docx》Word段落59 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-c0e0166ea582",
+        "locator": "Word 第59段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "嵌入式SQL",
+      "宿主变量",
+      "ECPG"
+    ]
+  },
+  {
+    "id": "paper-review-sql-06",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "sql"
+    ],
+    "type": "multiple",
+    "stem": "在 PostgreSQL 中，Teacher 表定义 teacher_no INTEGER NOT NULL UNIQUE、name TEXT，未声明其他约束，也没有 PRIMARY KEY 子句。下列哪些判断正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "teacher_no 不允许保存 NULL，非空值也不能重复"
+      },
+      {
+        "id": "B",
+        "text": "teacher_no 满足作为单列候选键的唯一、非空条件，但并未因此自动被声明为 PRIMARY KEY"
+      },
+      {
+        "id": "C",
+        "text": "因为 teacher_no 不是显式主键，所以允许任意重复非空值"
+      },
+      {
+        "id": "D",
+        "text": "teacher_no 可以保存字符串 T01，因为 UNIQUE 会覆盖 INTEGER 的类型要求"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B"
+    ],
+    "explanation": {
+      "analysis": "分别解释类型、非空、唯一和主键声明，不把其中任一个扩大成其他约束。",
+      "steps": [
+        "INTEGER 规定列的数据类型，NOT NULL 禁止空值，UNIQUE 禁止重复非空值。",
+        "这使单列 teacher_no 可唯一且非空地识别记录，具有候选键所需性质。",
+        "题干没有 PRIMARY KEY 子句，所以不能声称已显式选定该列为表主键；这也不会撤销已有 UNIQUE 与类型约束。"
+      ],
+      "keyPoint": "具有候选键性质与被显式选择为主键是两个判断层次。",
+      "pitfall": "把 NOT NULL UNIQUE 看成自动书写了 PRIMARY KEY，或以为不是主键就没有唯一性。",
+      "optionAnalysis": {
+        "A": "这是两个列约束直接给出的效果。",
+        "B": "准确区分候选标识能力与主键声明。",
+        "C": "UNIQUE 仍然生效，不能重复非空编号。",
+        "D": "唯一约束不会替代列类型，T01 不是合法整数值。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).pdf》PDF第11页第5题（多选） 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bca354628009",
+        "locator": "PDF 第11页，多选第5题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "候选键",
+      "UNIQUE",
+      "NOT NULL",
+      "主键声明"
+    ]
+  },
+  {
+    "id": "paper-review-db-design-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-design"
+    ],
+    "type": "single",
+    "stem": "合并两个部门的局部 E-R 图时出现三种差异：①同一个设备重量，一边用克、一边用千克；②同一种客户，一边叫“客户”、一边叫“用户”；③一边把供应商当设备的文本属性，一边把它建为独立实体。哪组分类最合适？",
+    "options": [
+      {
+        "id": "A",
+        "text": "①命名冲突；②结构冲突；③属性冲突"
+      },
+      {
+        "id": "B",
+        "text": "①属性冲突；②命名冲突；③结构冲突"
+      },
+      {
+        "id": "C",
+        "text": "三者都是 SQL 拼写语法错误"
+      },
+      {
+        "id": "D",
+        "text": "只要将图中的字改成一样，三者都会自动解决"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "从值的含义、名称与对象的建模方式三个角度定位差异。",
+      "steps": [
+        "①名称可以相同，但单位和数值解释不同，需要统一属性表达或换算。",
+        "②对象含义相同却名字不同，属于同义不同名的命名冲突。",
+        "③同一业务对象分别作为属性与实体，建模结构不同，需要按业务需求统一结构和联系。"
+      ],
+      "keyPoint": "局部模型合并要统一语义，不能仅检查图或 SQL 的语法。",
+      "pitfall": "因为都涉及文字描述就把一切都判成命名冲突。",
+      "optionAnalysis": {
+        "A": "三类均对应错位。",
+        "B": "分别对准单位表达、同义名称和实体属性结构。",
+        "C": "E-R 概念模型的语义差异不等于 SQL 拼写错误。",
+        "D": "单位与结构差异仍需业务决策，改名不能包办。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第10页第51题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第10页，第51题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "E-R合并",
+      "命名冲突",
+      "属性冲突",
+      "结构冲突"
+    ]
+  },
+  {
+    "id": "paper-review-db-design-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-design"
+    ],
+    "type": "single",
+    "stem": "每位员工当前恰好属于一个部门，一个部门可有多位员工；不记录历史调动，员工编号全局唯一。若把归属联系单独存为 Assignment(emp_id,dept_id,started_at)，下列哪个属性集是由题设保证的最小候选键？",
+    "options": [
+      {
+        "id": "A",
+        "text": "dept_id"
+      },
+      {
+        "id": "B",
+        "text": "(emp_id,dept_id)，且 emp_id 单独一定不够"
+      },
+      {
+        "id": "C",
+        "text": "emp_id"
+      },
+      {
+        "id": "D",
+        "text": "started_at"
+      }
+    ],
+    "correctOptionIds": [
+      "C"
+    ],
+    "explanation": {
+      "analysis": "每位员工至多一条当前归属，部门却可以在多条归属中出现。",
+      "steps": [
+        "题设要求一位员工只有一个当前部门，因此 emp_id 决定 dept_id 和该次当前归属的 started_at。",
+        "同一个部门可以有 E01、E02 等多名员工，dept_id 允许重复，不能唯一标识联系。",
+        "emp_id 已能标识整条记录，再加入 dept_id 是更大的超键，不是本例最小候选键；日期也未保证唯一。"
+      ],
+      "keyPoint": "1:N 联系单独成表时，在给定的一次归属约束下，多方的键可标识联系。",
+      "pitfall": "机械认为所有联系都必须以双方键联合成最小键，或把一方部门键当成唯一键。",
+      "optionAnalysis": {
+        "A": "会把一个部门的多名员工错误限制成最多一名。",
+        "B": "联合值虽可唯一，但 emp_id 已足够，所以不最小。",
+        "C": "符合员工到唯一当前归属的函数依赖，并满足最小性。",
+        "D": "多名员工可以同日入职，题设没有日期唯一性。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(2).pdf》PDF第13页第11题（多选） 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-f729c25aac93",
+        "locator": "PDF 第13页，多选第11题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "E-R映射",
+      "1:N联系",
+      "候选键"
+    ]
+  },
+  {
+    "id": "paper-review-db-design-03",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-design"
+    ],
+    "type": "multiple",
+    "stem": "规范化结构为 Department(dept_id,dept_name) 与 Employee(emp_id,dept_id)。为高频只读报表，团队在报表数据中额外保存 dept_name。下列哪些判断正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "这种有意冗余可能省去报表查询中的一次连接，但要测量实际收益"
+      },
+      {
+        "id": "B",
+        "text": "部门更名时应有一致的更新或刷新规则，否则可能出现同一部门两个当前名称"
+      },
+      {
+        "id": "C",
+        "text": "只要额外保存一列，就能保证所有写操作更快且永远没有异常"
+      },
+      {
+        "id": "D",
+        "text": "多个员工共享同一个 dept_id，本身就足以证明原来的两表设计违反 1NF"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B"
+    ],
+    "explanation": {
+      "analysis": "受控冗余用一部分存储和维护责任，交换特定读取路径上的便利。",
+      "steps": [
+        "原查询需要通过 dept_id 连接以得到名称；保存名称副本后，特定报表可能不再需要该连接。",
+        "当部门名称改变，副本必须按规则更新，或明确它保存的是历史时点事实；否则可能不一致。",
+        "读取收益要结合计划和负载判断，写入通常还有额外维护；合法重复的外键值不违反原子性要求。"
+      ],
+      "keyPoint": "冗余是否合理，要同时看事实语义、读取收益和维护一致性的成本。",
+      "pitfall": "将“可能减少连接”扩大为“必然更快”，或把一切重复值都当成范式违规。",
+      "optionAnalysis": {
+        "A": "说明了可能的读取收益，并保留测量前提。",
+        "B": "指出名称副本的更新一致性责任。",
+        "C": "冗余不提供这些绝对保证，还可能增加写入成本。",
+        "D": "多位员工属于同一部门是正常联系，外键值重复不等于字段非原子。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2020年国家电网-计算机类真题.pdf》PDF第7页第66题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-d91ce57b3763",
+        "locator": "PDF 第7页，第66题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "反规范化",
+      "受控冗余",
+      "更新一致性"
+    ]
+  },
+  {
+    "id": "paper-review-db-design-04",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-design"
+    ],
+    "type": "multiple",
+    "stem": "Loan(loan_id,reader_id,borrowed_at,note) 中 loan_id 是主键。方案甲按借出时间分为 2025 年以前与 2025 年及以后，两部分互斥且覆盖全部行；方案乙按列分成 Core(loan_id,reader_id,borrowed_at) 与 Note(loan_id,note)，且每条 Loan 在两表各有且仅有一行。哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "甲是水平拆分，可以用 UNION ALL 合回全部行"
+      },
+      {
+        "id": "B",
+        "text": "乙是垂直拆分，可按 loan_id 等值连接还原原来的各列"
+      },
+      {
+        "id": "C",
+        "text": "乙无需保存任何对应键，只要按两个结果的显示行号拼接就必然正确"
+      },
+      {
+        "id": "D",
+        "text": "任何拆分都保证所有查询更快，因为每个表都变小了"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B"
+    ],
+    "explanation": {
+      "analysis": "先看拆的是行还是列，再检查重组依据是否完整且唯一。",
+      "steps": [
+        "甲保留相同列、分走不同行，属于水平拆分；题设保证互斥且覆盖，因此 UNION ALL 不漏行、不因分区重叠产生重复。",
+        "乙把同一行的列分开，保留两边唯一的 loan_id 后，连接能把同一次借阅的字段配回。",
+        "关系查询没有无条件固定行序，不能按显示行号恢复对应；拆分还可能增加跨区扫描或连接成本。"
+      ],
+      "keyPoint": "水平重组检查覆盖与重叠，垂直重组检查键与匹配基数。",
+      "pitfall": "把分片与复制混同，或认为两张表第几行天然对应。",
+      "optionAnalysis": {
+        "A": "符合相同行模式下按互斥时间范围分行的重组方式。",
+        "B": "题设每键两边各一行，连接不会错配或放大。",
+        "C": "无排序与对应约束的行位置不代表同一业务对象。",
+        "D": "是否变快要看访问模式与实际计划，不能由表变小直接保证。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(2).pdf》PDF第12页第8题（多选） 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-f729c25aac93",
+        "locator": "PDF 第12页，多选第8题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "水平拆分",
+      "垂直拆分",
+      "无损重组"
+    ]
+  },
+  {
+    "id": "paper-review-db-design-05",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-design"
+    ],
+    "type": "single",
+    "stem": "管理员执行两项工作：甲仅整理数据页并按索引信息重新安排物理记录，表的列与业务约束不变；乙把设备表中的供应商信息拆出为独立 Supplier 表并修改应用访问。哪项判断最准确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "甲必然改变业务逻辑模式；乙只是在整理磁盘碎片"
+      },
+      {
+        "id": "B",
+        "text": "甲主要调整物理组织；乙涉及逻辑结构与应用的演进"
+      },
+      {
+        "id": "C",
+        "text": "甲之后任何查询都保证按该索引顺序返回，不再需要 ORDER BY"
+      },
+      {
+        "id": "D",
+        "text": "无论实际动作是什么，只要升级 DBMS 版本，就证明已经重新设计了全部业务表"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "按实际改变的层次判断，不把教材术语或软件版本号当成业务结构变化的证据。",
+      "steps": [
+        "甲没有改变关系属性与业务约束，主要重排存储与访问安排。",
+        "乙改变表之间如何表达设备与供应商事实，并修改应用访问，属于逻辑结构演进。",
+        "物理排列不替代 SQL 的 ORDER BY；DBMS 升级是否伴随逻辑变更，也必须看实际迁移内容。"
+      ],
+      "keyPoint": "物理布局、逻辑模式和 DBMS 软件版本是不同观察层次。",
+      "pitfall": "把“重组一定不改变任何物理安排”当成定义，或由升级软件推导业务重设计。",
+      "optionAnalysis": {
+        "A": "颠倒了两个动作的主要层次。",
+        "B": "与题设明确描述的变化相符。",
+        "C": "查询仍需显式排序来要求结果顺序。",
+        "D": "软件升级本身不保证发生业务表重设计。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2020年国家电网-计算机类真题.pdf》PDF第7页第59题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-d91ce57b3763",
+        "locator": "PDF 第7页，第59题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "数据库维护",
+      "物理组织",
+      "逻辑设计"
+    ]
+  },
+  {
+    "id": "paper-review-db-security-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-security"
+    ],
+    "type": "single",
+    "stem": "在 PostgreSQL 中，ZHAO 仅直接获得 Reader 表 phone 列的 UPDATE 权限，无角色继承、表级 UPDATE、所有者等其他路径。要只撤回这项更新授权，哪条语句合适？",
+    "options": [
+      {
+        "id": "A",
+        "text": "REVOKE SELECT ON Reader FROM ZHAO;"
+      },
+      {
+        "id": "B",
+        "text": "REVOKE UPDATE (phone) ON Reader FROM ZHAO;"
+      },
+      {
+        "id": "C",
+        "text": "DROP COLUMN phone FROM Reader;"
+      },
+      {
+        "id": "D",
+        "text": "GRANT UPDATE (phone) ON Reader TO ZHAO;"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "将“撤回”“更新”“phone 列”“Reader 表”“ZHAO”逐一对应到语法。",
+      "steps": [
+        "撤回已有授权应使用 REVOKE，UPDATE 对应修改能力，不是读取的 SELECT。",
+        "UPDATE(phone) 限定列级权限，ON Reader 限定对象，FROM ZHAO 限定被撤权主体。",
+        "题设排除了其他授权路径，所以撤回这项直接授权后，ZHAO 不再由这些假设外路径保有同项能力。"
+      ],
+      "keyPoint": "权限撤回与删除数据结构不同；有效权限仍要结合全部授予路径。",
+      "pitfall": "把 REVOKE 当成删除列，或忘记其他角色可能仍提供相同权限。",
+      "optionAnalysis": {
+        "A": "撤的是读取权限，未对准已有列级更新授权。",
+        "B": "操作、列、表与主体均与目标一致。",
+        "C": "这是改变表结构的意图，不是撤销授权，且也不是此产品的正确独立 DROP COLUMN 语法。",
+        "D": "这会增加或保留授权，方向相反。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2018年国家电网-计算机类真题.pdf》PDF第6页第56题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bf39e40d87a7",
+        "locator": "PDF 第6页，第56题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "REVOKE",
+      "列级权限",
+      "有效权限"
+    ]
+  },
+  {
+    "id": "paper-review-db-security-02",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-security"
+    ],
+    "type": "multiple",
+    "stem": "某 SQL Server 实例中，普通服务器登录名 analyst 分别映射为数据库 A 的用户 report_a 和数据库 B 的用户 report_b。report_a 加入 A 库只读角色，B 库未授予相应表权限。下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "登录名与两个数据库用户的名称必须完全相同，否则无法映射"
+      },
+      {
+        "id": "B",
+        "text": "在 A 库获得的表权限不会仅因同属一个登录名就自动变成 B 库的同类表权限"
+      },
+      {
+        "id": "C",
+        "text": "登录名、数据库用户和数据库角色有不同作用域，需要分别检查对应授权"
+      },
+      {
+        "id": "D",
+        "text": "除了 guest，SQL Server 所有数据库用户在所有场景下都必须对应服务器登录名"
+      }
+    ],
+    "correctOptionIds": [
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "题设使用常见登录映射场景，但不能从这一场景推出所有用户类别的绝对规则。",
+      "steps": [
+        "一个服务器登录可以在不同数据库映射为各自的数据库用户，名字可不同。",
+        "数据库内角色和对象授权按对应作用域检查，A 的读取权不自动给 B 的表访问权。",
+        "SQL Server 还支持包含数据库用户与 WITHOUT LOGIN 等类别，不能声称除 guest 外全部必有服务器登录映射。"
+      ],
+      "keyPoint": "身份入口、库内身份与对象授权需要分层；产品还可能有其他合法身份类别。",
+      "pitfall": "把“能登录实例”当成“能操作所有数据库对象”，或把一种常见映射当成唯一模式。",
+      "optionAnalysis": {
+        "A": "用户名称可以与登录名不同，名字相同不是题设映射的必要条件。",
+        "B": "正确保留数据库内授权作用域。",
+        "C": "准确区分三个概念的职责与检查层次。",
+        "D": "这个绝对说法排除了官方支持的其他用户类别。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2020年国家电网-计算机类真题.pdf》PDF第10页第96题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-d91ce57b3763",
+        "locator": "PDF 第10页，第96题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "SQLServer身份",
+      "数据库用户",
+      "权限作用域"
+    ]
+  },
+  {
+    "id": "paper-review-db-security-03",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "db-security"
+    ],
+    "type": "multiple",
+    "stem": "在 PostgreSQL 中，ReaderPublic 是 SELECT reader_id,name FROM Reader 定义的普通视图。下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "普通视图主要保存查询定义，不能仅因使用视图就断言保存了独立结果缓存"
+      },
+      {
+        "id": "B",
+        "text": "查询 ReaderPublic 一定比直接执行同样底层查询更快"
+      },
+      {
+        "id": "C",
+        "text": "若同一账号还可以直接查询 Reader 全部敏感列，仅给它一个不含电话的视图不足以限制它读取电话"
+      },
+      {
+        "id": "D",
+        "text": "普通视图只要创建一次，其结果便永远与基表之后的变化无关"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "视图可简化表达和限制暴露，但其结果机制、执行成本和权限路径必须分别判断。",
+      "steps": [
+        "普通视图查询按定义从底层数据得到结果，与保存结果的物化视图不同。",
+        "查询速度仍取决于底层操作、索引、数据量与计划，普通视图的名字没有自动加速保证。",
+        "若账号保有基表读取权，就可能绕过裁剪列的视图；授权限制需要一并检查基表路径。"
+      ],
+      "keyPoint": "普通视图不是自动缓存，视图抽象也不自动撤回底层已有权限。",
+      "pitfall": "把虚表当成静态副本，或用“封装了查询”直接推出更快、更安全。",
+      "optionAnalysis": {
+        "A": "准确描述普通视图与物化结果的边界。",
+        "B": "等价底层查询不因使用视图就保证减少成本。",
+        "C": "说明为何必须同时核查底层直接授权。",
+        "D": "普通视图不是创建时冻结的结果快照。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2021计算机类真题.pdf》PDF第19页第138题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-0c92787034a0",
+        "locator": "PDF 第19页，第138题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "普通视图",
+      "物化视图",
+      "权限绕过"
+    ]
+  },
+  {
+    "id": "paper-review-backup-recovery-01",
+    "revision": 1,
+    "moduleId": "databases",
+    "knowledgeIds": [
+      "backup-recovery"
+    ],
+    "type": "multiple",
+    "stem": "采用支持“基础备份＋连续日志重放”的数据库恢复方案。02:00 的基础备份 F 与其后覆盖到 08:59 的完整连续日志均在独立介质可用。09:00 数据盘损坏，无其他损坏。下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "可以先还原 F，再按方案要求重放连续日志，推进到其覆盖范围内的目标状态"
+      },
+      {
+        "id": "B",
+        "text": "因为是物理数据盘损坏，日志在任何情况下都不能参与恢复"
+      },
+      {
+        "id": "C",
+        "text": "如果目标是避开 08:30 已提交的一次误删除，单纯重放到所有日志末尾不一定符合业务目标"
+      },
+      {
+        "id": "D",
+        "text": "只要保留最后一小段日志，就不再需要任何起始数据库状态或此前恢复链"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "区分恢复起点、增量修改依据与目标时间，不能把日志用途限制为一种故障。",
+      "steps": [
+        "F 提供可用数据库起点，题设完整连续日志记录了此后需要推进的修改依据。",
+        "在指定机制下，还原基础备份后按正确顺序重放日志，可以用于数据盘损坏后的介质恢复。",
+        "已提交的误删除也会被日志记录；若目标是避免它，需要选择适当恢复点并处理后续合法业务，而不是机械追到末尾。"
+      ],
+      "keyPoint": "恢复能否成功取决于可用的基础状态、连续日志链与恢复目标，而非一句“日志不能修物理故障”。",
+      "pitfall": "把“日志不是完整备份”误读为“日志不能参与介质恢复”。",
+      "optionAnalysis": {
+        "A": "符合题设明确支持的恢复机制和材料条件。",
+        "B": "基础备份与日志组合正可用于这种恢复，绝对否定错误。",
+        "C": "区分最新状态与业务希望恢复的正确时点。",
+        "D": "末段日志一般不能从零重造缺失的基础数据与中间状态。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2020年国家电网-计算机类真题.pdf》PDF第9页第83题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-d91ce57b3763",
+        "locator": "PDF 第9页，第83题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "介质恢复",
+      "日志链",
+      "时间点恢复"
+    ]
+  },
+  {
+    "id": "paper-review-supervised-learning-01",
+    "revision": 1,
+    "moduleId": "ai",
+    "knowledgeIds": [
+      "supervised-learning"
+    ],
+    "type": "multiple",
+    "stem": "一个无循环连接的多层感知机用带标签样本训练：前向得到预测，计算损失，再反向求梯度并更新参数。下列哪些判断正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "它可以是前馈网络，同时使用反向传播训练"
+      },
+      {
+        "id": "B",
+        "text": "只要反向求了梯度，预测连接结构就必然变成反馈网络"
+      },
+      {
+        "id": "C",
+        "text": "带标签是学习信号的特征，与网络是否存在循环连接不是同一分类维度"
+      },
+      {
+        "id": "D",
+        "text": "循环网络之所以称为循环，只是因为训练样本要反复跑多个 epoch"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "连接结构、学习信号、梯度算法和训练轮数分别回答不同问题。",
+      "steps": [
+        "题设预测连接无环，从输入到输出，符合前馈结构。",
+        "反向传播沿计算依赖求梯度，并不在预测结构中凭空加入状态反馈连接。",
+        "标签支持监督学习；循环网络维护跨时间步的状态，与是否训练多个 epoch 不是同一件事。"
+      ],
+      "keyPoint": "前馈可以用反向传播训练；不要根据传播一词把结构与求导过程合并分类。",
+      "pitfall": "把训练时“反向”与结构上“反馈”视为同义词，或把重复训练当成循环网络定义。",
+      "optionAnalysis": {
+        "A": "两个描述分别针对结构与训练算法，可以同时成立。",
+        "B": "梯度计算方向不改变题设无环的预测连接。",
+        "C": "正确区分标签信号与网络结构两个维度。",
+        "D": "epoch 是遍历训练数据的次数，不定义模型是否有循环状态。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2022真题一批-计算机类.pdf》PDF第22页第143题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bb60eb608dc8",
+        "locator": "PDF 第22页，第143题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "前馈网络",
+      "反向传播",
+      "监督学习",
+      "循环网络"
+    ]
+  },
+  {
+    "id": "paper-review-iot-01",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "iot"
+    ],
+    "type": "multiple",
+    "stem": "仓库给普通备件贴上无源 RFID 标签。读写器取得编号，经联网网关交给后台匹配库存。下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "备件能参与该系统，不要求每件备件都运行完整操作系统并分配独立 IP 地址"
+      },
+      {
+        "id": "B",
+        "text": "读写器、网关和后台可以分担识别、网络上送与业务关联等工作"
+      },
+      {
+        "id": "C",
+        "text": "只要标签有芯片，就能推断该备件必然可以独立连续上传高清视频"
+      },
+      {
+        "id": "D",
+        "text": "因为物品未直接接入互联网，整个系统就绝不能利用它的身份信息进行联网管理"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B"
+    ],
+    "explanation": {
+      "analysis": "顺着身份数据的实际路径分配能力，避免把系统总体能力强加给每一件物品。",
+      "steps": [
+        "无源标签可由读写器信号获得工作能量，并按相应协议返回标识。",
+        "读写器获取编号，网关负责联网，后台将编号与业务记录关联，各节点能力不同。",
+        "参与联网管理不等于每件物品都是通用联网电脑，也不意味着一个简单标识标签具备视频采集与上传能力。"
+      ],
+      "keyPoint": "可识别物品与直接联网计算节点不同，系统可以通过中间节点连接现实对象。",
+      "pitfall": "看到物联网就要求每个“物”都配通用 CPU、操作系统和独立互联网接口。",
+      "optionAnalysis": {
+        "A": "题设的读写器与网关路径提供了合法的间接接入方式。",
+        "B": "符合本场景各部分实际职责。",
+        "C": "芯片和标识能力不能推出摄像、编码与宽带上送能力。",
+        "D": "后台可以经中间节点获得身份事件，不以物品直接上网为必要条件。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题附答案.pdf》PDF第18页第19题（多选） 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-ad6c63717cc5",
+        "locator": "PDF 第18页，多选第19题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "RFID",
+      "物联网节点",
+      "间接接入"
+    ]
+  },
+  {
+    "id": "paper-review-cloud-service-models-01",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "cloud-service-models"
+    ],
+    "type": "single",
+    "stem": "某供应商向社会上不同组织开放一套在线工单云服务，维护完整应用、运行平台与基础设施；客户主要管理账号和业务配置。已知符合相应云计算特征。按服务交付层与部署使用范围，最合适的组合是什么？",
+    "options": [
+      {
+        "id": "A",
+        "text": "IaaS、私有云，因为应用中也运行在硬件上"
+      },
+      {
+        "id": "B",
+        "text": "SaaS、公有云；两者分别描述交付层与使用范围"
+      },
+      {
+        "id": "C",
+        "text": "PaaS、私有云，因为客户能改业务配置"
+      },
+      {
+        "id": "D",
+        "text": "SaaS 与公有云互斥，一个系统只能选其中一个"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "题目同时给了服务管理边界与基础设施面向谁开放，需在两条轴上分别分类。",
+      "steps": [
+        "供应商交付并维护完整应用，客户不管理底层平台与基础设施，符合题设 SaaS 服务层。",
+        "云服务向社会上不同组织开放使用，题设对应公有云使用范围。",
+        "服务层与部署模式不是一组选项，因此 SaaS 与公有云可以同时描述这项服务；计费方式也不是这两种判断的唯一依据。"
+      ],
+      "keyPoint": "SaaS 是软件即服务；公有云描述使用范围，二者可交叉组合。",
+      "pitfall": "把公有云与 SaaS 排在同一条等级线上，或由能改配置就误认客户拥有平台控制权。",
+      "optionAnalysis": {
+        "A": "所有应用都需要硬件，不能因此把完整应用交付判为 IaaS；范围也不符合私有专用。",
+        "B": "分别对准了服务层与部署范围。",
+        "C": "业务配置不等于管理应用运行平台，使用范围也不是单一组织专用。",
+        "D": "混淆了两个不同分类维度。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2020年国家电网-计算机类真题.pdf》PDF第4页第31题 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-d91ce57b3763",
+        "locator": "PDF 第4页，第31题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "SaaS",
+      "公有云",
+      "云分类维度"
+    ]
+  },
+  {
+    "id": "paper-review-big-data-01",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "big-data"
+    ],
+    "type": "multiple",
+    "stem": "某检修数据仓库每天从业务数据库和文件提取记录，统一设备编码和单位，保留按日统计的多年历史。下列哪些说法正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "从原有业务数据库提取数据是合理来源之一，并不与数据仓库性质冲突"
+      },
+      {
+        "id": "B",
+        "text": "统一编码和单位体现集成，保留统计日与历史可支持随时间比较"
+      },
+      {
+        "id": "C",
+        "text": "“非易失”要求仓库建立后永久禁止新增、纠错与刷新"
+      },
+      {
+        "id": "D",
+        "text": "把各独立系统的当前值不加处理放到一起，就已经必然完成了仓库的语义集成"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "B"
+    ],
+    "explanation": {
+      "analysis": "把特征还原为实际工作：统一含义、保存时间事实、按规则装载并服务分析。",
+      "steps": [
+        "数据仓库可从业务系统及其他来源提取数据，来源于原数据库不是错误。",
+        "把不同编码与计量单位统一后才便于比较；时间字段与多期事实支持历史分析。",
+        "相对稳定、以分析读取为主，不等于永不装载或不许受控纠错；只合并文件也不能消除单位与口径差异。"
+      ],
+      "keyPoint": "仓库强调集成与历史；非易失不能被读成一个永远不再变化的空壳。",
+      "pitfall": "把历史可分析误解为只能存彼此独立的静态当前数据，或排除业务数据库来源。",
+      "optionAnalysis": {
+        "A": "业务数据库是常见来源，题设的提取路径合理。",
+        "B": "分别对应集成与时间维度。",
+        "C": "把相对稳定扩大为任何维护与新装载都禁止。",
+        "D": "仍须解决身份、单位和统计口径等语义差异。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).pdf》PDF第11页第6题（多选） 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-bca354628009",
+        "locator": "PDF 第11页，多选第6题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "数据仓库",
+      "集成",
+      "历史数据",
+      "非易失"
+    ]
+  },
+  {
+    "id": "paper-review-big-data-02",
+    "revision": 1,
+    "moduleId": "technologies",
+    "knowledgeIds": [
+      "big-data"
+    ],
+    "type": "multiple",
+    "stem": "仓库中有设备每日用电明细及地区每日汇总。下列哪些属于描述这些数据的元数据，而非题设的用电业务事实或汇总值本身？",
+    "options": [
+      {
+        "id": "A",
+        "text": "字段 energy_kwh 的类型、单位与含义，以及它来自哪个源字段"
+      },
+      {
+        "id": "B",
+        "text": "D01 在 2026-10-27 的用电量为 15 kWh"
+      },
+      {
+        "id": "C",
+        "text": "“地区每日均值”按哪个时区分日、怎样去重、采用何种公式和来源表的说明"
+      },
+      {
+        "id": "D",
+        "text": "东区当日所有设备算出的实际均值 12.4 kWh"
+      }
+    ],
+    "correctOptionIds": [
+      "A",
+      "C"
+    ],
+    "explanation": {
+      "analysis": "元数据说明怎样解释、定位与处理数据；业务汇总即使由明细算出，仍在描述业务事实。",
+      "steps": [
+        "字段类型、单位、语义和来源属于结构、含义及血缘描述。",
+        "某设备某日用了多少电，是被记录的业务事实。",
+        "统计口径和生成过程是元数据；实际算出的地区均值则是派生业务数据，不因“由数据得来”就变成元数据。"
+      ],
+      "keyPoint": "区分描述数据的说明与描述业务的值，避免把所有加工结果都叫元数据。",
+      "pitfall": "把“关于数据的数据”误读成“凡是计算出来的数据”，忽略它描述的对象。",
+      "optionAnalysis": {
+        "A": "直接说明字段怎样解释和从何而来。",
+        "B": "这是一个具体业务事实值。",
+        "C": "说明统计的口径、公式和血缘，属于元数据。",
+        "D": "这是具体汇总结果，仍描述当日用电业务。"
+      }
+    },
+    "difficulty": "medium",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题精选附答案(1).docx》Word段落350 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-20e0dbeaef8c",
+        "locator": "Word 第350段",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "元数据",
+      "数据血缘",
+      "统计口径"
+    ]
+  },
+  {
+    "id": "paper-review-implementation-01",
+    "revision": 1,
+    "moduleId": "software",
+    "knowledgeIds": [
+      "implementation"
+    ],
+    "type": "single",
+    "stem": "程序先令 total=0，再依次遍历 [2,−1,4]，每轮仅在 value>0 时执行 total=total+value，遍历结束打印 total。哪项正确？",
+    "options": [
+      {
+        "id": "A",
+        "text": "输出 5，只使用顺序结构"
+      },
+      {
+        "id": "B",
+        "text": "输出 6，使用顺序、选择与循环；选择嵌套在循环内部"
+      },
+      {
+        "id": "C",
+        "text": "输出 4，因为累加总会覆盖前一轮结果"
+      },
+      {
+        "id": "D",
+        "text": "输出 6，说明 GOTO 是与前三者并列且必需的第四种基本控制结构"
+      }
+    ],
+    "correctOptionIds": [
+      "B"
+    ],
+    "explanation": {
+      "analysis": "逐轮记录变量，再把语句的控制职责对应到三种基本结构。",
+      "steps": [
+        "初始 total=0；第一轮 2>0，total 变为 2。",
+        "第二轮 −1 不满足条件，total 保持 2；第三轮 4>0，total 变为 6。",
+        "初始化、遍历后打印体现顺序，逐项重复体现循环，value>0 的条件分支体现选择；本程序无需 GOTO。"
+      ],
+      "keyPoint": "顺序、选择、循环可以嵌套组合；赋值右侧包含旧 total 才实现累加。",
+      "pitfall": "不看条件把负数也加进去，或将 total=total+value 误读为 total=value。",
+      "optionAnalysis": {
+        "A": "把 −1 也加进去了，且遗漏题设明确的分支与重复。",
+        "B": "结果和控制结构分类都符合逐轮推演。",
+        "C": "这是将累加误换成覆盖赋值后的结果。",
+        "D": "数值虽对，但 GOTO 不是并列且必需的第四种基本结构。"
+      }
+    },
+    "difficulty": "easy",
+    "source": {
+      "label": "用户资料《2023年国家电网招聘之电网计算机真题附答案.pdf》PDF第19页第20题（多选） 改编自测 · 非官方真题",
+      "isExample": true,
+      "reference": {
+        "documentId": "local-ad6c63717cc5",
+        "locator": "PDF 第19页，多选第20题",
+        "kind": "adapted"
+      }
+    },
+    "tags": [
+      "结构化程序设计",
+      "顺序选择循环",
+      "过程跟踪"
+    ]
+  }
+]

@@ -19,6 +19,10 @@ sources:
     url: https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html
   - label: OWASP：日志记录
     url: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
+  - label: PostgreSQL 18 官方文档：REVOKE
+    url: https://www.postgresql.org/docs/18/sql-revoke.html
+  - label: Microsoft SQL Server 官方文档：创建数据库用户
+    url: https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/create-a-database-user?view=sql-server-ver15
 ---
 
 ## 数据库安全具体在保护什么
@@ -163,6 +167,37 @@ cursor.execute(
 5. 记录必要的导出和权限事件，备份也纳入保护范围。
 
 每一步针对一种具体失败。安全设计的价值是减少可触达的数据与操作，并保留可核查的边界，而不是把术语堆在一起。
+
+## 补充：列级撤权，先对准对象，再检查其他授权路径
+
+假设授权关系只有下面一条，ZHAO 没有其他角色、表级更新权限或所有者权限：
+
+```sql
+GRANT UPDATE (phone) ON Reader TO ZHAO;
+REVOKE UPDATE (phone) ON Reader FROM ZHAO;
+```
+
+第一句只给更新 phone 列的能力；第二句撤回这项列级授权。它不表示删除 phone 列，不是撤回 SELECT，也不影响另一位用户已有的权限。括号中的 phone 限定列，ON 后限定表，FROM 后限定被撤权主体。[PostgreSQL REVOKE 文档](https://www.postgresql.org/docs/18/sql-revoke.html)列出了列级撤权的语法。
+
+再改变一个条件：如果 ZHAO 同时通过角色 contact_editor 获得整表 UPDATE，那么仅撤销直接的 UPDATE(phone)，不一定使他失去更新 phone 的有效能力。做题时可把权限来源画成路径：直接授权、角色继承、公共角色、所有者或管理身份。撤掉一条路径，不等于其他路径自动消失。
+
+产品语法也要区分。上面的写法是 PostgreSQL 的例子，不能据此推断每个 DBMS 的全部授权规则都相同。题干给了具体产品与版本时，应使用该产品的权限模型。
+
+## 补充：SQL Server 的登录身份与数据库用户不在同一层
+
+在常见 SQL Server 身份映射场景中，**登录名 login**用于实例层的身份访问，**数据库用户 user**是某个数据库内的身份，数据库角色与对象权限又在相应作用域中组织。一个普通登录名可在数据库 A 映射成用户 report_a，在数据库 B 映射成用户 report_b；二者的名字不必相同。
+
+例如 report_a 在 A 库加入只读报表角色，并不会因此自动在 B 库获得修改工单的权限。应分别检查能否访问实例、能否进入对应数据库、在该数据库中能操作什么对象。只知道“登录成功”不足以回答能否 UPDATE 某张表。
+
+这也不能反推“除了 guest，任何数据库用户都必定对应一个服务器登录名”。SQL Server 还有包含数据库用户、WITHOUT LOGIN 等情形；这些身份的用途与认证路径需要单独判断。[Microsoft 创建数据库用户文档](https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/create-a-database-user?view=sql-server-ver15)明确区分了多种用户类别。学习这种产品知识时，保留题目的前提比背一个绝对断言更可靠。
+
+## 补充：普通视图不等于缓存，也不保证查询加速
+
+假设 ReaderPublic 只是查询 Reader 的普通视图。基表新增一条符合条件的已提交记录，后续查询在相应事务可见性规则下可以从视图得到它；无需先执行一次“刷新普通视图”。原因是普通视图主要保存查询定义，并非自动持有一份独立结果缓存。
+
+把 `SELECT ... FROM Reader` 换成 `SELECT ... FROM ReaderPublic`，可能帮助复用表达、限制暴露范围，却不能单凭名称保证减少读页或连接。实际速度仍取决于底层查询、索引、数据分布和执行计划。某个复杂视图也可能产生昂贵查询。
+
+物化视图则会保存结果，通常还需要设计刷新与数据新鲜度。用缓存加速时要回答“何时更新、允许多旧”，用普通视图限制访问时要回答“谁有底层权限、检查使用谁的身份”。性能与授权是两个需要分别验证的目标。
 
 ## 辨析题方法与自查
 
