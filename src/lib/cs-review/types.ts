@@ -43,6 +43,7 @@ export interface QuestionFlag {
 export interface Session {
   id: string;
   mode: PracticeMode;
+  knowledgeId?: string;
   questionIds: string[];
   revisions: Record<string, number>;
   index: number;

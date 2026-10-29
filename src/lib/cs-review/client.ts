@@ -45,10 +45,10 @@ function renderShared() {
   const homeSession = document.querySelector<HTMLElement>('[data-home-session]');
   if (homeSession) {
     const session = store.snapshot().session;
-    homeSession.hidden = !session || session.status !== 'active';
+    homeSession.hidden = !session || (session.status === 'finished' && session.mode !== 'knowledge');
     if (session) {
       const count = session.mode === 'exam' ? Object.values(session.selections).filter((v) => v.length).length : session.committed.length;
-      homeSession.innerHTML = `<div><h2 id="resume-title">继续上次${session.mode === 'exam' ? '模拟考试' : '练习'}</h2><p>${count} / ${session.questionIds.length} 题已${session.mode === 'exam' ? '作答' : '提交'} · 选择与标记已保存</p></div><a class="review-button is-small" href="${url('practice/?resume=1')}">继续练习 →</a>`;
+      homeSession.innerHTML = `<div><h2 id="resume-title">${session.status === 'finished' ? '上次知识点练习已完成' : `继续上次${session.mode === 'exam' ? '模拟考试' : '练习'}`}</h2><p>${count} / ${session.questionIds.length} 题已${session.mode === 'exam' ? '作答' : '提交'} · ${session.status === 'finished' ? '可回看解析，选择接下来的复习内容' : '选择与标记已保存'}</p></div><a class="review-button is-small" href="${url('practice/?resume=1')}">${session.status === 'finished' ? '继续复习' : '继续练习'} →</a>`;
     }
   }
 }

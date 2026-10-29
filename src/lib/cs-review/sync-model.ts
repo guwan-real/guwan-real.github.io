@@ -161,7 +161,10 @@ export function mergeSyncDocuments(left: SyncDocument, right: SyncDocument): Syn
     const x = a.sessions[id], y = b.sessions[id];
     if (!x || !y) { result.sessions[id] = structuredClone(x ?? y); continue; }
     if (canonical([x.session.mode, x.session.questionIds, x.session.revisions, x.session.createdAt]) !== canonical([y.session.mode, y.session.questionIds, y.session.revisions, y.session.createdAt])) throw new Error('同一练习的题目结构冲突，请先保留两份备份。');
+    if (x.session.knowledgeId && y.session.knowledgeId && x.session.knowledgeId !== y.session.knowledgeId) throw new Error('同一练习的知识点冲突，请先保留两份备份。');
     const merged = structuredClone(choose(x, x.editedAt, y, y.editedAt));
+    const knowledgeId = x.session.knowledgeId ?? y.session.knowledgeId;
+    if (knowledgeId) merged.session.knowledgeId = knowledgeId;
     merged.editedAt = last(x.editedAt, y.editedAt); merged.indexAt = last(x.indexAt, y.indexAt);
     merged.session.index = choose(x.session.index, x.indexAt, y.session.index, y.indexAt);
     for (const qid of new Set([...Object.keys(x.session.selections), ...Object.keys(y.session.selections)])) {
