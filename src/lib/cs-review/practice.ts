@@ -1,6 +1,7 @@
 import { DIFFICULTY_LABELS, MODULES, TYPE_LABELS, moduleTitle } from './catalogue';
 import { createSession, emptyQuestionStats, masteryTimestamp, questionStats, questionStatsIndex, recordExam, recordPracticeAnswer, setQuestionFlag } from './study';
 import { escapeHtml as e, fetchAnswer } from './browser';
+import { nextKnowledge, sessionKnowledge } from './practice-navigation';
 import type { ReviewContext } from './browser';
 import type { Answer, Attempt, PracticeMode, PublicQuestion, Session } from './types';
 
@@ -29,6 +30,21 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
   const findQuestion = (id: string) => ctx.questions.find((q) => q.id === id);
   const selection = (session: Session, id: string) => session.selections[id] ?? [];
   const selectedOption = (value: string, current: string) => value === current ? ' selected' : '';
+  function restoreKnowledgeScope(session: Session | null) {
+    const topic = session && sessionKnowledge(session, ctx.questions, ctx.knowledge);
+    if (!topic) return;
+    mode = 'knowledge'; knowledgeId = topic.knowledgeId; moduleId = topic.moduleId; count = 'all';
+    fixedQuestionId = ''; reviewScope = ''; recordFilter = '';
+  }
+  function continuationMarkup(session: Session) {
+    if (session.status !== 'finished') return '';
+    const topic = sessionKnowledge(session, ctx.questions, ctx.knowledge);
+    if (!topic) return '';
+    const next = nextKnowledge(topic.knowledgeId, ctx.knowledge);
+    if (!next) return `<section class="review-study-next" aria-labelledby="study-next-title"><p class="review-caption">本节练习已完成 · 记录已保留</p><h2 id="study-next-title">已到最后一个知识点。</h2><div class="review-actions"><a class="review-button is-primary" href="${ctx.url('progress/')}">查看学习状态 →</a><a class="review-text-link" href="${ctx.url(`knowledge/#${topic.moduleId}`)}">返回章节目录 ↗</a></div></section>`;
+    const available = ctx.questions.filter((q) => q.knowledgeIds.includes(next.knowledgeId)).length;
+    return `<section class="review-study-next" aria-labelledby="study-next-title"><p class="review-caption">本节练习已完成 · 接着复习${topic.moduleId !== next.moduleId ? ` · 下一章：${e(moduleTitle(next.moduleId))}` : ''}</p><h2 id="study-next-title">下一知识点：${e(next.title)}</h2><div class="review-actions"><a class="review-button is-primary" href="${ctx.url(`knowledge/${next.knowledgeId}/`)}">阅读下一知识点 →</a>${available ? '<button class="review-button" data-action="next-knowledge" data-focus="next-knowledge">直接练习下一节 →</button>' : '<span class="review-caption">下一节暂未录入练习题，可以先阅读讲义。</span>'}</div></section>`;
+  }
   function filteredQuestions() {
     const data = ctx.store.snapshot();
     const index = questionStatsIndex(data);
@@ -100,7 +116,14 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
     const flag = data.flags[q.id];
     const stats = questionStats(data, q.id);
     const totalCorrect = data.attempts.filter((a) => a.sessionId === session.id && a.correct).length;
-    app.innerHTML = `<div class="review-session-header"><div><h1>${modeLabels[session.mode]}</h1><p>${isExam && !isFinished ? '交卷后统一判分 · 选择自动保存' : '理解每一步，比记住答案更重要'}</p></div><div class="review-actions"><button class="review-button is-small" data-action="configure" data-focus="configure">练习设置</button>${isExam && !isFinished ? '<button class="review-button is-primary is-small" data-action="finish-exam" data-focus="finish-exam">交卷</button>' : ''}</div></div>
+    const topic = sessionKnowledge(session, ctx.questions, ctx.knowledge);
+    const atLastQuestion = session.index === session.questionIds.length - 1;
+    const missing = session.questionIds.filter((id) => !session.committed.includes(id));
+    const nextControl = !atLastQuestion ? `<button class="review-button ${committed || isExam ? 'is-primary' : ''}" data-action="next" data-focus="next">下一题 →</button>`
+      : isExam && !isFinished ? '<button class="review-button is-primary" data-action="finish-exam" data-focus="finish-exam-last">交卷 →</button>'
+      : !isExam && committed && !isFinished ? '<button class="review-button is-primary" data-action="unanswered" data-focus="unanswered">继续未提交题 →</button>'
+      : committed ? '<span class="review-caption">已到本组最后一题</span>' : '';
+    app.innerHTML = `${topic ? `<a class="review-back-link" href="${ctx.url(`knowledge/${topic.knowledgeId}/`)}">← 返回本节讲义 · ${e(topic.title)}</a>` : ''}<div class="review-session-header"><div><h1>${e(topic?.title ?? modeLabels[session.mode])}</h1><p>${topic ? '知识点练习 · ' : ''}${isExam && !isFinished ? '交卷后统一判分 · 选择自动保存' : '理解每一步，比记住答案更重要'}</p></div><div class="review-actions"><button class="review-button is-small" data-action="configure" data-focus="configure">练习设置</button>${isExam && !isFinished ? '<button class="review-button is-primary is-small" data-action="finish-exam" data-focus="finish-exam">交卷</button>' : ''}</div></div>
       ${isFinished ? `<section class="review-exam-result"><p class="review-eyebrow">${isExam ? 'EXAM RESULT' : 'SESSION COMPLETE'}</p><h2>${isExam ? '已交卷，可以逐题回看。' : '本组练习已完成。'}</h2><div class="review-exam-score">${totalCorrect}<small> / ${session.questionIds.length} ${isExam ? '分' : '题正确'}</small></div><p>每题 1 分，多选全对才得分；${isExam ? '未答题计错。' : '重复查看不会重复计入历史。'}题目${session.questionIds.every((id) => findQuestion(id)?.source.isExample) ? '均为自编练习，结果仅用于复习。' : '来源见各题。'}</p></section>` : ''}
       <div class="review-session-progress"><div><strong aria-live="polite">${String(session.index + 1).padStart(2, '0')} <span>/ ${String(session.questionIds.length).padStart(2, '0')}</span></strong><span>${completed} 题已${isExam ? '作答' : '提交'}</span></div><progress value="${completed}" max="${session.questionIds.length}" aria-label="练习完成进度"></progress></div>
       <div class="review-question-meta"><span class="review-tag">${TYPE_LABELS[q.type]}</span><span class="review-tag">${e(moduleTitle(q.moduleId))}</span><span class="review-tag">${DIFFICULTY_LABELS[q.difficulty]}</span>${q.source.isExample ? '<span class="review-tag is-example">自编自测 · 非官方真题</span>' : ''}</div>
@@ -115,8 +138,10 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
       <p class="review-question-source">来源：${e(q.source.label)}${q.source.url ? ` · <a class="review-text-link" href="${e(q.source.url)}" target="_blank" rel="noopener noreferrer">查看来源 ↗</a>` : ''}${q.source.reference && (!isExam || isFinished) ? ` · <a class="review-text-link" href="${ctx.url(`materials/#${encodeURIComponent(q.source.reference.documentId)}`)}">资料出处 ↗</a>` : ''}</p>
       ${canReveal && answer && attempt ? answerMarkup(answer, q, attempt) : ''}
       ${answerError ? `<div class="review-feedback">${e(answerError)} <button class="review-button is-small" data-action="retry-answer">重试解析</button></div>` : ''}
-      <div class="review-question-navigation"><button class="review-button" data-action="previous" data-focus="previous" ${session.index === 0 ? 'disabled' : ''}>← 上一题</button>${!isExam && !committed ? '<button class="review-button is-primary" data-action="submit" data-focus="submit">提交并看解析</button>' : ''}<button class="review-button ${committed || isExam ? 'is-primary' : ''}" data-action="next" data-focus="next" ${session.index === session.questionIds.length - 1 ? 'disabled' : ''}>下一题 →</button></div>
+      <div class="review-question-navigation"><button class="review-button" data-action="previous" data-focus="previous" ${session.index === 0 ? 'disabled' : ''}>← 上一题</button>${!isExam && !committed ? '<button class="review-button is-primary" data-action="submit" data-focus="submit">提交并看解析</button>' : ''}${nextControl}</div>
+      ${atLastQuestion && !isExam && committed && missing.length ? `<p class="review-caption">还有 ${missing.length} 题未提交。${topic ? '先补完本组，即可继续下一知识点。' : '点击“继续未提交题”补完本组。'}</p>` : ''}
       <p class="review-keyboard-hint">1–9 选择 · Enter 提交练习 · ← → 切题（选项聚焦时使用原生方向键）</p>
+      ${continuationMarkup(session)}
       <details class="review-question-index" ${indexOpen ? 'open' : ''}><summary>答题卡 · ${isExam && !isFinished ? '只标记作答状态，交卷后显示正误' : '选择题号跳转，圆点表示不确定'}</summary><div class="review-question-grid">${session.questionIds.map((id, index) => {
         const done = isExam ? selection(session, id).length > 0 : session.committed.includes(id);
         const history = data.attempts.find((a) => a.id === `${session.id}:${id}`);
@@ -155,9 +180,20 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
     if (mode === 'random' || mode === 'exam') questions = shuffle(questions);
     questions = questions.slice(0, chosenCount());
     const session = createSession(questions, mode, crypto.randomUUID());
+    if (mode === 'knowledge' && knowledgeId) session.knowledgeId = knowledgeId;
     await ctx.store.update((data) => { data.session = session; });
     setup = false;
     history.replaceState(null, '', ctx.url('practice/?resume=1'));
+  }
+  async function startNextKnowledge() {
+    const session = ctx.store.snapshot().session;
+    if (!session || session.status !== 'finished') return;
+    const topic = sessionKnowledge(session, ctx.questions, ctx.knowledge);
+    const next = topic && nextKnowledge(topic.knowledgeId, ctx.knowledge);
+    if (!next || !ctx.questions.some((q) => q.knowledgeIds.includes(next.knowledgeId))) return;
+    mode = 'knowledge'; knowledgeId = next.knowledgeId; moduleId = next.moduleId; count = 'all';
+    fixedQuestionId = ''; reviewScope = ''; recordFilter = '';
+    await startSession();
   }
   async function submitNormal() {
     const session = ctx.store.snapshot().session;
@@ -223,15 +259,22 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
     if (!button || (button.type === 'submit' && button.closest('#practice-config')) || button.disabled || busy) return;
     const action = button.dataset.action;
     if (action === 'configure') {
+      restoreKnowledgeScope(ctx.store.snapshot().session);
       setup = true; fixedQuestionId = ''; reviewScope = ''; history.replaceState(null, '', ctx.url('practice/')); void render(); return;
     }
-    if (action === 'resume') { setup = false; history.replaceState(null, '', ctx.url('practice/?resume=1')); void render(); return; }
+    if (action === 'resume') { restoreKnowledgeScope(ctx.store.snapshot().session); setup = false; history.replaceState(null, '', ctx.url('practice/?resume=1')); void render(); return; }
+    if (action === 'next-knowledge') { void perform(startNextKnowledge, true).then(() => app.scrollIntoView({ block: 'start', behavior: 'instant' })); return; }
     if (action === 'submit') { void perform(submitNormal); return; }
     if (action === 'finish-exam') { void perform(finishExam); return; }
     if (action === 'retry-answer') { void perform(() => {}); return; }
     const session = ctx.store.snapshot().session;
     if (!session) return;
     const id = session.questionIds[session.index];
+    if (action === 'unanswered' && session.mode !== 'exam') {
+      const next = session.questionIds.findIndex((qid) => !session.committed.includes(qid));
+      if (next >= 0) void perform(() => ctx.store.sessionUpdate(session.id, (current) => { current.index = next; }), true);
+      return;
+    }
     if (action === 'previous' || action === 'next' || button.dataset.jump !== undefined) {
       const next = button.dataset.jump !== undefined ? Number(button.dataset.jump) : session.index + (action === 'next' ? 1 : -1);
       if (next < 0 || next >= session.questionIds.length) return;
@@ -260,7 +303,13 @@ export async function initPractice(ctx: ReviewContext): Promise<() => void> {
       if (control && !control.disabled) { event.preventDefault(); control.click(); }
     }
   });
-  if (params.get('start') === '1' && ctx.store.snapshot().session?.status !== 'active' && filteredQuestions().length) await startSession();
+  const saved = ctx.store.snapshot().session;
+  if (params.get('start') === '1' && mode === 'knowledge' && knowledgeId && !fixedQuestionId && !recordFilter && saved && !sessionInvalid(saved)
+    && sessionKnowledge(saved, ctx.questions, ctx.knowledge)?.knowledgeId === knowledgeId) {
+    // Re-entering the current lesson must resume it, including a finished group's next-topic links.
+    setup = false; history.replaceState(null, '', ctx.url('practice/?resume=1'));
+  } else if (params.get('start') === '1' && saved?.status !== 'active' && filteredQuestions().length) await startSession();
+  if (!setup) restoreKnowledgeScope(ctx.store.snapshot().session);
   await render();
   return () => { void render(); };
 }

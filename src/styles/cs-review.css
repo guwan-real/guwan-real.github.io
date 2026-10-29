@@ -223,7 +223,10 @@
 .review-option.is-wrong .review-option-result { color: var(--review-red); }
 .review-question-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
 .review-question-source { font-size: 10px; color: var(--review-muted); margin: 16px 0; }
-.review-question-navigation { display: flex; justify-content: space-between; gap: 12px; margin: 28px 0 14px; border-top: 1px solid var(--review-line); padding-top: 22px; }
+.review-question-navigation { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 28px 0 14px; border-top: 1px solid var(--review-line); padding-top: 22px; }
+.review-study-next { margin: 28px 0; padding: 24px 0; border-block: 1px solid var(--review-line); }
+.review-study-next h2 { margin: 8px 0 18px; font-size: 1.2rem; }
+.review-study-next .review-caption { margin: 0; }
 .review-keyboard-hint { text-align: center; font-size: 10px; color: #767e70; margin: 14px 0; }
 .review-answer { margin: 30px 0; border-top: 2px solid var(--review-green); padding-top: 23px; }
 .review-answer.is-incorrect { border-top-color: var(--review-red); }
@@ -387,6 +390,8 @@
   .review-config-footer { flex-direction: column; align-items: stretch; gap: 14px; }
   .review-config-footer .review-button { align-self: start; }
   .review-session-header h1 { font-size: 1.05rem; }
+  .review-session-header > div:first-child { min-width: 0; }
+  .review-session-header > .review-actions { flex-shrink: 0; }
   .review-session-header .review-actions { gap: 5px; }
   .review-session-header .review-button { font-size: 10px; padding-inline: 8px; }
   .review-question-stem { font-size: 15px; }
@@ -394,6 +399,9 @@
   .review-option .review-prose { font-size: 13px; }
   .review-option-result { grid-column: 3; font-size: 10px; }
   .review-question-navigation .review-button { padding-inline: 12px; font-size: 11px; }
+  .review-question-navigation > .review-caption { text-align: right; font-size: 10px; }
+  .review-study-next .review-actions { align-items: stretch; flex-direction: column; }
+  .review-study-next .review-button { width: 100%; }
   .review-keyboard-hint { display: none; }
   .review-answer-result { flex-direction: column; gap: 8px; }
   .review-filter-row { gap: 13px; align-items: end; }

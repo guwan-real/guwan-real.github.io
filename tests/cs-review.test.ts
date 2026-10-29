@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import matter from 'gray-matter';
 import { questionSchema, validateCatalogue, validateExplanations } from '../src/lib/cs-review/content-schema';
 import { renderMarkdown } from '../src/lib/cs-review/markdown';
+import { nextKnowledge, sessionKnowledge } from '../src/lib/cs-review/practice-navigation';
 import { parseHandbook, chapterBody } from '../src/lib/cs-review/handbook-source';
 import syllabus from '../src/content/cs-review/syllabus.json';
 import sourceManifest from '../src/content/cs-review/source-manifest.json';
@@ -41,6 +42,19 @@ class MemoryStorage {
   setItem(key: string, value: string) { assert.equal(key, STORAGE_KEY); if (this.quota) throw new DOMException('full', 'QuotaExceededError'); this.value = value; }
   removeItem(key: string) { assert.equal(key, STORAGE_KEY); this.value = null; }
 }
+
+test('all existing full-topic practice sets recover the correct chapter and next topic without new metadata', () => {
+  const { knowledge } = validateCatalogue(knowledgeData, allQuestions);
+  const ordered = [...knowledge].sort((a, b) => a.order - b.order);
+  for (const [index, topic] of ordered.entries()) {
+    const scoped = allQuestions.filter((q) => q.knowledgeIds.includes(topic.knowledgeId)).map((q) => ({
+      ...q, stemHtml: q.stem, options: q.options.map((option) => ({ id: option.id, html: option.text })),
+    }));
+    const legacy = createSession(scoped, 'knowledge', 'legacy-topic-session', t1);
+    assert.equal(sessionKnowledge(legacy, scoped, knowledge)?.knowledgeId, topic.knowledgeId);
+    assert.equal(nextKnowledge(topic.knowledgeId, knowledge)?.knowledgeId, ordered[index + 1]?.knowledgeId);
+  }
+});
 
 test('the actual content catalogue is valid and example labels are explicit', () => {
   const result = validateCatalogue(knowledgeData, allQuestions);

@@ -57,6 +57,7 @@ export function parseStudyData(input: unknown): StudyData {
     const questionIds = v.questionIds as string[];
     if (Object.keys(v.revisions).length !== questionIds.length || !questionIds.every((id) => validRevision((v.revisions as Record<string, unknown>)[id]))) fail('练习题目版本不完整。');
     if (!Object.entries(v.selections).every(([id, value]) => questionIds.includes(id) && options(value))) fail('练习选项不合法。');
+    if (v.knowledgeId !== undefined && (v.mode !== 'knowledge' || !validId(v.knowledgeId))) fail('练习知识点不合法。');
     if (v.mode === 'exam' && v.status === 'active' && v.committed.length) fail('未交卷的模拟考试不能存在已判分题目。');
     if ((v.status === 'finished') !== (v.submittedAt !== null)) fail('练习提交状态不一致。');
     if (v.status === 'finished' && v.committed.length !== questionIds.length) fail('已完成练习缺少提交题目。');
@@ -68,7 +69,8 @@ export function parseStudyData(input: unknown): StudyData {
     }
     session = { id: v.id, mode: v.mode as PracticeMode, questionIds, index: v.index as number,
       revisions: { ...v.revisions } as Record<string, number>, selections: { ...v.selections } as Record<string, string[]>,
-      committed: [...v.committed] as string[], status: v.status as Session['status'], createdAt: v.createdAt, submittedAt: v.submittedAt as string | null };
+      committed: [...v.committed] as string[], status: v.status as Session['status'], createdAt: v.createdAt, submittedAt: v.submittedAt as string | null,
+      ...(v.knowledgeId !== undefined ? { knowledgeId: v.knowledgeId as string } : {}) };
   }
   return { version: DATA_VERSION, attempts, flags, reviewed, session };
 }
