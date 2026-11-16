@@ -1,0 +1,364 @@
+{
+  "scope": {
+    "videos": 50,
+    "questions": 250,
+    "minimum_input_reviewed": 250,
+    "score_questions_reviewed": 192,
+    "audio_clips_asr_reviewed": 12
+  },
+  "minimum_input_counts": {
+    "frame": 57,
+    "earlier": 17,
+    "unknown": 23,
+    "history": 153
+  },
+  "minimum_input_labels": {
+    "frame": "当前画面＋选项",
+    "history": "当前画面＋官方历史问答",
+    "earlier": "还需提问前的其他画面",
+    "unknown": "暂不能确定"
+  },
+  "media": {
+    "video_codecs": {
+      "h264": 50
+    },
+    "audio_codecs": {
+      "aac": 50
+    },
+    "audio_sample_rate_hz": 44100,
+    "audio_channels": 2,
+    "resolution_counts": {
+      "1920x1080": 43,
+      "1280x720": 7
+    },
+    "duration_total_hours": 8.223540277777778
+  },
+  "time_distributions": [
+    {
+      "field": "video_duration_seconds",
+      "label": "视频时长",
+      "population": "50段视频",
+      "unit": "seconds",
+      "mean": 592.0948999999999,
+      "median": 583.123,
+      "q25": 565.49175,
+      "q75": 612.79225,
+      "min": 185.621,
+      "max": 842.64,
+      "definition": "秒；ffprobe文件时长"
+    },
+    {
+      "field": "question_span_seconds",
+      "label": "每组问题覆盖的时间范围",
+      "population": "50组",
+      "unit": "seconds",
+      "mean": 403.6,
+      "median": 451.5,
+      "q25": 365.75,
+      "q75": 471.5,
+      "min": 88.0,
+      "max": 600.0,
+      "definition": "max(提问时间) − min(提问时间)，不是机械Q5−Q1"
+    },
+    {
+      "field": "adjacent_gap_seconds_positive",
+      "label": "相邻轮提问间隔",
+      "population": "199个正间隔",
+      "unit": "seconds",
+      "mean": 101.10552763819095,
+      "median": 102.0,
+      "q25": 64.5,
+      "q75": 139.5,
+      "min": 4.0,
+      "max": 247.0,
+      "definition": "原200个间隔中，sample_7的−300秒单列"
+    },
+    {
+      "field": "reference_delay_seconds_nonnegative",
+      "label": "直接回指跨越的视频时间",
+      "population": "199条有效时间关系",
+      "unit": "seconds",
+      "mean": 175.2462311557789,
+      "median": 146.0,
+      "q25": 83.5,
+      "q75": 244.0,
+      "min": 4.0,
+      "max": 455.0,
+      "definition": "原200条引用中，sample_7_5回指未来，单列"
+    }
+  ],
+  "question_word_count": {
+    "mean": 14.308,
+    "median": 15.0,
+    "min": 8,
+    "max": 20
+  },
+  "five_round_qa_word_count": {
+    "mean": 77.68,
+    "median": 79.0,
+    "min": 72,
+    "max": 103
+  },
+  "templates": {
+    "exact_unique": 30,
+    "normalized_unique": 30,
+    "duplicate_excess_count": 220,
+    "duplicate_excess_fraction": 0.88,
+    "questions_in_repeated_templates": 237,
+    "top10_questions": 190,
+    "top14_questions": 230,
+    "exact_dialogue_templates": 12,
+    "videos_in_repeated_dialogues": 41
+  },
+  "reference_distances": {
+    "1": 103,
+    "3": 46,
+    "2": 51
+  },
+  "reference_chain_depths": {
+    "0": 50,
+    "1": 99,
+    "2": 54,
+    "3": 46,
+    "4": 1
+  },
+  "answer_counts": {
+    "A": 63,
+    "B": 62,
+    "C": 62,
+    "D": 63
+  },
+  "answer_counts_by_turn": {
+    "1": {
+      "A": 30,
+      "B": 14,
+      "C": 2,
+      "D": 4
+    },
+    "2": {
+      "A": 7,
+      "B": 1,
+      "C": 29,
+      "D": 13
+    },
+    "3": {
+      "A": 11,
+      "B": 20,
+      "C": 4,
+      "D": 15
+    },
+    "4": {
+      "A": 2,
+      "B": 24,
+      "C": 4,
+      "D": 20
+    },
+    "5": {
+      "A": 13,
+      "B": 3,
+      "C": 23,
+      "D": 11
+    }
+  },
+  "visual_categories": {
+    "history_selects_between_scores": 153,
+    "current_sufficient_by_options": 19,
+    "recent_video_sufficient_without_qa_history": 1,
+    "annotation_or_timing_issue": 17,
+    "current_sufficient_equal_scores": 1,
+    "history_with_recent_scoring_event": 1
+  },
+  "visual_categories_by_sport": {
+    "basketball": {
+      "n": 80,
+      "history_selects_between_scores": 74,
+      "history_with_recent_scoring_event": 1,
+      "annotation_or_timing_issue": 5
+    },
+    "table_tennis": {
+      "n": 72,
+      "history_selects_between_scores": 52,
+      "current_sufficient_by_options": 17,
+      "recent_video_sufficient_without_qa_history": 1,
+      "annotation_or_timing_issue": 1,
+      "current_sufficient_equal_scores": 1
+    },
+    "tennis": {
+      "n": 40,
+      "annotation_or_timing_issue": 11,
+      "history_selects_between_scores": 27,
+      "current_sufficient_by_options": 2
+    }
+  },
+  "audio_counts": {
+    "score_related": 7,
+    "commentary": 4,
+    "uncertain": 1,
+    "human_listened": 0,
+    "audio_necessity": "not_determined"
+  },
+  "field_dictionary": [
+    {
+      "field": "sample",
+      "label": "视频编号",
+      "unit": "视频",
+      "values": "1–50",
+      "definition": "同一个视频的5题共享编号；本次派生"
+    },
+    {
+      "field": "turn",
+      "label": "语义轮次",
+      "unit": "题目",
+      "values": "1–5",
+      "definition": "由question_id解析，不直接使用CSV行序"
+    },
+    {
+      "field": "timestamp_seconds",
+      "label": "提问时刻",
+      "unit": "题目 / 秒",
+      "values": "7–650",
+      "definition": "time_stamp转换为秒，不是比赛计时器"
+    },
+    {
+      "field": "video_duration_seconds",
+      "label": "原视频时长",
+      "unit": "视频 / 秒",
+      "values": "185.621–842.640",
+      "definition": "来自媒体文件检查；不是截取片段长度"
+    },
+    {
+      "field": "question_span_seconds",
+      "label": "问题覆盖时间范围",
+      "unit": "视频 / 秒",
+      "values": "中位451.50",
+      "definition": "每组max(timestamp)−min(timestamp)"
+    },
+    {
+      "field": "adjacent_gap_seconds",
+      "label": "与上一语义轮的时间差",
+      "unit": "后续题 / 秒",
+      "values": "199个正值；1个−300",
+      "definition": "首轮为空；负值保留，单独标错序"
+    },
+    {
+      "field": "referenced_turn",
+      "label": "直接引用的轮次",
+      "unit": "题目",
+      "values": "空、1、2、3、4",
+      "definition": "根据题干解析；原CSV没有此列"
+    },
+    {
+      "field": "reference_distance_turns",
+      "label": "相隔几轮",
+      "unit": "回指题 / 轮",
+      "values": "1/2/3：103/51/46",
+      "definition": "turn−referenced_turn；首轮为空"
+    },
+    {
+      "field": "reference_delay_seconds",
+      "label": "跨越多少视频时间",
+      "unit": "回指题 / 秒",
+      "values": "199条非负；1条−212",
+      "definition": "本轮时间−引用轮时间；负值意味着引用未来"
+    },
+    {
+      "field": "reference_chain_depth",
+      "label": "沿回指链的深度",
+      "unit": "题目 / 边数",
+      "values": "0–4",
+      "definition": "首轮0；本轮＝引用轮深度＋1；与相隔轮数区分"
+    },
+    {
+      "field": "question_word_count",
+      "label": "问题英文词数",
+      "unit": "题目 / 词",
+      "values": "均值14.308；8–20",
+      "definition": "按空白切分；不含选项，不是模型token"
+    },
+    {
+      "field": "template_frequency",
+      "label": "相同题干出现次数",
+      "unit": "题目 / 次",
+      "values": "30种题干覆盖250题",
+      "definition": "逐字匹配question统计，重复视频不由此推断"
+    },
+    {
+      "field": "relation",
+      "label": "题面回指类别",
+      "unit": "题目",
+      "values": "anchor / linear / cross",
+      "definition": "首轮50；相邻103；跨轮97；不等于实际必要性"
+    },
+    {
+      "field": "minimum.tier",
+      "label": "最少够用的已核验输入",
+      "unit": "全部250题",
+      "values": "frame / history / earlier / unknown",
+      "definition": "57 / 153 / 17 / 23，依次是当前画面、加官方问答、还需旧画面、暂不能确定"
+    },
+    {
+      "field": "minimum.basis",
+      "label": "逐题判定依据",
+      "unit": "全部250题",
+      "values": "文字",
+      "definition": "记录可辨的对象、数字、事件或不确定原因。详表含主核查图与补充画面名称"
+    },
+    {
+      "field": "evidence",
+      "label": "比分题专门核查类别",
+      "unit": "192道比分题，另58题在此字段记为范围外",
+      "values": "history / current / recent / issue / unreviewed",
+      "definition": "154 / 20 / 1 / 17 / 58。用 minimum.tier 查看全部250道题的核查结果"
+    },
+    {
+      "field": "audit.target",
+      "label": "题面解析对象",
+      "unit": "192道比分题",
+      "values": "选手或队伍名",
+      "definition": "以先前官方答案为锚点，保留对象冲突疑点"
+    },
+    {
+      "field": "audit.scores",
+      "label": "采用的当前读数",
+      "unit": "192道比分题",
+      "values": "两方比分，可为空或AD",
+      "definition": "比分不可读保留空值；事件推断另存，不覆盖原读数"
+    },
+    {
+      "field": "score_change_flag",
+      "label": "两张标准帧变化标记",
+      "unit": "192道比分题",
+      "values": "30个true",
+      "definition": "只代表已记录变化；其余无该标记不证明画面没有变化"
+    },
+    {
+      "field": "audio_review_status",
+      "label": "音频核查覆盖",
+      "unit": "250题",
+      "values": "sampled 12 / unsampled 238",
+      "definition": "未抽样不能写成“没有音频信息”"
+    },
+    {
+      "field": "audio_information_kind",
+      "label": "音频信息类别",
+      "unit": "12段抽样",
+      "values": "score_related 7 / commentary 4 / uncertain 1",
+      "definition": "描述自动转写内容；与音频是否必须是两回事"
+    },
+    {
+      "field": "audio_required",
+      "label": "音频必要性",
+      "unit": "250题",
+      "values": "not_determined",
+      "definition": "目前未做系统静音对照，不填确定的是或否"
+    },
+    {
+      "field": "audit.flags",
+      "label": "核查标记",
+      "unit": "192道比分题",
+      "values": "可同时含多项",
+      "definition": "例如时间倒退、目标冲突、字幕滞后、遮挡、AD规则归一"
+    }
+  ],
+  "inferential_caveat": "The 47-video sport comparison is exploratory; clips may share an original match. Full-dataset counts are a census, not independent-question sampling estimates."
+}
