@@ -66,7 +66,12 @@ test('homepage retains its own stylesheet and review styles are isolated', async
   const review = await readFile(new URL('index.html', root), 'utf8');
   const reviewCss = review.match(/href="([^" ]+\.css)"/)?.[1];
   assert.ok(reviewCss); assert.ok(!home.includes(reviewCss));
-  assert.match(home, /Appendix \/ CS Review/); assert.match(home, /hero-workbench/);
+  assert.match(home, /href="\/knowledge\/">知识与研究/);
+  assert.doesNotMatch(home, /href="\/appendix\/streamingbench-sqa\//);
+  assert.match(home, /hero-workbench/);
+  const knowledge = await readFile(new URL('knowledge/index.html', dist), 'utf8');
+  assert.match(knowledge, /href="\/appendix\/cs-review\//);
+  assert.match(knowledge, /href="\/appendix\/streamingbench-sqa\//);
   assert.match(review, /class="cs-review"/);
 });
 test('sync credentials cannot be entered into a native form before its JS handler is ready', async () => {

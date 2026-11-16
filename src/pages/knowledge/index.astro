@@ -1,0 +1,55 @@
+---
+import "../../styles/global.css";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="付涛的知识与研究专题，包括计算机复习和 StreamingBench SQA 数据集分析。" />
+    <title>知识与研究 · 付涛</title>
+  </head>
+  <body>
+    <header class="site-header shell">
+      <a class="brand" href="/" aria-label="返回付涛的个人主页">
+        <span class="brand-mark">FT</span>
+        <span>付涛</span>
+      </a>
+      <nav class="nav" aria-label="页面导航">
+        <a href="/">主页</a>
+        <a href="/knowledge/" aria-current="page">知识与研究</a>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section class="section" aria-labelledby="knowledge-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Knowledge & Research</p>
+            <h1 id="knowledge-title">知识与研究</h1>
+          </div>
+        </div>
+        <div class="education-grid">
+          <article class="project-card">
+            <span class="card-kicker">学习专题</span>
+            <h2>计算机复习</h2>
+            <p>按知识点阅读基础讲义，做练习并记录学习进度。</p>
+            <a class="card-link" href="/appendix/cs-review/">进入计算机复习 →</a>
+          </article>
+          <article class="project-card">
+            <span class="card-kicker">数据集研究</span>
+            <h2>StreamingBench SQA</h2>
+            <p>查看 250 道视频问答的标注字段、历史回指关系、逐题证据和真实画面。</p>
+            <a class="card-link" href="/appendix/streamingbench-sqa/">进入 SQA 分析 →</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer shell">
+      <span>&copy; {new Date().getFullYear()} 付涛</span>
+      <a href="/">返回主页 ↑</a>
+    </footer>
+  </body>
+</html>

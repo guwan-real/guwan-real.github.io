@@ -352,6 +352,7 @@ h1 {
   text-transform: uppercase;
 }
 
+.project-card h2,
 .project-card h3,
 .writing-card h3,
 .contact-card h3 {

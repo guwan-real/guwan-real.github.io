@@ -1,0 +1,24 @@
+﻿字段,含义,统计单位,结果或取值,定义
+sample,视频编号,视频,1–50,同一个视频的5题共享编号；本次派生
+turn,语义轮次,题目,1–5,由question_id解析，不直接使用CSV行序
+timestamp_seconds,提问时刻,题目 / 秒,7–650,time_stamp转换为秒，不是比赛计时器
+video_duration_seconds,原视频时长,视频 / 秒,185.621–842.640,来自媒体文件检查；不是截取片段长度
+question_span_seconds,问题覆盖时间范围,视频 / 秒,中位451.50,每组max(timestamp)−min(timestamp)
+adjacent_gap_seconds,与上一语义轮的时间差,后续题 / 秒,199个正值；1个−300,首轮为空；负值保留，单独标错序
+referenced_turn,直接引用的轮次,题目,空、1、2、3、4,根据题干解析；原CSV没有此列
+reference_distance_turns,相隔几轮,回指题 / 轮,1/2/3：103/51/46,turn−referenced_turn；首轮为空
+reference_delay_seconds,跨越多少视频时间,回指题 / 秒,199条非负；1条−212,本轮时间−引用轮时间；负值意味着引用未来
+reference_chain_depth,沿回指链的深度,题目 / 边数,0–4,首轮0；本轮＝引用轮深度＋1；与相隔轮数区分
+question_word_count,问题英文词数,题目 / 词,均值14.308；8–20,按空白切分；不含选项，不是模型token
+template_frequency,相同题干出现次数,题目 / 次,30种题干覆盖250题,逐字匹配question统计，重复视频不由此推断
+relation,题面回指类别,题目,anchor / linear / cross,首轮50；相邻103；跨轮97；不等于实际必要性
+minimum.tier,最少够用的已核验输入,全部250题,frame / history / earlier / unknown,57 / 153 / 17 / 23，依次是当前画面、加官方问答、还需旧画面、暂不能确定
+minimum.basis,逐题判定依据,全部250题,文字,记录可辨的对象、数字、事件或不确定原因。详表含主核查图与补充画面名称
+evidence,比分题专门核查类别,192道比分题，另58题在此字段记为范围外,history / current / recent / issue / unreviewed,154 / 20 / 1 / 17 / 58。用 minimum.tier 查看全部250道题的核查结果
+audit.target,题面解析对象,192道比分题,选手或队伍名,以先前官方答案为锚点，保留对象冲突疑点
+audit.scores,采用的当前读数,192道比分题,两方比分，可为空或AD,比分不可读保留空值；事件推断另存，不覆盖原读数
+score_change_flag,两张标准帧变化标记,192道比分题,30个true,只代表已记录变化；其余无该标记不证明画面没有变化
+audio_review_status,音频核查覆盖,250题,sampled 12 / unsampled 238,未抽样不能写成“没有音频信息”
+audio_information_kind,音频信息类别,12段抽样,score_related 7 / commentary 4 / uncertain 1,描述自动转写内容；与音频是否必须是两回事
+audio_required,音频必要性,250题,not_determined,目前未做系统静音对照，不填确定的是或否
+audit.flags,核查标记,192道比分题,可同时含多项,例如时间倒退、目标冲突、字幕滞后、遮挡、AD规则归一
